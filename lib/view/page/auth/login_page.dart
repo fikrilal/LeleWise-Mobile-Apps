@@ -25,22 +25,14 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  "Masuk ke Akun Kamu",
-                  style: TextStyle(
-                    fontFamily: 'SFDisplay',
-                    fontSize: 30,
-                    color: Color(0xff374151),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                ComponentTextHeader("Masuk ke Akun Kamu"),
                 const SizedBox(
                   height: 8,
                 ),
-                const Text(
+                Text(
                   "Masukkan email dan password kamu untuk masuk ke aplikasi LeleWise",
                   style: TextStyle(
-                    fontFamily: 'Satoshi',
+                    fontFamily: 'Ananda',
                     fontWeight: FontWeight.w400,
                     height: 1.5,
                     fontSize: 18,
@@ -123,6 +115,23 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(height: 8),
         reusableTextField(label, icon, isPassword, controller),
       ],
+    );
+  }
+}
+
+class ComponentTextHeader extends StatelessWidget {
+  String? text;
+  ComponentTextHeader(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Ananda',
+        fontSize: 30,
+        color: Color(0xff374151),
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
