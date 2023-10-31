@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lelewise_mobile_apps/view/component/reusableTextField.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -17,29 +17,112 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
-                24, MediaQuery.of(context).size.height * 0.2, 24, 0),
+            padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(
-                  height: 30,
+                const Text(
+                  "Masuk ke Akun Kamu",
+                  style: TextStyle(
+                    fontFamily: 'SFDisplay',
+                    fontSize: 30,
+                    color: Color(0xff374151),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                reusableTextField(
-                    "Email kamu", Icons.email, false, _emailTextController),
                 const SizedBox(
-                  height: 30,
+                  height: 8,
                 ),
-                reusableTextField(
-                    "Password", Icons.lock, true, _passwordTextController),
+                const Text(
+                  "Masukkan email dan password kamu untuk masuk ke aplikasi LeleWise",
+                  style: TextStyle(
+                    fontFamily: 'Satoshi',
+                    fontWeight: FontWeight.w400,
+                    height: 1.5,
+                    fontSize: 18,
+                    color: Color(0xff6B7280),
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                buildTextFieldWithLabel(
+                  label: "Email",
+                  icon: Icons.email,
+                  isPassword: false,
+                  controller: _emailTextController,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                buildTextFieldWithLabel(
+                  label: "Password",
+                  icon: Icons.lock,
+                  isPassword: true,
+                  controller: _passwordTextController,
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
+                    onPressed: () {
+                      // Tambahkan fungsi yang ingin dijalankan saat tombol ditekan
+                    },
+                    child: const Text(
+                      "Lupa password?",
+                      style: TextStyle(
+                        fontFamily: 'Satoshi',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Color(0xFF1C64F2),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                reusableButton(
+                  text: "Masuk",
+                  onPressed: () {
+                    // Tambahkan fungsi yang ingin dijalankan saat tombol ditekan
+                  },
+                ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildTextFieldWithLabel({
+    required String label,
+    required IconData icon,
+    required bool isPassword,
+    required TextEditingController controller,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'Satoshi',
+            fontWeight: FontWeight.w400,
+            fontSize: 18,
+            color: Color(0xff374151),
+          ),
+        ),
+        const SizedBox(height: 8),
+        reusableTextField(label, icon, isPassword, controller),
+      ],
     );
   }
 }

@@ -9,9 +9,15 @@ TextField reusableTextField(String text, IconData iconData, bool isPasswordType,
     enableSuggestions: !isPasswordType,
     autocorrect: !isPasswordType,
     cursorColor: const Color(0xff0A9830),
+    style: const TextStyle(
+      fontFamily: 'Satoshi',
+      fontWeight: FontWeight.w400,
+      fontSize: 18,
+      color: Color(0xFF374151), // Warna teks dalam TextField
+    ),
     decoration: InputDecoration(
-      contentPadding:
-          EdgeInsets.only(top: 20.0, right: 12.0, bottom: 20.0, left: 30.0),
+      contentPadding: const EdgeInsets.only(
+          top: 20.0, right: 12.0, bottom: 20.0, left: 30.0),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60),
         borderSide: const BorderSide(
@@ -47,5 +53,33 @@ TextField reusableTextField(String text, IconData iconData, bool isPasswordType,
     keyboardType: isPasswordType
         ? TextInputType.visiblePassword
         : TextInputType.emailAddress,
+  );
+}
+
+Widget reusableButton({
+  required String text,
+  required VoidCallback onPressed,
+}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      primary: const Color(0xff0A9830), // Warna latar belakang tombol
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(60),
+      ),
+      minimumSize: Size(double.infinity, 0), // Lebar mengikuti parent
+      padding: EdgeInsets.symmetric(
+          vertical: 16), // Padding atas dan bawah sebesar 16
+      elevation: 0, // Menghilangkan shadow
+    ),
+    child: Text(
+      text,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w600, // Warna teks pada tombol
+      ),
+    ),
   );
 }

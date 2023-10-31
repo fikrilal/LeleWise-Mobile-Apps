@@ -35,3 +35,7 @@ fonts:
         - asset: lib/res/font/Satoshi-BoldItalic.otf
         - asset: lib/res/font/Satoshi-Bold.otf
         - asset: lib/res/font/Satoshi-Black.otf
+
+    - family: SFDisplay
+      fonts:
+        - asset: lib/res/font/SF-Pro-Display-Bold.otf
