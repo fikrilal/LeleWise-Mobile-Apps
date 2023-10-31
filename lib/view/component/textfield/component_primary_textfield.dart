@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 TextField PrimaryTextfield(String text, IconData iconData, bool isPasswordType,
     TextEditingController controller) {
@@ -32,13 +33,11 @@ TextField PrimaryTextfield(String text, IconData iconData, bool isPasswordType,
         ),
       ),
       prefixIcon: SizedBox(
-        width: 24, // Atur lebar ikon sesuai keinginan Anda
-        child: Icon(
-          iconData, // Gunakan ikon bawaan Flutter
-          color: const Color.fromARGB(255, 0, 76, 227),
-          size: 24,
-        ),
-      ),
+          width: 24, // Atur lebar ikon sesuai keinginan Anda
+          child: SvgPicture.asset(
+            "assets/icons/email_icon.svg",
+            colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
+          )),
       labelText: text,
       labelStyle: const TextStyle(
         fontFamily: 'Satoshi',
