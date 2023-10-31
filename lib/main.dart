@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Ananda'),
+      theme: ThemeData(fontFamily: 'Satoshi'),
       home: const LoginPage(),
     );
   }

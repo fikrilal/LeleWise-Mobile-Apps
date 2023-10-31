@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lelewise_mobile_apps/view/component/reusableTextField.dart';
+import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
+import 'package:lelewise_mobile_apps/view/component/button/component_primary_btn.dart';
+import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
+import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
+import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -29,15 +33,9 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
+                TextDescription(
                   "Masukkan email dan password kamu untuk masuk ke aplikasi LeleWise",
-                  style: TextStyle(
-                    fontFamily: 'Ananda',
-                    fontWeight: FontWeight.w400,
-                    height: 1.5,
-                    fontSize: 18,
-                    color: Color(0xff6B7280),
-                  ),
+                  textcolor: ListColor.gray500,
                 ),
                 const SizedBox(
                   height: 32,
@@ -72,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontFamily: 'Satoshi',
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
-                        color: Color(0xFF1C64F2),
+                        color: ListColor.blue600,
                       ),
                     ),
                   ),
@@ -80,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 32,
                 ),
-                reusableButton(
+                primaryButton(
                   text: "Masuk",
                   onPressed: () {
                     // Tambahkan fungsi yang ingin dijalankan saat tombol ditekan
@@ -109,29 +107,12 @@ class _LoginPageState extends State<LoginPage> {
             fontFamily: 'Satoshi',
             fontWeight: FontWeight.w400,
             fontSize: 18,
-            color: Color(0xff374151),
+            color: ListColor.gray700,
           ),
         ),
         const SizedBox(height: 8),
-        reusableTextField(label, icon, isPassword, controller),
+        PrimaryTextfield(label, icon, isPassword, controller),
       ],
-    );
-  }
-}
-
-class ComponentTextHeader extends StatelessWidget {
-  String? text;
-  ComponentTextHeader(this.text);
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "${text}",
-      style: TextStyle(
-        fontFamily: 'Ananda',
-        fontSize: 30,
-        color: Color(0xff374151),
-        fontWeight: FontWeight.bold,
-      ),
     );
   }
 }
