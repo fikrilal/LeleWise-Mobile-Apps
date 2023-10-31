@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.8
+  font_awesome_flutter: ^10.6.0
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +19,19 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+assets:
+    - assets/
+    - assets/icons/
+
+fonts:
+    - family: Satoshi
+      fonts:
+        - asset: lib/res/font/Satoshi-Regular.otf
+        - asset: lib/res/font/Satoshi-MediumItalic.otf
+        - asset: lib/res/font/Satoshi-Medium.otf
+        - asset: lib/res/font/Satoshi-Light.otf
+        - asset: lib/res/font/Satoshi-Italic.otf
+        - asset: lib/res/font/Satoshi-BoldItalic.otf
+        - asset: lib/res/font/Satoshi-Bold.otf
+        - asset: lib/res/font/Satoshi-Black.otf
