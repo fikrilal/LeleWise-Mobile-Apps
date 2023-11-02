@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
                 name: TestingWidgetPage.routeName!,
-                page: () => LoginPage())
+                page: () => HomePage())
             // ben penak digae ngene ben rapi juga
 ,
             GetPage(name: LoginPage.routeName, page: ()=> LoginPage()),

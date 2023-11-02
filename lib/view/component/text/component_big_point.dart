@@ -3,29 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/res/dimension/size.dart';
 
-class ComponentTextHeader extends StatelessWidget {
+class TextPoint extends StatelessWidget {
   final String? text;
 
-  ComponentTextHeader(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "${text}",
-      style:  TextStyle(
-        fontFamily: 'SFDisplay',
-        fontSize: SizeDimen.sizeTextHeader.sp,
-        color: ListColor.gray700,
-        fontWeight: FontWeight.w800,
-      ),
-    );
-  }
-}
-
-class ComponentTextTitle extends StatelessWidget {
-  final String? text;
-
-  ComponentTextTitle(this.text);
+  TextPoint(this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +14,26 @@ class ComponentTextTitle extends StatelessWidget {
       "${text}",
       style:  TextStyle(
         fontFamily: 'Satoshi',
-        fontSize: SizeDimen.sizeTextTitle.sp,
+        fontSize: SizeDimen.sizeTextPoint.sp,
+        color: ListColor.gray700,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
+
+class TextPointSmall extends StatelessWidget {
+  final String? text;
+
+  TextPointSmall(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style:  TextStyle(
+        fontFamily: 'Satoshi',
+        fontSize: SizeDimen.sizeTextPointSmall.sp,
         color: ListColor.gray700,
         fontWeight: FontWeight.w700,
       ),

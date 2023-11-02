@@ -17,8 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +48,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 8,
                 ),
-                PrimaryTextfield("Email", "assets/icons/email_icon.svg",
-                    false, _emailTextController, ListColor.gray500),
+                PrimaryTextfield("Email", "assets/icons/email_icon.svg", false,
+                    _emailTextController, ListColor.gray500),
                 const SizedBox(
                   height: 16,
                 ),
@@ -57,12 +57,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 8,
                 ),
-                PrimaryTextfield(
-                    "Password",
-                    "assets/icons/password_icon.svg",
-                    true,
-                    _passwordTextController,
-                    ListColor.gray500),
+                PrimaryTextfield("Password", "assets/icons/password_icon.svg",
+                    true, _passwordTextController, ListColor.gray500),
                 const SizedBox(
                   height: 2,
                 ),
@@ -87,10 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 32,
                 ),
-                primaryButton(
-                  text: "Masuk",
-                  onPressed: () async {}
-                ),
+                primaryButton(text: "Masuk", onPressed: () async {}),
               ],
             ),
           ),
