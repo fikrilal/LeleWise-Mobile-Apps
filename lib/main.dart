@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 
 void main() {
@@ -15,22 +16,39 @@ class MainApp extends StatelessWidget {
     return ScreenUtilInit(
       useInheritedMediaQuery: true,
       minTextAdapt: true,
-      builder: (context,child){
-        return  GetMaterialApp(
+      builder: (context, child) {
+        return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Satoshi'),
-          initialRoute: LoginPage.routeName,
+          initialRoute: TestingWidgetPage.routeName,
           getPages: [
-            GetPage(name: LoginPage.routeName, page: ()=> LoginPage()),
+            GetPage(name: LoginPage.routeName, page: () => LoginPage()),
+            GetPage(
+                name: TestingWidgetPage.routeName!,
+                page: () => TestingWidgetPage())
             // ben penak digae ngene ben rapi juga
-
           ],
         );
       },
     );
-
   }
 }
 
+class TestingWidgetPage extends StatefulWidget {
+  static String? routeName = "/testingWidget";
+  @override
+  _TestingWidgetPageState createState() => _TestingWidgetPageState();
+}
+
+class _TestingWidgetPageState extends State<TestingWidgetPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TimePickerLele(),
+      ),
+    );
+  }
+}
 
 class TemplatePage extends StatefulWidget {
   static String? routeName = "/namaHalaman";
@@ -39,7 +57,6 @@ class TemplatePage extends StatefulWidget {
 }
 
 class _TemplatePageState extends State<TemplatePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

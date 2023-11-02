@@ -5,19 +5,19 @@ import 'package:lelewise_mobile_apps/res/dimension/size.dart';
 class TextDescription extends StatelessWidget {
   final String? text;
   final Color? textcolor;
-
-  TextDescription(this.text, {super.key, this.textcolor});
+  final double? fontSize;
+  TextDescription(this.text, {super.key, this.textcolor, this.fontSize});
   @override
   Widget build(BuildContext context) {
     return Text(
       "${text}",
-      style:  TextStyle(
+      style: TextStyle(
         fontFamily: 'Satoshi',
         fontWeight: FontWeight.w400,
-
         height: 1.5,
-        fontSize: SizeDimen.textDescription.sp,
-        color: Color(0xff6B7280),
+        fontSize:
+            fontSize == null ? SizeDimen.textDescription.sp : fontSize!.sp,
+        color: textcolor == null ? Color(0xff6B7280) : textcolor,
       ),
     );
   }
