@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "11481576355",
+    "project_id": "lele-wise-5f987",
+    "storage_bucket": "lele-wise-5f987.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11481576355:android:7155192f6fc30d89be6016",
+        "android_client_info": {
+          "package_name": "com.lelewise.lelewise_mobile_apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyYHslDtCAwP55zIpFGBCqwDTHPWDwTok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

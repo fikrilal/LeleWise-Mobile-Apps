@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/button/component_primary_btn.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_textfield.dart';
+import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -15,6 +17,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
+
+  static Future<User?> loginUsingEmailPassword(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        print("User not found");
+      }
+    }
+    return user;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +60,22 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 32,
                 ),
-                buildTextFieldWithLabel(
-                  label: "Email",
-                  icon: Icons.email,
-                  isPassword: false,
-                  controller: _emailTextController,
+                PrimaryTextfield("Password test", "assets/icons/email_icon.svg",
+                    true, _passwordTextController, 12.0, 12.0, Colors.black12),
+                const SizedBox(
+                  height: 2,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                buildTextFieldWithLabel(
-                  label: "Password",
-                  icon: Icons.lock,
-                  isPassword: true,
-                  controller: _passwordTextController,
-                ),
+                PrimaryTextfield(
+                    "Password test",
+                    "assets/icons/password_icon.svg",
+                    true,
+                    _passwordTextController,
+                    12,
+                    12,
+                    Colors.black26),
                 const SizedBox(
                   height: 2,
                 ),
@@ -80,8 +101,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 primaryButton(
                   text: "Masuk",
-                  onPressed: () {
-                    // Tambahkan fungsi yang ingin dijalankan saat tombol ditekan
+                  onPressed: () async {
+                    User? user = await loginUsingEmailPassword(
+                        email: _emailTextController.text,
+                        password: _passwordTextController.text,
+                        context: context);
+                    print(user);
+                    if (user != null) {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }
                   },
                 ),
               ],
@@ -89,30 +118,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildTextFieldWithLabel({
-    required String label,
-    required IconData icon,
-    required bool isPassword,
-    required TextEditingController controller,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontFamily: 'Satoshi',
-            fontWeight: FontWeight.w400,
-            fontSize: 18,
-            color: ListColor.gray700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        PrimaryTextfield(label, icon, isPassword, controller),
-      ],
     );
   }
 }

@@ -1,49 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 
-TextField PrimaryTextfield(String text, IconData iconData, bool isPasswordType,
-    TextEditingController controller) {
-  return TextField(
+Widget PrimaryTextfield(
+    String text,
+    String svgIconPath,
+    bool isPasswordType,
+    TextEditingController controller,
+    double iconWidth,
+    double iconHeight,
+    Color iconColor) {
+  return TextFormField(
     controller: controller,
     obscureText: isPasswordType,
     enableSuggestions: !isPasswordType,
     autocorrect: !isPasswordType,
-    cursorColor: const Color(0xff0A9830),
+    cursorColor: ListColor.primary,
     style: const TextStyle(
       fontFamily: 'Satoshi',
       fontWeight: FontWeight.w400,
       fontSize: 18,
-      color: Color(0xFF374151), // Warna teks dalam TextField
+      color: ListColor.gray700, // Warna teks dalam TextField
     ),
     decoration: InputDecoration(
-      contentPadding: const EdgeInsets.only(
-          top: 20.0, right: 12.0, bottom: 20.0, left: 30.0),
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 20.0,
+        horizontal: 30.0,
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60),
         borderSide: const BorderSide(
-          color: Color(0xffE5E7EB),
+          color: ListColor.gray200,
           width: 1,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60),
         borderSide: const BorderSide(
-          color: Color(0xff0A9830),
+          color: ListColor.primary,
           width: 1,
         ),
       ),
       prefixIcon: SizedBox(
-          width: 24, // Atur lebar ikon sesuai keinginan Anda
-          child: SvgPicture.asset(
-            "assets/icons/email_icon.svg",
-            colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
-          )),
+        width: iconWidth,
+        height: iconHeight,
+        child: SvgPicture.asset(
+          svgIconPath, // Gunakan path file SVG custom
+          color: iconColor,
+        ),
+      ),
       labelText: text,
       labelStyle: const TextStyle(
         fontFamily: 'Satoshi',
         fontWeight: FontWeight.w400,
         fontSize: 18,
-        color: Color(0xff6B7280),
+        color: ListColor.gray500,
       ),
       filled: false,
       floatingLabelBehavior: FloatingLabelBehavior.never,
