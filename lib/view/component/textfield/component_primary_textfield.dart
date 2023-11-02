@@ -16,15 +16,13 @@ Widget PrimaryTextfield(
     cursorColor: ListColor.primary,
     style: const TextStyle(
       fontFamily: 'Satoshi',
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 18,
       color: ListColor.gray700, // Warna teks dalam TextField
     ),
     decoration: InputDecoration(
-
-      contentPadding: const EdgeInsets.symmetric(
-        vertical: 20.0,
-        horizontal: 30.0,
+      contentPadding: const EdgeInsets.all(
+          18.0
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60),
@@ -40,22 +38,24 @@ Widget PrimaryTextfield(
           width: 1,
         ),
       ),
-
       prefixIcon: Container(
-        width: 30,
-        alignment: Alignment.center,
-        child: SvgPicture.asset(
-          width: 25.0,
-          height: 25.0,
-          fit: BoxFit.fill,
-          svgIconPath, // Gunakan path file SVG custom
-
+        width: 54, // Atur lebar Container sesuai kebutuhan
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 18.0), // Sesuaikan jarak di sisi kiri di sini
+          child: SvgPicture.asset(
+            width: 25.0,
+            height: 25.0,
+            fit: BoxFit.fill,
+            svgIconPath,
+            color: iconColor,
+          ),
         ),
       ),
       labelText: text,
       labelStyle: const TextStyle(
         fontFamily: 'Satoshi',
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         fontSize: 18,
         color: ListColor.gray500,
       ),

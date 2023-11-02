@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
+import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
 void main() {
   runApp(const MainApp());
@@ -21,11 +22,16 @@ class MainApp extends StatelessWidget {
           theme: ThemeData(fontFamily: 'Satoshi'),
           initialRoute: TestingWidgetPage.routeName,
           getPages: [
+
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
                 name: TestingWidgetPage.routeName!,
                 page: () => TestingWidgetPage())
             // ben penak digae ngene ben rapi juga
+,
+            GetPage(name: LoginPage.routeName, page: ()=> LoginPage()),
+            GetPage(name: HomePage.routeName, page: ()=> HomePage()),
+
           ],
         );
       },
@@ -51,7 +57,7 @@ class _TestingWidgetPageState extends State<TestingWidgetPage> {
 }
 
 class TemplatePage extends StatefulWidget {
-  static String? routeName = "/namaHalaman";
+  static String? routeName = "/TemplatePage";
   @override
   _TemplatePageState createState() => _TemplatePageState();
 }

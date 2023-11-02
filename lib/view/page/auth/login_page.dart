@@ -4,6 +4,7 @@ import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/button/component_primary_btn.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
+import 'package:lelewise_mobile_apps/view/component/text/component_textlabel.dart';
 import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_textfield.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
@@ -18,24 +19,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
-
-  static Future<User?> loginUsingEmailPassword(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print("User not found");
-      }
-    }
-    return user;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,23 +42,27 @@ class _LoginPageState extends State<LoginPage> {
                   textcolor: ListColor.gray500,
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 24,
+                ),
+                TextLabel("Email"),
+                const SizedBox(
+                  height: 8,
                 ),
                 PrimaryTextfield("Email", "assets/icons/email_icon.svg",
-                    false, _emailTextController, Colors.black12),
-                const SizedBox(
-                  height: 2,
-                ),
+                    false, _emailTextController, ListColor.gray500),
                 const SizedBox(
                   height: 16,
                 ),
+                TextLabel("Password"),
+                const SizedBox(
+                  height: 8,
+                ),
                 PrimaryTextfield(
-                    "Password test",
+                    "Password",
                     "assets/icons/password_icon.svg",
                     true,
                     _passwordTextController,
-
-                    Colors.black26),
+                    ListColor.gray500),
                 const SizedBox(
                   height: 2,
                 ),
@@ -89,9 +76,10 @@ class _LoginPageState extends State<LoginPage> {
                       "Lupa password?",
                       style: TextStyle(
                         fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                         fontSize: 18,
                         color: ListColor.blue600,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
@@ -101,17 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 primaryButton(
                   text: "Masuk",
-                  onPressed: () async {
-                    User? user = await loginUsingEmailPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text,
-                        context: context);
-                    print(user);
-                    if (user != null) {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => HomePage()));
-                    }
-                  },
+                  onPressed: () async {}
                 ),
               ],
             ),
