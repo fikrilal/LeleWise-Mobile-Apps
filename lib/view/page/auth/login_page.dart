@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 32,
                 ),
                 PrimaryTextfield("Password test", "assets/icons/email_icon.svg",
-                    true, _passwordTextController, 12.0, 12.0, Colors.black12),
+                    true, _passwordTextController, Colors.black12),
                 const SizedBox(
                   height: 2,
                 ),
@@ -73,8 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     "assets/icons/password_icon.svg",
                     true,
                     _passwordTextController,
-                    12,
-                    12,
+
                     Colors.black26),
                 const SizedBox(
                   height: 2,

@@ -7,8 +7,6 @@ Widget PrimaryTextfield(
     String svgIconPath,
     bool isPasswordType,
     TextEditingController controller,
-    double iconWidth,
-    double iconHeight,
     Color iconColor) {
   return TextFormField(
     controller: controller,
@@ -23,6 +21,7 @@ Widget PrimaryTextfield(
       color: ListColor.gray700, // Warna teks dalam TextField
     ),
     decoration: InputDecoration(
+
       contentPadding: const EdgeInsets.symmetric(
         vertical: 20.0,
         horizontal: 30.0,
@@ -41,12 +40,15 @@ Widget PrimaryTextfield(
           width: 1,
         ),
       ),
-      prefixIcon: SizedBox(
-        width: iconWidth,
-        height: iconHeight,
+
+      prefixIcon: Container(
+        width: 30,
         child: SvgPicture.asset(
+          width: 0.0,
+          height: 0.0,
+          fit: BoxFit.fill,
           svgIconPath, // Gunakan path file SVG custom
-          color: iconColor,
+
         ),
       ),
       labelText: text,
