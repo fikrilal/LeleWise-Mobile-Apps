@@ -43,9 +43,10 @@ Widget PrimaryTextfield(
 
       prefixIcon: Container(
         width: 30,
+        alignment: Alignment.center,
         child: SvgPicture.asset(
-          width: 0.0,
-          height: 0.0,
+          width: 25.0,
+          height: 25.0,
           fit: BoxFit.fill,
           svgIconPath, // Gunakan path file SVG custom
 

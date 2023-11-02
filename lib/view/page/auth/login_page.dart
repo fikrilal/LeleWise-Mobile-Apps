@@ -9,6 +9,7 @@ import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
+  static String routeName = "/LoginPage";
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -60,8 +61,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 32,
                 ),
-                PrimaryTextfield("Password test", "assets/icons/email_icon.svg",
-                    true, _passwordTextController, Colors.black12),
+                PrimaryTextfield("Email", "assets/icons/email_icon.svg",
+                    false, _emailTextController, Colors.black12),
                 const SizedBox(
                   height: 2,
                 ),

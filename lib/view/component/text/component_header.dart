@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lelewise_mobile_apps/res/dimension/size.dart';
 
 class ComponentTextHeader extends StatelessWidget {
   final String? text;
@@ -9,9 +11,9 @@ class ComponentTextHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "${text}",
-      style: const TextStyle(
+      style:  TextStyle(
         fontFamily: 'SFDisplay',
-        fontSize: 30,
+        fontSize: SizeDimen.sizeTextHeader.sp,
         color: Color(0xff374151),
         fontWeight: FontWeight.w800,
       ),
