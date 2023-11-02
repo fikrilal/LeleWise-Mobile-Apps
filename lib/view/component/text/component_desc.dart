@@ -14,7 +14,7 @@ class TextDescription extends StatelessWidget {
       "${text}",
       style: TextStyle(
         fontFamily: 'Satoshi',
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         height: 1.5,
         fontSize:
             fontSize == null ? SizeDimen.textDescription.sp : fontSize!.sp,

@@ -33,23 +33,23 @@ class _TimePickerState extends State<TimePickerLele> {
             _buildPicker(_periods, _selectedPeriod, (int index) {
               setState(() {
                 _selectedPeriod = index;
-                widget.onTimeSelected!(
-                    _selectedPeriod, _selectedMinute, _selectedPeriod);
+                // widget.onTimeSelected!(
+                //     _selectedPeriod, _selectedMinute, _selectedPeriod);
               });
             }),
             _buildPicker(_hours, _selectedHour, (int index) {
               setState(() {
                 _selectedHour = index;
 
-                widget.onTimeSelected!(
-                    _selectedPeriod, _selectedMinute, _selectedPeriod);
+                // widget.onTimeSelected!(
+                //     _selectedPeriod, _selectedMinute, _selectedPeriod);
               });
             }),
             _buildPicker(_minutes, _selectedMinute, (int index) {
               setState(() {
                 _selectedMinute = index;
-                widget.onTimeSelected!(
-                    _selectedPeriod, _selectedMinute, _selectedPeriod);
+                // widget.onTimeSelected!(
+                //     _selectedPeriod, _selectedMinute, _selectedPeriod);
               });
               ;
             }),
