@@ -68,6 +68,10 @@ class _TimePickerState extends State<TimePickerLele> {
         diameterRatio: 3,
         selectionOverlay: Container(),
         backgroundColor: Colors.transparent,
+        itemExtent: 100.0,
+        onSelectedItemChanged: onSelectedItemChanged,
+        scrollController:
+            FixedExtentScrollController(initialItem: selectedIndex),
         children: options
             .map((item) => Center(
                     child: Container(
@@ -80,10 +84,6 @@ class _TimePickerState extends State<TimePickerLele> {
                           : Colors.grey),
                 )))
             .toList(),
-        itemExtent: 100.0,
-        onSelectedItemChanged: onSelectedItemChanged,
-        scrollController:
-            FixedExtentScrollController(initialItem: selectedIndex),
       ),
     );
   }

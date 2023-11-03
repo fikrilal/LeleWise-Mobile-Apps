@@ -40,3 +40,22 @@ class ComponentTextTitle extends StatelessWidget {
     );
   }
 }
+
+class ComponentTextAppBar extends StatelessWidget {
+  final String? text;
+
+  ComponentTextAppBar(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style:  TextStyle(
+        fontFamily: 'Satoshi',
+        fontSize: SizeDimen.textDescription.sp,
+        color: ListColor.gray700,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
