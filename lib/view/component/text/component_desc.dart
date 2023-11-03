@@ -16,9 +16,29 @@ class TextDescription extends StatelessWidget {
         fontFamily: 'Satoshi',
         fontWeight: FontWeight.w500,
         height: 1.5,
-        fontSize:
-            fontSize == null ? SizeDimen.textDescription.sp : fontSize!.sp,
-        color: textcolor == null ? ListColor.gray500 : textcolor,
+        fontSize: SizeDimen.textDescription,
+        color: ListColor.gray500,
+      ),
+    );
+  }
+}
+
+class TextDescriptionBold extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionBold(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        fontSize: SizeDimen.textDescription,
+        color: ListColor.gray700,
       ),
     );
   }

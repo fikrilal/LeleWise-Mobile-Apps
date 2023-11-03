@@ -15,4 +15,7 @@ class ListColor {
   static const blue600 = Color(0xFF1C64F2);
 
   static const primary = Color(0xff0A9830);
+
+  static const redAccent = Color(0x33EB5757);
+  static const red = Color(0xFFEB5757);
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
+import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
 void main() {
   runApp(const MainApp());
@@ -26,7 +27,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
                 name: TestingWidgetPage.routeName!,
-                page: () => HomePage())
+                page: () => PakanDashboard())
             // ben penak digae ngene ben rapi juga
 ,
             GetPage(name: LoginPage.routeName, page: ()=> LoginPage()),

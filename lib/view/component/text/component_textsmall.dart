@@ -24,6 +24,70 @@ class TextDescriptionSmall extends StatelessWidget {
   }
 }
 
+class TextDescriptionSmallGreen extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionSmallGreen(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionSmall,
+        color: ListColor.primary,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
+class TextDescriptionSmallTiny extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionSmallTiny(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionTiny,
+        color: ListColor.gray500,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
+class TextDescriptionSmallAll extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionSmallAll(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionSmall,
+        color: ListColor.primary,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
 class TextDescriptionSmallButton extends StatelessWidget {
   final String? text;
   final Color? textcolor;
@@ -40,6 +104,28 @@ class TextDescriptionSmallButton extends StatelessWidget {
         height: 1.5,
         fontSize: SizeDimen.textDescriptionSmall,
         color: ListColor.gray600,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
+class TextDescriptionSmallBold extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionSmallBold(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionTiny12,
+        color: ListColor.red,
         overflow: TextOverflow.clip,
       ),
     );

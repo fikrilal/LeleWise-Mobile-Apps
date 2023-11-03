@@ -40,3 +40,22 @@ class TextPointSmall extends StatelessWidget {
     );
   }
 }
+
+class TextPointAccent extends StatelessWidget {
+  final String? text;
+
+  TextPointAccent(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style:  TextStyle(
+        fontFamily: 'Satoshi',
+        fontSize: SizeDimen.sizeTextPointAccent.sp,
+        color: ListColor.gray700,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
