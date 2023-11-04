@@ -63,3 +63,24 @@ class TextDescriptionBold extends StatelessWidget {
     );
   }
 }
+
+class TextDescriptionBoldGreen extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionBoldGreen(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        fontSize: SizeDimen.textDescription,
+        color: ListColor.primary,
+      ),
+    );
+  }
+}
