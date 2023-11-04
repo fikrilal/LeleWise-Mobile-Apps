@@ -384,14 +384,6 @@ class _HomePageState extends State<HomePage> {
                             Align( // align kedua
                               alignment: Alignment.center,
                               child: Container(
-                                decoration: const BoxDecoration(boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x0A000000),
-                                    blurRadius: 50,
-                                    offset: Offset(1, 6),
-                                    spreadRadius: 0,
-                                  ),
-                                ]),
                                 child: Table(
                                   border: const TableBorder(
                                     horizontalInside: BorderSide(width: 1.0, color: ListColor.gray200),

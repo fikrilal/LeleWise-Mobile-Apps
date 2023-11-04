@@ -1,11 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
-import 'package:lelewise_mobile_apps/res/dimension/size.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
-import 'package:lelewise_mobile_apps/view/component/text/component_desc_ovr.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
 

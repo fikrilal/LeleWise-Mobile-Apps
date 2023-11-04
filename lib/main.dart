@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
+import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
+import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
 
@@ -28,7 +30,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
                 name: TestingWidgetPage.routeName!,
-                page: () => NewSchedulePage())
+                page: () => HomePage())
             // ben penak digae ngene ben rapi juga
 ,
             GetPage(name: LoginPage.routeName, page: ()=> LoginPage()),

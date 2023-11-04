@@ -62,6 +62,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                 TimePickerLele(),
               ],
             ),
+            SizedBox(height: 8),
             Column(
               children: [
                 Padding(padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -122,6 +123,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                       child: Container(
                         decoration: const BoxDecoration(
                           border: Border(
+                            top: BorderSide(width: 1, color: ListColor.gray200),
                             bottom: BorderSide(width: 1, color: ListColor.gray200),
                           ),
                         ),
