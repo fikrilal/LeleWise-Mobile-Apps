@@ -20,23 +20,23 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      useInheritedMediaQuery: true,
       minTextAdapt: true,
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Satoshi'),
-          initialRoute: TestingWidgetPage.routeName,
+          initialRoute: NewSchedulePage.routeName,
           getPages: [
-
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
                 name: TestingWidgetPage.routeName!,
                 page: () => NotifikasiPage())
             // ben penak digae ngene ben rapi juga
-,
-            GetPage(name: LoginPage.routeName, page: ()=> LoginPage()),
-            GetPage(name: HomePage.routeName, page: ()=> HomePage()),
-
+            ,
+            GetPage(name: LoginPage.routeName, page: () => LoginPage()),
+            GetPage(name: HomePage.routeName, page: () => HomePage()),
+            GetPage(
+                name: NewSchedulePage.routeName!,
+                page: () => NewSchedulePage()),
           ],
         );
       },

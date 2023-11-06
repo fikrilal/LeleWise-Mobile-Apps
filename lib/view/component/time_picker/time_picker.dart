@@ -75,9 +75,9 @@ class _TimePickerState extends State<TimePickerLele> {
         children: options
             .map((item) => Center(
                     child: Container(
-                  child: TextDescription(item,
+                  child: TextDescriptionPicker(item,
                       fontSize: selectedIndex == options.indexOf(item)
-                          ? 45.sp
+                          ? 50.sp
                           : 34.sp,
                       textcolor: selectedIndex == options.indexOf(item)
                           ? Colors.black
