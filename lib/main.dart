@@ -36,7 +36,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(
                 name: NewSchedulePage.routeName!,
-                page: () => NewSchedulePage()),
+                page: () => PakanDashboard()),
           ],
         );
       },

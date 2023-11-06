@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 
 class TimePickerLele extends StatefulWidget {
@@ -77,10 +78,10 @@ class _TimePickerState extends State<TimePickerLele> {
                     child: Container(
                   child: TextDescriptionPicker(item,
                       fontSize: selectedIndex == options.indexOf(item)
-                          ? 50.sp
-                          : 34.sp,
+                          ? 36.sp
+                          : 32.sp,
                       textcolor: selectedIndex == options.indexOf(item)
-                          ? Colors.black
+                          ? Colors.grey.shade800
                           : Colors.grey),
                 )))
             .toList(),

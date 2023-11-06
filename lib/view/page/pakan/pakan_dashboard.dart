@@ -15,6 +15,7 @@ class PakanDashboard extends StatefulWidget {
 }
 
 class _PakanDashboardState extends State<PakanDashboard> {
+  bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -113,7 +114,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                             ),
                                                           ),
                                                           onPressed: () {
-                                                            // Tindakan yang akan dijalankan ketika tombol ditekan
+                                                            // KETIKA TOMBOL DITEKAN, AKAN MENG-EXPAND CARD ATAU CONTAINER
                                                           },
                                                           child: Padding(
                                                             padding: EdgeInsets.all(8.0),

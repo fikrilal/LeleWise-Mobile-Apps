@@ -99,7 +99,16 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                             ),
                                             child: Row(
                                               children: [
-                                                TextDescription700(option.name),
+                                                Text(
+                                                  option.name,
+                                                style: TextStyle(
+                                                fontFamily: 'Satoshi',
+                                                fontWeight: option.name == selectedOption.name ? FontWeight.w700 : FontWeight.w500,
+                                                height: 1.5,
+                                                fontSize: 18,
+                                                color: option.name == selectedOption.name ? ListColor.primary : ListColor.gray600,
+                                                ),
+                                                ),
                                                 Spacer(),
                                                 CustomRadio(
                                                   value: option.id,
@@ -174,7 +183,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                           setState(() {
                                             selectedOption2 = option2;
                                           });
-                                          Navigator.pop(context); // Tutup ModalBottomSheet
+                                          Navigator.pop(context);
                                         },
                                         child: Container(
                                           padding: EdgeInsets.all(24.0),
@@ -183,7 +192,16 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                           ),
                                           child: Row(
                                             children: [
-                                              TextDescription700(option2.name),
+                                              Text(
+                                                option2.name,
+                                                style: TextStyle(
+                                                  fontFamily: 'Satoshi',
+                                                  fontWeight: option2.name == selectedOption2.name ? FontWeight.w700 : FontWeight.w500,
+                                                  height: 1.5,
+                                                  fontSize: 18,
+                                                  color: option2.name == selectedOption2.name ? ListColor.primary : ListColor.gray600,
+                                                ),
+                                              ),
                                               Spacer(),
                                               CustomRadio(
                                                 value: option2.id,
