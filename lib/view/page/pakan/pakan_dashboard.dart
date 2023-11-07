@@ -224,7 +224,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                                   EdgeInsets
                                                                       .all(8.0),
                                                               child: TextDescriptionSmallButton(
-                                                                  "Edit Cepat"),
+                                                                  _isExpanded ==
+                                                                          true
+                                                                      ? "Simpan"
+                                                                      : "Edit Cepat"),
                                                             ),
                                                           ),
                                                         ],
