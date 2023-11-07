@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Satoshi'),
-          initialRoute: NewSchedulePage.routeName,
+          initialRoute: PakanDashboard.routeName,
           getPages: [
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
@@ -34,9 +34,9 @@ class MainApp extends StatelessWidget {
             ,
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
+            GetPage(name: NewSchedulePage.routeName!, page: () => HomePage()),
             GetPage(
-                name: NewSchedulePage.routeName!,
-                page: () => HomePage()),
+                name: PakanDashboard.routeName!, page: () => PakanDashboard())
           ],
         );
       },
