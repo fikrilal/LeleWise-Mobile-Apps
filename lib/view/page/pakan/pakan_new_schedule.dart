@@ -4,6 +4,7 @@ import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/radio_button/radio_button.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
+import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
 import '../../component/button/component_primary_btn.dart';
 import '../../component/time_picker/time_picker.dart';
@@ -264,7 +265,10 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(20, 24, 20, 32),
-                child: primaryButton(text: "Simpan", onPressed: () async {}),
+                child: primaryButton(text: "Simpan", onPressed: () async {Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PakanDashboard()),
+                );}),
               ),
             )
           ],

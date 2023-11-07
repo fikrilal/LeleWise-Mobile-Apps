@@ -8,6 +8,11 @@ import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc_ovr.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
+import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
+import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
+import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
+
+import '../pakan/pakan_new_schedule.dart';
 
 class HomePage extends StatefulWidget {
   static String routeName = "/HomePage";
@@ -123,123 +128,140 @@ class _HomePageState extends State<HomePage> {
                             Expanded(child:
                             Align( // align pertama
                               alignment: Alignment.center,
-                              child: Container(
-                                decoration: const BoxDecoration(boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x0A000000),
-                                    blurRadius: 50,
-                                    offset: Offset(1, 6),
-                                    spreadRadius: 0,
-                                  ),
-                                ]),
-                                child: Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(
-                                      color: ListColor.gray100,
-                                      width: 1,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => PHPage()),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x0A000000),
+                                      blurRadius: 50,
+                                      offset: Offset(1, 6),
+                                      spreadRadius: 0,
                                     ),
-                                  ),
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      children: [
-                                        Row( //row pertama
-                                          children: [
-                                            TextDescriptionSmall("pH Air"),
-                                            Spacer(),
-                                            SvgPicture.asset(
-                                              'assets/icons/arrow_btn.svg',
-                                              width: 26,
-                                              height: 26,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Column( // row kedua
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            TextPointSmall("5,45"),
-                                            SizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  'assets/icons/cheklist_icon.svg',
-                                                  width: 20,
-                                                  height: 20,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                TextDescriptionTiny("Kondisi baik")
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                  ]),
+                                  child: Card(
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: const BorderSide(
+                                        color: ListColor.gray100,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        children: [
+                                          Row( //row pertama
+                                            children: [
+                                              TextDescriptionSmall("pH Air"),
+                                              Spacer(),
+                                              SvgPicture.asset(
+                                                'assets/icons/arrow_btn.svg',
+                                                width: 26,
+                                                height: 26,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Column( // row kedua
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              TextPointSmall("5,45"),
+                                              SizedBox(height: 10),
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/icons/cheklist_icon.svg',
+                                                    width: 20,
+                                                    height: 20,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  TextDescriptionTiny("Kondisi baik")
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              )
                             ),
                             ),
                             Expanded(child:
                             Align( // align kedua
                               alignment: Alignment.center,
-                              child: Container(
-                                decoration: const BoxDecoration(boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x0A000000),
-                                    blurRadius: 50,
-                                    offset: Offset(1, 6),
-                                    spreadRadius: 0,
-                                  ),
-                                ]),
-                                child: Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(
-                                      color: ListColor.gray100,
-                                      width: 1,
+
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SuhuAirPage()),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x0A000000),
+                                      blurRadius: 50,
+                                      offset: Offset(1, 6),
+                                      spreadRadius: 0,
                                     ),
-                                  ),
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      children: [
-                                        Row( //row pertama
-                                          children: [
-                                            TextDescriptionSmall("Suhu air"),
-                                            Spacer(),
-                                            SvgPicture.asset(
-                                              'assets/icons/arrow_btn.svg',
-                                              width: 26,
-                                              height: 26,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Column( // row kedua
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            TextPointSmall("30°C"),
-                                            SizedBox(height: 10),
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  'assets/icons/cheklist_icon.svg',
-                                                  width: 20,
-                                                  height: 20,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                TextDescriptionTiny("Kondisi baik")
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                  ]),
+                                  child: Card(
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: const BorderSide(
+                                        color: ListColor.gray100,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        children: [
+                                          Row( //row pertama
+                                            children: [
+                                              TextDescriptionSmall("Suhu air"),
+                                              Spacer(),
+                                              SvgPicture.asset(
+                                                'assets/icons/arrow_btn.svg',
+                                                width: 26,
+                                                height: 26,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Column( // row kedua
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              TextPointSmall("30°C"),
+                                              SizedBox(height: 10),
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/icons/cheklist_icon.svg',
+                                                    width: 20,
+                                                    height: 20,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  TextDescriptionTiny("Kondisi baik")
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -344,7 +366,6 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-
                 ],
               ),
               Container(
@@ -365,23 +386,31 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 ComponentTextTitle("Riwayat Pakan Lele"),
                                 Spacer(),
-                                Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextDescriptionSmallAll("Semua"),
-                                      SvgPicture.asset(
-                                        'assets/icons/right_arrow2.svg',
-                                        width: 18,
-                                        height: 18,
-                                      ),
-                                    ],
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => PakanDashboard()),
+                                    );
+                                  },
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        TextDescriptionSmallAll("Semua"),
+                                        SvgPicture.asset(
+                                          'assets/icons/right_arrow2.svg',
+                                          width: 18,
+                                          height: 18,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(height: 16),
-                            Align( // align kedua
+                            Align(
                               alignment: Alignment.center,
                               child: Container(
                                 child: Table(

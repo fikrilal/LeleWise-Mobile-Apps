@@ -5,6 +5,7 @@ import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dar
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
+import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
 
 import '../../component/button/component_primary_btn.dart';
 class PakanDashboard extends StatefulWidget {
@@ -318,7 +319,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                       ),
                                     ),
                                     const SizedBox(height: 32),
-                                    primaryButton(text: "+ Jadwal Baru", onPressed: () async {}),
+                                    primaryButton(text: "+ Jadwal Baru", onPressed: () async {Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => NewSchedulePage()),
+                                    );}),
                                   ],
                                 ),
                               ),
