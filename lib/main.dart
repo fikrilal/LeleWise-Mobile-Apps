@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
 import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
+import 'package:lelewise_mobile_apps/view/page/deteksi/hasil_deteksi.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
+import 'package:lelewise_mobile_apps/view/page/notifikasi/detail_notifikasi.dart';
 import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
@@ -36,7 +38,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: NewSchedulePage.routeName!, page: () => HomePage()),
             GetPage(
-                name: PakanDashboard.routeName!, page: () => PakanDashboard())
+                name: PakanDashboard.routeName!, page: () => HasilDeteksi())
           ],
         );
       },
