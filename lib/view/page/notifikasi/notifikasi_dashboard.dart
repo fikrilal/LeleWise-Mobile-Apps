@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lelewise_mobile_apps/view/component/button/component_primary_btn.dart';
 
@@ -44,7 +45,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.fromLTRB(20, 24, 20, 20),
+              Padding(padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 20.h),
                 child: Column(
                   children: [
                     Align(
@@ -69,28 +70,28 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                           ),
                           color: Colors.white,
                           child: Padding(
-                            padding: const EdgeInsets.all(16),
+                            padding: EdgeInsets.all(16.w),
                             child: Column(
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: EdgeInsets.all(12.w),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: ListColor.gray200, // Warna border
-                                          width: 1, // Lebar border
+                                          color: ListColor.gray200,
+                                          width: 1,
                                         ),
                                       ),
                                       child: SvgPicture.asset(
                                         'assets/icons/ai_icon.svg',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.w,
+                                        height: 28.h,
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    SizedBox(width: 10.w),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +101,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                               TextDescriptionOver("pH air kolam kamu tinggi!"),
                                             ],
                                           ),
-                                          SizedBox(height: 8),
+                                          SizedBox(height: 8.h),
                                           Row(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,11 +112,11 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                                   borderRadius: BorderRadius.circular(50),
                                                 ),
                                                 child: Padding (
-                                                  padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                                  padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
                                                   child: TextDescriptionSmallBold("Tindakan diperlukan!"),
                                                 ),
                                               ),
-                                              TextDescriptionSmallTiny400("Hari ini · 12:30"), // text ini akan berada di sebelah kanan
+                                              TextDescriptionSmallTiny400("Hari ini · 12:30"),
                                             ],
                                           ),
                                         ],
@@ -123,19 +124,19 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 16),
+                                SizedBox(height: 16.h),
                                 const Divider(
                                   color: ListColor.gray200,
                                   height: 1,
                                 ),
-                                SizedBox(height: 16),
+                                SizedBox(height: 16.h),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       TextDescriptionSmall("ph air kolam kamu mencapai 9,51! Kamu perlu mengganti air kolam untuk menjaga kesehatan lele!"),
-                                      SizedBox(height: 20),
+                                      SizedBox(height: 20.h),
                                       secondaryButton(text: "Lihat Detail", onPressed: () {
 
                                       },)

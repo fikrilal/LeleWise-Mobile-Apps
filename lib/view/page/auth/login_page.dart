@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/button/component_primary_btn.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
@@ -29,38 +30,38 @@ class _LoginPageState extends State<LoginPage> {
         decoration: const BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
+            padding: EdgeInsets.fromLTRB(24.w, 60.h, 24.w, 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ComponentTextHeader("Masuk ke Akun Kamu"),
-                const SizedBox(
-                  height: 8,
+                SizedBox(
+                  height: 8.h,
                 ),
                 TextDescription(
                   "Masukkan email dan password kamu untuk masuk ke aplikasi LeleWise",
                   textcolor: ListColor.gray500,
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 TextLabel("Email"),
-                const SizedBox(
-                  height: 8,
+                SizedBox(
+                  height: 8.h,
                 ),
                 PrimaryTextfield("Email", "assets/icons/email_icon.svg", false,
                     _emailTextController, ListColor.gray500),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextLabel("Password"),
-                const SizedBox(
-                  height: 8,
+                SizedBox(
+                  height: 8.h,
                 ),
                 PrimaryTextfield("Password", "assets/icons/password_icon.svg",
                     true, _passwordTextController, ListColor.gray500),
-                const SizedBox(
-                  height: 2,
+                SizedBox(
+                  height: 2.h,
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
@@ -80,8 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 32,
+                SizedBox(
+                  height: 32.h,
                 ),
                 primaryButton(text: "Masuk", onPressed: () async {}),
               ],

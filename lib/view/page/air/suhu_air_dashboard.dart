@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
@@ -19,7 +20,7 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          padding: EdgeInsets.fromLTRB(20, 46, 20, 20),
+          padding: EdgeInsets.fromLTRB(20.w, 46.h, 20.w, 20.h),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(color: Colors.white),
@@ -49,25 +50,25 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                       ),
                       color: Colors.white,
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: EdgeInsets.all(16.w),
                         child: Column(
                           children: [
                             Row( //row pertama
                               children: [
                                 SvgPicture.asset(
                                   'assets/icons/water.svg',
-                                  width: 24,
-                                  height: 24,
+                                  width: 24.w,
+                                  height: 24.h,
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: 8.w),
                                 TextDescriptionOver("Suhu air hari ini")
                               ],
                             ),
-                            const SizedBox(height: 16),
-                            Row( // row kedua
+                            SizedBox(height: 16.h),
+                            Row(
                               children: [
                                 TextPoint("32°C"),
-                                SizedBox(width: 10),
+                                SizedBox(width: 10.w),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children:[
@@ -77,15 +78,15 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 10.h),
                             Row(
                               children: [
                                 SvgPicture.asset(
                                   'assets/icons/cheklist_icon.svg',
-                                  width: 20,
-                                  height: 20,
+                                  width: 20.w,
+                                  height: 20.h,
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: 8.w),
                                 TextDescriptionTiny("Dalam keadaan baik")
                               ],
                             ),
@@ -95,7 +96,7 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 Column(
                   children: [
                     Container(
@@ -103,7 +104,7 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ComponentTextTitle("Riwayat Suhu Air"),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.h),
                           Align( // align kedua
                             alignment: Alignment.center,
                             child: Container(
@@ -118,14 +119,14 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                                       children: [
                                         TableCell(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(bottom: 24.0, top: 24.0),
+                                            padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
                                             child: TextDescription(item["name"] ?? ""),
                                           ),
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: Padding(
-                                            padding: const EdgeInsets.only(bottom: 24.0, top: 24.0),
+                                            padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: TextDescription(item["date"] ?? ""),

@@ -63,7 +63,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                            padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
                             child: Column(
                               children: [
                                 Container(
@@ -72,9 +72,8 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ComponentTextTitle("Pakan Lele"),
-                                      SizedBox(height: 8),
+                                      SizedBox(height: 8.h),
                                       Align(
-                                        // align kedua
                                         alignment: Alignment.center,
                                         child: Container(
                                           decoration:
@@ -98,84 +97,54 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                             ),
                                             color: Colors.white,
                                             child: Padding(
-                                              padding: const EdgeInsets.all(16),
+                                              padding: EdgeInsets.all(16.w),
                                               child: Column(
                                                 children: [
                                                   Row(
-                                                    //row pertama
                                                     children: [
-                                                      TextDescriptionSmall(
-                                                          "Jadwal pakan berikutnya pukul 12.00 AM"),
+                                                      TextDescriptionSmall("Jadwal pakan berikutnya pukul 12.00 AM"),
                                                     ],
                                                   ),
-                                                  const SizedBox(height: 10),
+                                                  SizedBox(height: 10.h),
                                                   Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    // row kedua
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       TextPointSmall("500 Gr"),
                                                       AnimatedContainer(
-                                                        height:
-                                                            _isExpanded == true
-                                                                ? 80.h
-                                                                : 0,
+                                                        height: _isExpanded == true ? 80.h : 0,
                                                         duration: Duration(
                                                             milliseconds: 300),
                                                         child: AnimatedOpacity(
-                                                          opacity:
-                                                              _isExpanded ==
-                                                                      true
-                                                                  ? 1.0
-                                                                  : 0,
+                                                          opacity: _isExpanded == true ? 1.0 : 0,
                                                           duration: Duration(
-                                                              milliseconds:
-                                                                  300),
+                                                              milliseconds: 300),
                                                           child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
+                                                            mainAxisSize: MainAxisSize.min,
                                                             children: [
                                                               Divider(),
-                                                              SizedBox(
-                                                                  height: 24),
+                                                              SizedBox(height: 24.h),
                                                               Row(
                                                                 children: [
-                                                                  TextDescription(
-                                                                      "Berat Pakan"),
+                                                                  TextDescription("Berat Pakan"),
                                                                   Spacer(),
                                                                   Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
                                                                     children: [
-                                                                      TextDescriptionBoldGreen(
-                                                                          "omg"),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              8),
-                                                                      SvgPicture
-                                                                          .asset(
+                                                                      TextDescriptionBoldGreen("omg"),
+                                                                      SizedBox(width: 8.w),
+                                                                      SvgPicture.asset(
                                                                         'assets/icons/right_arrow2.svg',
-                                                                        width:
-                                                                            24,
-                                                                        height:
-                                                                            24,
-                                                                        color: ListColor
-                                                                            .gray500,
+                                                                        width: 24.w,
+                                                                        height: 24.h,
+                                                                        color: ListColor.gray500,
                                                                       ),
                                                                     ],
                                                                   )
                                                                 ],
                                                               ),
-                                                              SizedBox(
-                                                                  height: 20),
+                                                              SizedBox(height: 20.h),
                                                               Divider(),
                                                             ],
                                                           ),
@@ -184,23 +153,13 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                       Row(
                                                         children: [
                                                           ElevatedButton(
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              primary:
-                                                                  Colors.white,
-                                                              shadowColor: Colors
-                                                                  .transparent,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50),
-                                                                side:
-                                                                    const BorderSide(
-                                                                  color: ListColor
-                                                                      .gray300,
+                                                            style: ElevatedButton.styleFrom(
+                                                              primary: Colors.white,
+                                                              shadowColor: Colors.transparent,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(50),
+                                                                side: const BorderSide(
+                                                                  color: ListColor.gray300,
                                                                   width: 1,
                                                                 ),
                                                               ),
@@ -209,25 +168,18 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                               // KETIKA TOMBOL DITEKAN, AKAN MENG-EXPAND CARD ATAU CONTAINER
                                                               if (_isExpanded) {
                                                                 setState(() {
-                                                                  _isExpanded =
-                                                                      false;
+                                                                  _isExpanded = false;
                                                                 });
                                                               } else {
                                                                 setState(() {
-                                                                  _isExpanded =
-                                                                      true;
+                                                                  _isExpanded = true;
                                                                 });
                                                               }
                                                             },
                                                             child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
+                                                              padding: EdgeInsets.all(8.w),
                                                               child: TextDescriptionSmallButton(
-                                                                  _isExpanded ==
-                                                                          true
-                                                                      ? "Simpan"
-                                                                      : "Edit Cepat"),
+                                                                  _isExpanded == true ? "Simpan" : "Edit Cepat"),
                                                             ),
                                                           ),
                                                         ],
@@ -250,13 +202,13 @@ class _PakanDashboardState extends State<PakanDashboard> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 8,
+                        height: 8.h,
                         color: ListColor.gray100,
                       ),
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                            padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
                             child: Column(
                               children: [
                                 Container(
@@ -265,7 +217,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ComponentTextTitle("Jadwal pakan"),
-                                      SizedBox(height: 8),
+                                      SizedBox(height: 8.h),
                                       Align(
                                         alignment: Alignment.center,
                                         child: Container(
@@ -290,51 +242,35 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                             ),
                                             color: Colors.white,
                                             child: Padding(
-                                              padding: const EdgeInsets.all(16),
+                                              padding: EdgeInsets.all(16.w),
                                               child: Column(
                                                 children: [
                                                   Row(
-                                                    //row pertama
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           SvgPicture.asset(
                                                             'assets/icons/pagi.svg',
-                                                            width: 18,
-                                                            height: 18,
+                                                            width: 18.w,
+                                                            height: 18.h,
                                                           ),
-                                                          SizedBox(width: 8),
-                                                          TextDescriptionSmallGreen(
-                                                              "Pagi • 07:00 AM"),
+                                                          SizedBox(width: 8.w),
+                                                          TextDescriptionSmallGreen("Pagi • 07:00 AM"),
                                                         ],
                                                       ),
                                                       Spacer(),
                                                       Row(
                                                         children: [
                                                           ElevatedButton(
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              primary:
-                                                                  Colors.white,
-                                                              shadowColor: Colors
-                                                                  .transparent,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50),
-                                                                side:
-                                                                    const BorderSide(
-                                                                  color: ListColor
-                                                                      .gray300,
+                                                            style: ElevatedButton.styleFrom(
+                                                              primary: Colors.white,
+                                                              shadowColor: Colors.transparent,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(50),
+                                                                side: const BorderSide(
+                                                                  color: ListColor.gray300,
                                                                   width: 1,
                                                                 ),
                                                               ),
@@ -342,24 +278,15 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                             onPressed: () {
                                                               // Tindakan yang akan dijalankan ketika tombol ditekan
                                                             },
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          2,
-                                                                          8,
-                                                                          2,
-                                                                          8),
-                                                              child:
-                                                                  TextDescriptionSmallButton(
-                                                                      "Edit"),
+                                                            child: Padding(padding: EdgeInsets.fromLTRB(2.w, 8.h, 2.w, 8.h),
+                                                              child: TextDescriptionSmallButton("Edit"),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(height: 2),
+                                                  SizedBox(height: 2.h),
                                                   Row(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -398,11 +325,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                             ),
                                             color: Colors.white,
                                             child: Padding(
-                                              padding: const EdgeInsets.all(16),
+                                              padding: EdgeInsets.all(16.w),
                                               child: Column(
                                                 children: [
                                                   Row(
-                                                    //row pertama
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
@@ -414,10 +340,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                         children: [
                                                           SvgPicture.asset(
                                                             'assets/icons/sore.svg',
-                                                            width: 18,
-                                                            height: 18,
+                                                            width: 18.w,
+                                                            height: 18.h,
                                                           ),
-                                                          SizedBox(width: 8),
+                                                          SizedBox(width: 8.w),
                                                           TextDescriptionSmallGreen(
                                                               "Sore • 18:00 PM"),
                                                         ],
@@ -427,22 +353,13 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                         children: [
                                                           ElevatedButton(
                                                             style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              primary:
-                                                                  Colors.white,
-                                                              shadowColor: Colors
-                                                                  .transparent,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50),
-                                                                side:
-                                                                    const BorderSide(
-                                                                  color: ListColor
-                                                                      .gray300,
+                                                                ElevatedButton.styleFrom(
+                                                              primary: Colors.white,
+                                                              shadowColor: Colors.transparent,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(50),
+                                                                side: const BorderSide(
+                                                                  color: ListColor.gray300,
                                                                   width: 1,
                                                                 ),
                                                               ),
@@ -453,25 +370,18 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                             child: Padding(
                                                               padding:
                                                                   EdgeInsets
-                                                                      .fromLTRB(
-                                                                          2,
-                                                                          8,
-                                                                          2,
-                                                                          8),
+                                                                      .fromLTRB(2.w, 8.h, 2.w, 8.h),
                                                               child:
-                                                                  TextDescriptionSmallButton(
-                                                                      "Edit"),
+                                                                  TextDescriptionSmallButton("Edit"),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(height: 2),
+                                                  SizedBox(height: 2.h),
                                                   Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       TextPointAccent("350 Gr"),
                                                     ],
@@ -482,7 +392,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 32),
+                                      SizedBox(height: 32.h),
                                       primaryButton(
                                           text: "+ Jadwal Baru",
                                           onPressed: () async {
@@ -512,11 +422,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 23, 20, 0),
+                        padding: EdgeInsets.fromLTRB(20.w, 23.h, 20.w, 0.h),
                         child: Column(
                           children: [
                             Align(
-                              // align kedua
                               alignment: Alignment.center,
                               child: Container(
                                 decoration: const BoxDecoration(boxShadow: [
@@ -540,22 +449,19 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                         children: [
                                           TableCell(
                                             child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 24.0, top: 24.0),
+                                              padding: EdgeInsets.only(
+                                                  bottom: 24.h, top: 24.h),
                                               child: TextDescription(
                                                   item["name"] ?? ""),
                                             ),
                                           ),
                                           TableCell(
                                             verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
+                                                TableCellVerticalAlignment.middle,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 24.0, top: 24.0),
+                                              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
                                               child: Align(
-                                                alignment:
-                                                    Alignment.centerRight,
+                                                alignment: Alignment.centerRight,
                                                 child: TextDescription(
                                                     item["date"] ?? ""),
                                               ),

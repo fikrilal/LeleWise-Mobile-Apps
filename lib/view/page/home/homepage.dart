@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/res/dimension/size.dart';
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 60, 20, 16),
+                    padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 16.h),
                     child: Column(
                       children: [
                         Align(
@@ -51,22 +52,22 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16.0),
+                              padding: EdgeInsets.all(16.w),
                               child: Row(
                                 children: [
                                   SvgPicture.asset(
                                     'assets/icons/ai_icon.svg',
-                                    width: 28,
-                                    height: 28,
+                                    width: 28.w,
+                                    height: 28.h,
                                   ),
-                                  SizedBox(width: 16),
+                                  SizedBox(width: 16.w),
                                   TextDescriptionOver("Lele kamu dalam keadaan baik!")
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 8.h),
                         Align(
                           alignment: Alignment.center,
                           child: Container(
@@ -89,25 +90,25 @@ class _HomePageState extends State<HomePage> {
                               ),
                               color: Colors.white,
                               child: Padding(
-                                padding: const EdgeInsets.all(16),
+                                padding: EdgeInsets.all(16.w),
                                 child: Column(
                                   children: [
                                     Row( //row pertama
                                       children: [
                                         SvgPicture.asset(
                                           'assets/icons/maps_icon.svg',
-                                          width: 24,
-                                          height: 24,
+                                          width: 24.w,
+                                          height: 24.h,
                                         ),
-                                        const SizedBox(width: 8),
+                                        SizedBox(width: 8.w),
                                         TextDescriptionOver("Mojoroto, Kediri")
                                       ],
                                     ),
-                                    const SizedBox(height: 16),
-                                    Row( // row kedua
+                                    SizedBox(height: 16.h),
+                                    Row(
                                       children: [
                                         TextPoint("32°C"),
-                                        SizedBox(width: 10),
+                                        SizedBox(width: 10.w),
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children:[
@@ -155,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     color: Colors.white,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(16),
+                                      padding: EdgeInsets.all(16.w),
                                       child: Column(
                                         children: [
                                           Row( //row pertama
@@ -164,25 +165,25 @@ class _HomePageState extends State<HomePage> {
                                               Spacer(),
                                               SvgPicture.asset(
                                                 'assets/icons/arrow_btn.svg',
-                                                width: 26,
-                                                height: 26,
+                                                width: 26.w,
+                                                height: 26.h,
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 10),
-                                          Column( // row kedua
+                                          SizedBox(height: 10.h),
+                                          Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               TextPointSmall("5,45"),
-                                              SizedBox(height: 10),
+                                              SizedBox(height: 10.h),
                                               Row(
                                                 children: [
                                                   SvgPicture.asset(
                                                     'assets/icons/cheklist_icon.svg',
-                                                    width: 20,
-                                                    height: 20,
+                                                    width: 20.w,
+                                                    height: 20.h,
                                                   ),
-                                                  const SizedBox(width: 8),
+                                                  SizedBox(width: 8.w),
                                                   TextDescriptionTiny("Kondisi baik")
                                                 ],
                                               ),
@@ -197,9 +198,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                             ),
                             Expanded(child:
-                            Align( // align kedua
+                            Align(
                               alignment: Alignment.center,
-
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     color: Colors.white,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(16),
+                                      padding: EdgeInsets.all(16.w),
                                       child: Column(
                                         children: [
                                           Row( //row pertama
@@ -241,20 +241,20 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 10),
+                                          SizedBox(height: 10.h),
                                           Column( // row kedua
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               TextPointSmall("30°C"),
-                                              SizedBox(height: 10),
+                                              SizedBox(height: 10.h),
                                               Row(
                                                 children: [
                                                   SvgPicture.asset(
                                                     'assets/icons/cheklist_icon.svg',
-                                                    width: 20,
-                                                    height: 20,
+                                                    width: 20.w,
+                                                    height: 20.h,
                                                   ),
-                                                  const SizedBox(width: 8),
+                                                  SizedBox(width: 8.w),
                                                   TextDescriptionTiny("Kondisi baik")
                                                 ],
                                               ),
@@ -277,13 +277,13 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 width: double.infinity,
-                height: 8,
+                height: 8.h,
                 color: ListColor.gray100,
               ),
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                    padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
                     child: Column(
                       children: [
                         Container(
@@ -291,8 +291,8 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ComponentTextTitle("Pakan Lele"),
-                              SizedBox(height: 8),
-                              Align( // align kedua
+                              SizedBox(height: 8.h),
+                              Align(
                                 alignment: Alignment.center,
                                 child: Container(
                                   decoration: const BoxDecoration(boxShadow: [
@@ -314,20 +314,20 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     color: Colors.white,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(16),
+                                      padding: EdgeInsets.all(16.w),
                                       child: Column(
                                         children: [
-                                          Row( //row pertama
+                                          Row(
                                             children: [
                                               TextDescriptionSmall("Jadwal pakan berikutnya pukul 12.00 AM"),
                                             ],
                                           ),
-                                          const SizedBox(height: 10),
-                                          Column( // row kedua
+                                          SizedBox(height: 10.h),
+                                          Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               TextPointSmall("500 Gr"),
-                                              SizedBox(height: 12),
+                                              SizedBox(height: 12.h),
                                               Row(
                                                 children: [
                                                   ElevatedButton(
@@ -370,12 +370,12 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 width: double.infinity,
-                height: 8,
+                height: 8.h,
                 color: ListColor.gray100,
               ),
               Column(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+                  Padding(padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0.h),
                   child: Column(
                     children: [
                       Container(
@@ -400,8 +400,8 @@ class _HomePageState extends State<HomePage> {
                                         TextDescriptionSmallAll("Semua"),
                                         SvgPicture.asset(
                                           'assets/icons/right_arrow2.svg',
-                                          width: 18,
-                                          height: 18,
+                                          width: 18.w,
+                                          height: 18.h,
                                         ),
                                       ],
                                     ),
@@ -409,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 16.h),
                             Align(
                               alignment: Alignment.center,
                               child: Container(
@@ -424,14 +424,14 @@ class _HomePageState extends State<HomePage> {
                                         children: [
                                           TableCell(
                                             child: Padding(
-                                              padding: const EdgeInsets.only(bottom: 24.0, top: 24.0),
+                                              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
                                               child: TextDescription(item["name"] ?? ""),
                                             ),
                                           ),
                                           TableCell(
                                             verticalAlignment: TableCellVerticalAlignment.middle,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(bottom: 24.0, top: 24.0),
+                                              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
                                               child: Align(
                                                 alignment: Alignment.centerRight,
                                                 child: TextDescription(item["date"] ?? ""),
@@ -458,7 +458,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Column(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
+                  Padding(padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
                     child: Column(
                       children: [
                         Container(
@@ -481,7 +481,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     color: Colors.white,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(10),
+                                      padding: EdgeInsets.all(10.w),
                                       child: Row(
                                         children: [
                                           Row(
@@ -490,28 +490,28 @@ class _HomePageState extends State<HomePage> {
                                                 borderRadius: BorderRadius.circular(8),
                                                 child: Image.asset(
                                                   'assets/icons/lele.jpg',
-                                                  width: 80,
-                                                  height: 80,
+                                                  width: 80.w,
+                                                  height: 80.h,
                                                   fit: BoxFit.fitHeight,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(width: 8),
+                                          SizedBox(width: 8.w),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               TextDescriptionSmallTiny("Selasa 17 October · 12:32"),
-                                              SizedBox(height: 2),
+                                              SizedBox(height: 2.h),
                                               TextDescriptionBold("Lele terjangkit penyakit"),
-                                              SizedBox(height: 8),
+                                              SizedBox(height: 8.h),
                                               Container(
                                                 decoration: BoxDecoration(
                                                   color: ListColor.redAccent,
-                                                  borderRadius: BorderRadius.circular(50), // Mengatur sudut container menjadi bulat
+                                                  borderRadius: BorderRadius.circular(50),
                                                 ),
                                                 child: Padding (
-                                                  padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                                  padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
                                                   child: TextDescriptionSmallBold("Tindakan diperlukan!"),
                                                 ),
                                               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/radio_button/radio_button.dart';
@@ -42,7 +43,6 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: ListColor.gray500),
           onPressed: () {
-            // Tindakan saat tombol kembali ditekan
             Navigator.of(context).pop();
           },
         ),
@@ -63,10 +63,10 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                 TimePickerLele(),
               ],
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Column(
               children: [
-                Padding(padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                Padding(padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 20.h),
                 child: Column(
                   children: [
                     InkWell(
@@ -84,7 +84,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 child: Container(
                                   child: Column(
                                     children: [
-                                      SizedBox(height: 32),
+                                      SizedBox(height: 32.h),
                                       for (var option in options)
                                         InkWell(
                                           onTap: () {
@@ -94,7 +94,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                             Navigator.pop(context); // Tutup ModalBottomSheet
                                           },
                                           child: Container(
-                                            padding: EdgeInsets.all(24.0),
+                                            padding: EdgeInsets.all(24.h),
                                             decoration: BoxDecoration(
                                               color: option.id == selectedOption.id ? ListColor.primaryAccent : Colors.transparent,
                                             ),
@@ -138,7 +138,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
+                          padding: EdgeInsets.fromLTRB(0, 24.h, 0, 24.h),
                           child: Row(
                             children: [
                               TextDescription("Berat Pakan"),
@@ -151,8 +151,8 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                   SizedBox(width: 8),
                                   SvgPicture.asset(
                                     'assets/icons/right_arrow2.svg',
-                                    width: 24,
-                                    height: 24,
+                                    width: 24.w,
+                                    height: 24.h,
                                     color: ListColor.gray500,
                                   ),
                                 ],
@@ -177,7 +177,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 child: Container(
                                   child: Column(
                                     children: [
-                                      SizedBox(height: 32),
+                                      SizedBox(height: 32.h),
                                       for (var option2 in options2)
                                       InkWell(
                                         onTap: () {
@@ -187,7 +187,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                           Navigator.pop(context);
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.all(24.0),
+                                          padding: EdgeInsets.all(24.w),
                                           decoration: BoxDecoration(
                                             color: option2.id == selectedOption2.id ? ListColor.primaryAccent : Colors.transparent,
                                           ),
@@ -230,7 +230,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
+                          padding: EdgeInsets.fromLTRB(0, 24.h, 0, 24.h),
                           child: Row(
                             children: [
                               TextDescription("Pengulangan"),
@@ -240,11 +240,11 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   TextDescriptionBoldGreen("${selectedOption2.name}"),
-                                  SizedBox(width: 8),
+                                  SizedBox(width: 8.w),
                                   SvgPicture.asset(
                                     'assets/icons/right_arrow2.svg',
-                                    width: 24,
-                                    height: 24,
+                                    width: 24.w,
+                                    height: 24.h,
                                     color: ListColor.gray500,
                                   ),
                                 ],
@@ -264,7 +264,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(20, 24, 20, 32),
+                padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 32.h),
                 child: primaryButton(text: "Simpan", onPressed: () async {Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PakanDashboard()),
