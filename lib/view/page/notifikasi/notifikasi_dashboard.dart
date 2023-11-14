@@ -45,7 +45,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 20.h),
+              Padding(padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 20.h),
                 child: Column(
                   children: [
                     Align(

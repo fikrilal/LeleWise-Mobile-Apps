@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 16.h),
+                    padding: EdgeInsets.fromLTRB(16.w, 60.h, 16.w, 16.h),
                     child: Column(
                       children: [
                         Align(
@@ -283,7 +283,7 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
+                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                     child: Column(
                       children: [
                         Container(
@@ -375,7 +375,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Column(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0.h),
+                  Padding(padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
                   child: Column(
                     children: [
                       Container(
@@ -458,7 +458,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Column(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
+                  Padding(padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                     child: Column(
                       children: [
                         Container(

@@ -66,7 +66,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
             SizedBox(height: 8.h),
             Column(
               children: [
-                Padding(padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 20.h),
+                Padding(padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 20.h),
                 child: Column(
                   children: [
                     InkWell(
@@ -264,7 +264,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 32.h),
+                padding: EdgeInsets.fromLTRB(16.w, 24.h, 16.w, 32.h),
                 child: primaryButton(text: "Simpan", onPressed: () async {Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PakanDashboard()),

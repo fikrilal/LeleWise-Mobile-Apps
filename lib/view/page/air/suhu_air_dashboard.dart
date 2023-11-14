@@ -20,7 +20,7 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          padding: EdgeInsets.fromLTRB(20.w, 46.h, 20.w, 20.h),
+          padding: EdgeInsets.fromLTRB(16.w, 46.h, 16.w, 20.h),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(color: Colors.white),

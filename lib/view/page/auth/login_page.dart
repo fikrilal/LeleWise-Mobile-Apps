@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: const BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(24.w, 60.h, 24.w, 24.h),
+            padding: EdgeInsets.fromLTRB(16.w, 60.h, 16.w, 24.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

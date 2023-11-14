@@ -63,7 +63,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                       Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
+                            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                             child: Column(
                               children: [
                                 Container(
@@ -113,12 +113,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                       TextPointSmall("500 Gr"),
                                                       AnimatedContainer(
                                                         height: _isExpanded == true ? 80.h : 0,
-                                                        duration: Duration(
-                                                            milliseconds: 300),
+                                                        duration: Duration(milliseconds: 300),
                                                         child: AnimatedOpacity(
                                                           opacity: _isExpanded == true ? 1.0 : 0,
-                                                          duration: Duration(
-                                                              milliseconds: 300),
+                                                          duration: Duration(milliseconds: 300),
                                                           child: Column(
                                                             mainAxisSize: MainAxisSize.min,
                                                             children: [
@@ -208,7 +206,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                       Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
+                            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                             child: Column(
                               children: [
                                 Container(
