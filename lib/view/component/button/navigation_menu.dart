@@ -22,10 +22,6 @@ class CenterDockedFloatingActionButtonLocation extends FloatingActionButtonLocat
   }
 }
 
-
-
-
-
 class NavigationMenu extends StatelessWidget {
   NavigationMenu({super.key});
 
@@ -52,30 +48,33 @@ class NavigationMenu extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
           child: Obx(
                 () => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // KENAPA SPACE BETWEEN PADA ROW INI TIDAK BEKERJA
-                  children: [
-                    _bottomAppBarItem(context, icon: Hicons.home_3_light_outline, activeIcon: Hicons.home_3_bold, page: 0, label: "Home"),
-                    _bottomAppBarItem(context, icon: Hicons.drop_light_outline, activeIcon: Hicons.drop_bold, page: 1, label: "Pakan"),
-                  ],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _bottomAppBarItem(context, icon: Hicons.home_3_light_outline, activeIcon: Hicons.home_3_bold, page: 0, label: "Home"),
+                      _bottomAppBarItem(context, icon: Hicons.drop_light_outline, activeIcon: Hicons.drop_bold, page: 1, label: "Pakan"),
+                    ],
+                  ),
                 ),
-                Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // SPACE BETWEEN PADA ROW INI JUGA TIDAK BEKERJA
-                  children: [
-                    _bottomAppBarItem(context, icon: Hicons.discovery_2_light_outline, activeIcon: Hicons.discovery_2_bold, page: 2, label: "Suhu"),
-                    _bottomAppBarItem(context, icon: Hicons.virus_light_outline, activeIcon: Hicons.virus_bold, page: 3, label: "pH"),
-                  ],
+                SizedBox(width: 110.w),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _bottomAppBarItem(context, icon: Hicons.discovery_2_light_outline, activeIcon: Hicons.discovery_2_bold, page: 2, label: "Suhu"),
+                      _bottomAppBarItem(context, icon: Hicons.virus_light_outline, activeIcon: Hicons.virus_bold, page: 3, label: "pH"),
+                    ],
+                  ),
                 ),
-
               ],
             ),
           ),
         ),
       ),
+
       floatingActionButtonLocation: CenterDockedFloatingActionButtonLocation(),
       floatingActionButton: ZoomTapAnimation(
         onTap: () {
