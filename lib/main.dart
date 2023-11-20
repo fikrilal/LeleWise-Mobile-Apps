@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lelewise_mobile_apps/view/component/button/navigation_menu.dart';
 import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
 import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
@@ -38,7 +39,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: NewSchedulePage.routeName!, page: () => HomePage()),
             GetPage(
-                name: PakanDashboard.routeName!, page: () => HasilDeteksi())
+                name: PakanDashboard.routeName!, page: () => NavigationMenu())
           ],
         );
       },

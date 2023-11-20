@@ -17,6 +17,9 @@ dependencies:
   get: ^4.6.6
   flutter_screenutil: 5.8.4
   flutter_time_picker_spinner: ^2.0.0
+  iconsax: ^0.0.8
+  flutter_hicons: ^0.1.0
+  zoom_tap_animation: ^1.1.0
 
 dev_dependencies:
   flutter_test:

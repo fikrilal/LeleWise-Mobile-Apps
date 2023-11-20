@@ -47,6 +47,12 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Image.asset(
+                      'assets/icons/lele.jpg',
+                      width: 80.w,
+                      height: 80.h,
+                      fit: BoxFit.fitHeight,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +79,7 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                             children: [
                               Row(
                                 children: [
-                                  TextDescriptionOver("pH air kolam kamu tinggi!"),
+                                  TextDescriptionOver("Lele kamu terjangkit penyakit Diare!"),
                                 ],
                               ),
                               SizedBox(height: 8.h),
