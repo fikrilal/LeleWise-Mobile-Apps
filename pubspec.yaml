@@ -20,6 +20,7 @@ dependencies:
   iconsax: ^0.0.8
   flutter_hicons: ^0.1.0
   zoom_tap_animation: ^1.1.0
+  iconly: ^1.0.1
 
 dev_dependencies:
   flutter_test:
