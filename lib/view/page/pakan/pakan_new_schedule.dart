@@ -148,7 +148,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   TextDescriptionBoldGreen("${selectedOption.name}"),
-                                  SizedBox(width: 8),
+                                  SizedBox(width: 8.w),
                                   SvgPicture.asset(
                                     'assets/icons/right_arrow2.svg',
                                     width: 24.w,

@@ -3,7 +3,6 @@ import 'package:flutter_hicons/flutter_hicons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconly/iconly.dart';
 import 'package:lelewise_mobile_apps/controller/navigation_controller.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
@@ -65,7 +64,7 @@ class NavigationMenu extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _bottomAppBarItem(context, icon: Hicons.discovery_2_light_outline, activeIcon: Hicons.discovery_2_bold, page: 2, label: "Suhu"),
-                      _bottomAppBarItem(context, icon: Hicons.virus_light_outline, activeIcon: Hicons.virus_bold, page: 3, label: "pH"),
+                      _bottomAppBarItem(context, icon: Hicons.virus_light_outline, activeIcon: Hicons.virus_bold, page: 3, label: "pH Air"),
                     ],
                   ),
                 ),

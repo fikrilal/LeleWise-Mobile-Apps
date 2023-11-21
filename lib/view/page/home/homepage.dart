@@ -10,6 +10,7 @@ import 'package:lelewise_mobile_apps/view/component/text/component_desc_ovr.dart
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
 import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
+import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
@@ -40,8 +41,13 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.fromLTRB(16.w, 60.h, 16.w, 16.h),
                     child: Column(
                       children: [
-                        Align(
-                          alignment: Alignment.center,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => NotifikasiPage()),
+                            );
+                          },
                           child: Card(
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -97,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         SvgPicture.asset(
                                           'assets/icons/maps_icon.svg',
-                                          width: 24.w,
-                                          height: 24.h,
+                                          width: 20.w,
+                                          height: 20.h,
                                         ),
                                         SizedBox(width: 8.w),
                                         TextDescriptionOver("Mojoroto, Kediri")
@@ -165,8 +171,8 @@ class _HomePageState extends State<HomePage> {
                                               Spacer(),
                                               SvgPicture.asset(
                                                 'assets/icons/arrow_btn.svg',
-                                                width: 26.w,
-                                                height: 26.h,
+                                                width: 20.w,
+                                                height: 20.h,
                                               ),
                                             ],
                                           ),
@@ -236,8 +242,8 @@ class _HomePageState extends State<HomePage> {
                                               Spacer(),
                                               SvgPicture.asset(
                                                 'assets/icons/arrow_btn.svg',
-                                                width: 26,
-                                                height: 26,
+                                                width: 20.w,
+                                                height: 20.h,
                                               ),
                                             ],
                                           ),

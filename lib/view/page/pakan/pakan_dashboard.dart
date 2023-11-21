@@ -111,16 +111,19 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       TextPointSmall("500 Gr"),
+                                                      SizedBox(height: 10.h),
                                                       AnimatedContainer(
-                                                        height: _isExpanded == true ? 80.h : 0,
-                                                        duration: Duration(milliseconds: 300),
+                                                        height: _isExpanded == true ? 100.h : 0,
+                                                        duration: const Duration(milliseconds: 300),
                                                         child: AnimatedOpacity(
                                                           opacity: _isExpanded == true ? 1.0 : 0,
-                                                          duration: Duration(milliseconds: 300),
+                                                          duration: const Duration(milliseconds: 300),
                                                           child: Column(
                                                             mainAxisSize: MainAxisSize.min,
                                                             children: [
-                                                              Divider(),
+                                                              const Divider(
+                                                                thickness: 0.7
+                                                              ),
                                                               SizedBox(height: 24.h),
                                                               Row(
                                                                 children: [
@@ -134,8 +137,8 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                                       SizedBox(width: 8.w),
                                                                       SvgPicture.asset(
                                                                         'assets/icons/right_arrow2.svg',
-                                                                        width: 24.w,
-                                                                        height: 24.h,
+                                                                        width: 20.w,
+                                                                        height: 20.h,
                                                                         color: ListColor.gray500,
                                                                       ),
                                                                     ],
@@ -143,7 +146,9 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                                 ],
                                                               ),
                                                               SizedBox(height: 20.h),
-                                                              Divider(),
+                                                              const Divider(
+                                                                  thickness: 0.7
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
