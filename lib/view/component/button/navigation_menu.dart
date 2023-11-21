@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hicons/flutter_hicons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +60,30 @@ class NavigationMenu extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(width: 110.w),
+                Expanded(
+                  child: Container(
+                    transform: Matrix4.translationValues(0, -16, 0),
+                    child: ZoomTapAnimation(
+                      onTap: () {
+                        // Add your action when the button is pressed
+                      },
+                      child: Transform.scale(
+                        scale: 2, // Adjust the scale factor as needed
+                        child: FloatingActionButton(
+                          backgroundColor:ListColor.primary,
+                          mini: true,
+                          elevation: 0,
+                          onPressed: () {  },
+                          child: SvgPicture.asset(
+                            'assets/icons/Scan.svg',
+                            width: 18.w,
+                            height: 18.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,27 +100,6 @@ class NavigationMenu extends StatelessWidget {
       ),
 
       floatingActionButtonLocation: CenterDockedFloatingActionButtonLocation(),
-      floatingActionButton: ZoomTapAnimation(
-        onTap: () {
-          // Add your action when the button is pressed
-        },
-        child: Transform.scale(
-          scale: 2, // Adjust the scale factor as needed
-          child: FloatingActionButton(
-            elevation: 0,
-            onPressed: () {
-              // Add your action when the button is pressed
-            },
-            backgroundColor: ListColor.primary,
-            mini: true,
-            child: SvgPicture.asset(
-              'assets/icons/Scan.svg',
-              width: 20,
-              height: 20,
-            ),
-          ),
-        ),
-      ),
     );
   }
 
