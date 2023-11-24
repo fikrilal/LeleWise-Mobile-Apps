@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
@@ -10,16 +11,43 @@ import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key});
   static String routeName = "/LoginPage";
-
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
+
+  static Future<User?> loginUsingEmailPassword({
+    required String email,
+    required String password,
+    required BuildContext buildContext,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      print("FirebaseAuthException: ${e.message}");
+      // Handle specific error cases if needed
+      if (e.code == "user-not-found") {
+        print("No User Found");
+      } else if (e.code == "wrong-password") {
+        print("Wrong Password");
+      }
+    } catch (e) {
+      print("Error: $e");
+      // Handle other exceptions
+    }
+    return user;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(
-                    onPressed: () {
-                      // Tambahkan fungsi yang ingin dijalankan saat tombol ditekan
+                    onPressed: () async {
                     },
                     child: const Text(
                       "Lupa password?",
@@ -84,7 +111,22 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 32.h,
                 ),
-                primaryButton(text: "Masuk", onPressed: () async {}),
+                primaryButton(text: "Masuk", onPressed: () async {
+                  User? user = await loginUsingEmailPassword(
+                  email: _emailTextController.text,
+                  password: _passwordTextController.text,
+                  buildContext: context,
+                );
+                print(user);
+                if (user != null) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                } else {
+                  // Handle the case when login fails
+                  // You might want to show a snackbar or an alert
+                  print("Login failed");
+                }}),
               ],
             ),
           ),

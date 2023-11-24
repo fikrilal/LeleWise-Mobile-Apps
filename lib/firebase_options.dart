@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '11481576355',
     projectId: 'lele-wise-5f987',
     authDomain: 'lele-wise-5f987.firebaseapp.com',
+    databaseURL: 'https://lele-wise-5f987-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'lele-wise-5f987.appspot.com',
     measurementId: 'G-J179RQBV7N',
   );
@@ -58,16 +59,18 @@ class DefaultFirebaseOptions {
     appId: '1:11481576355:android:7155192f6fc30d89be6016',
     messagingSenderId: '11481576355',
     projectId: 'lele-wise-5f987',
+    databaseURL: 'https://lele-wise-5f987-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'lele-wise-5f987.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBWu-Xm1UuAq2Wfh2VXanibObt5KFmzq6s',
-    appId: '1:11481576355:ios:69a76b453c9d0040be6016',
+    appId: '1:11481576355:ios:39985c43cc705f38be6016',
     messagingSenderId: '11481576355',
     projectId: 'lele-wise-5f987',
+    databaseURL: 'https://lele-wise-5f987-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'lele-wise-5f987.appspot.com',
-    iosBundleId: 'com.example.lelewiseMobileApps',
+    iosBundleId: 'com.lelewise.lelewiseMobileApps',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -75,6 +78,7 @@ class DefaultFirebaseOptions {
     appId: '1:11481576355:ios:ab7483cc24701300be6016',
     messagingSenderId: '11481576355',
     projectId: 'lele-wise-5f987',
+    databaseURL: 'https://lele-wise-5f987-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'lele-wise-5f987.appspot.com',
     iosBundleId: 'com.example.lelewiseMobileApps.RunnerTests',
   );

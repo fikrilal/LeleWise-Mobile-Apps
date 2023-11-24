@@ -1,19 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lelewise_mobile_apps/view/component/button/navigation_menu.dart';
 import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
-import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
-import 'package:lelewise_mobile_apps/view/page/deteksi/hasil_deteksi.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
-import 'package:lelewise_mobile_apps/view/page/notifikasi/detail_notifikasi.dart';
 import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
-import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
-import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Satoshi'),
-          initialRoute: PakanDashboard.routeName,
+          initialRoute: LoginPage.routeName,
           getPages: [
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
             GetPage(
@@ -39,7 +39,7 @@ class MainApp extends StatelessWidget {
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: NewSchedulePage.routeName!, page: () => HomePage()),
             GetPage(
-                name: PakanDashboard.routeName!, page: () => NavigationMenu())
+                name: LoginPage.routeName!, page: () => LoginPage())
           ],
         );
       },
