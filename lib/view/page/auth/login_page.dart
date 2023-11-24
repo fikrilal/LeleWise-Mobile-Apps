@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
@@ -10,8 +11,12 @@ import 'package:lelewise_mobile_apps/view/component/text/component_textlabel.dar
 import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_textfield.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
+import '../../component/button/navigation_menu.dart';
+
 class LoginPage extends StatefulWidget {
   static String routeName = "/LoginPage";
+
+  const LoginPage({super.key});
   @override
   _LoginPageState createState() => _LoginPageState();
 }

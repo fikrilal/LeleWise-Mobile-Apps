@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,8 +15,6 @@ import '../../component/radio_button/radio_button.dart';
 class PakanDashboard extends StatefulWidget {
   static String? routeName = "/PakanDashboard";
 
-
-
   @override
   _PakanDashboardState createState() => _PakanDashboardState();
 }
@@ -31,6 +30,27 @@ class _PakanDashboardState extends State<PakanDashboard> {
   OpsiPakan selectedOption2 = OpsiPakan(id: 1, name: "100 Gram");
 
   bool _isExpanded = false;
+
+  String realTimeValueJadwal = '0';
+  String realTimeValueBerat = '0';
+
+  final DatabaseReference _tesRef = FirebaseDatabase.instance.ref().child('berat_pakan/1');
+
+  @override
+  void initState() {
+    super.initState();
+    _tesRef.onValue.listen(
+          (event) {
+        setState(() {
+          realTimeValueJadwal = event.snapshot.value.toString();
+        });
+      },
+      onError: (Object error) {
+        print('Errornya mas: $error');
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -114,7 +134,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                 children: [
                                                   Row(
                                                     children: [
-                                                      TextDescriptionSmall("Jadwal pakan berikutnya pukul 12.00 AM"),
+                                                      TextDescriptionSmall("Jadwal pakan berikutnya pukul $realTimeValueJadwal AM"),
                                                     ],
                                                   ),
                                                   SizedBox(height: 10.h),

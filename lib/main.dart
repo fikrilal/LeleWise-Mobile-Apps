@@ -6,6 +6,7 @@ import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
+import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class MainApp extends StatelessWidget {
           theme: ThemeData(fontFamily: 'Satoshi'),
           initialRoute: LoginPage.routeName,
           getPages: [
-            GetPage(name: LoginPage.routeName, page: () => LoginPage()),
+            GetPage(name: LoginPage.routeName, page: () => PakanDashboard()),
             GetPage(name: TestingWidgetPage.routeName!, page: () => NotifikasiPage()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: LoginPage.routeName!, page: () => LoginPage())

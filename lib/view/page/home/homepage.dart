@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/res/dimension/size.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
@@ -14,6 +16,7 @@ import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.d
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
+import '../../../controller/navigation_controller.dart';
 import '../pakan/pakan_new_schedule.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +27,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final MainWrapperController controller = Get.put(MainWrapperController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
