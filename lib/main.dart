@@ -6,7 +6,6 @@ import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
-import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -30,16 +29,9 @@ class MainApp extends StatelessWidget {
           initialRoute: LoginPage.routeName,
           getPages: [
             GetPage(name: LoginPage.routeName, page: () => LoginPage()),
-            GetPage(
-                name: TestingWidgetPage.routeName!,
-                page: () => NotifikasiPage())
-            // ben penak digae ngene ben rapi juga
-            ,
-            GetPage(name: LoginPage.routeName, page: () => LoginPage()),
+            GetPage(name: TestingWidgetPage.routeName!, page: () => NotifikasiPage()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
-            GetPage(name: NewSchedulePage.routeName!, page: () => HomePage()),
-            GetPage(
-                name: LoginPage.routeName!, page: () => LoginPage())
+            GetPage(name: LoginPage.routeName!, page: () => LoginPage())
           ],
         );
       },
