@@ -29,7 +29,8 @@ class _PakanDashboardState extends State<PakanDashboard> {
     OpsiPakan(id: 4, name: "400 Gram"),
   ];
   OpsiPakan selectedOption2 = OpsiPakan(id: 1, name: "100 Gram");
-
+  String _nextFeedingTime  = "";
+  String _beratPakan  = "";
   bool _isExpanded = false;
   final DatabaseReference _databaseReference =
   FirebaseDatabase.instance.reference().child('konfigurasi_pakan');
@@ -42,7 +43,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
     _getDataFromFirebase();
   }
 
-  void _getDataFromFirebase() {
+  Future<void> _getDataFromFirebase() async {
+    final DateTime currentTime = DateTime.now();
+    final String formattedTime = DateFormat('HH:mm').format(currentTime);
+
     _databaseReference.once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
       if (snapshot.value != null) {
@@ -50,15 +54,38 @@ class _PakanDashboardState extends State<PakanDashboard> {
         dataList.forEach((data) {
           String beratPakan = data['berat_pakan'].toString();
           String waktuPakan = data['waktu_pakan'].toString();
-          _dataList.add({
-            'berat_pakan': beratPakan,
-            'waktu_pakan': waktuPakan,
-          });
+
+          if (waktuPakan.compareTo(formattedTime) > 0) {
+            _dataList.add({
+              'berat_pakan': beratPakan,
+              'waktu_pakan': waktuPakan,
+            });
+          }
         });
-        setState(() {});
+
+        _dataList.sort((a, b) {
+          return DateFormat('HH:mm').parse(a['waktu_pakan']).compareTo(DateFormat('HH:mm').parse(b['waktu_pakan']));
+        });
+
+        if (_dataList.isNotEmpty) {
+          setState(() {
+            _nextFeedingTime = _dataList[0]['waktu_pakan'];
+            _beratPakan = _dataList[0]['berat_pakan'];
+          });
+        } else {
+          setState(() {
+            _nextFeedingTime = "";
+            _beratPakan = "";
+          });
+        }
       }
     });
   }
+
+  String getBeratPakan() {
+    return _beratPakan;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +172,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul .. AM"), //LETAKKAN WAKTU TERDEKAT DISINI
+                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul $_nextFeedingTime AM"), //LETAKKAN WAKTU TERDEKAT DISINI
                                                   ],
                                                 ),
                                                 SizedBox(height: 10.h),
@@ -153,7 +180,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    TextPointSmall(".. Gr"), //LETAKKAN BERAT PAKAN DARI WAKTU TERDEKAT DISINI
+                                                    TextPointSmall("$_beratPakan Gr"), //LETAKKAN BERAT PAKAN DARI WAKTU TERDEKAT DISINI
                                                     SizedBox(height: 10.h),
                                                     AnimatedContainer(
                                                       height: _isExpanded == true ? 100.h : 0,
