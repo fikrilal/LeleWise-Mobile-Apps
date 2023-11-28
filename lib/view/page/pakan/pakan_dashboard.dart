@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
@@ -10,6 +11,7 @@ import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dar
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
 
 import '../../component/button/component_primary_btn.dart';
+import '../../component/card/card_pakan.dart';
 import '../../component/radio_button/radio_button.dart';
 
 class PakanDashboard extends StatefulWidget {
@@ -44,23 +46,15 @@ class _PakanDashboardState extends State<PakanDashboard> {
     _databaseReference.once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
       if (snapshot.value != null) {
-        // Perhatikan bahwa snapshot.value sekarang merupakan List<Object?>,
-        // dan kita perlu mengonversinya menjadi List<Map<dynamic, dynamic>>.
         List<Map<dynamic, dynamic>> dataList = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
-
         dataList.forEach((data) {
-          // Mengambil berat_pakan dan waktu_pakan dari setiap data
           String beratPakan = data['berat_pakan'].toString();
           String waktuPakan = data['waktu_pakan'].toString();
-
-          // Menambah data ke dalam list
           _dataList.add({
             'berat_pakan': beratPakan,
             'waktu_pakan': waktuPakan,
           });
         });
-
-        // Mengupdate UI setelah mendapatkan data
         setState(() {});
       }
     });
@@ -151,7 +145,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul AM"),
+                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul .. AM"), //LETAKKAN WAKTU TERDEKAT DISINI
                                                   ],
                                                 ),
                                                 SizedBox(height: 10.h),
@@ -159,7 +153,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    TextPointSmall("100 Gr"),
+                                                    TextPointSmall(".. Gr"), //LETAKKAN BERAT PAKAN DARI WAKTU TERDEKAT DISINI
                                                     SizedBox(height: 10.h),
                                                     AnimatedContainer(
                                                       height: _isExpanded == true ? 100.h : 0,
@@ -341,7 +335,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                     ComponentTextTitle("Jadwal pakan"),
                                     SizedBox(height: 8.h),
                                     for (var data in _dataList)
-                                      _buildPakanCard(data),
+                                      buildPakanCard(data),
                                     SizedBox(height: 32.h),
                                     primaryButton(
                                       text: "+ Jadwal Baru",
@@ -444,91 +438,6 @@ class _PakanDashboardState extends State<PakanDashboard> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPakanCard(Map<String, dynamic> data) {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        decoration: const BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 50,
-            offset: Offset(1, 6),
-            spreadRadius: 0,
-          ),
-        ]),
-        child: Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(
-              color: ListColor.gray100,
-              width: 1,
-            ),
-          ),
-          color: Colors.white,
-          child: Padding(
-            padding: EdgeInsets.all(16.w),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/pagi.svg',
-                          width: 18.w,
-                          height: 18.h,
-                        ),
-                        SizedBox(width: 8.w),
-                        TextDescriptionSmallGreen(
-                          "Pagi • ${data['waktu_pakan']}",
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                              side: const BorderSide(
-                                color: ListColor.gray300,
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            // Tindakan yang akan dijalankan ketika tombol ditekan
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(2.w, 8.h, 2.w, 8.h),
-                            child: TextDescriptionSmallButton("Edit"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 2.h),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextPointAccent("${data['berat_pakan']} Gr"),
-                  ],
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

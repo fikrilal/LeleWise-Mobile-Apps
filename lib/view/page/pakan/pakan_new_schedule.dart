@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/radio_button/radio_button.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
@@ -18,21 +19,34 @@ class NewSchedulePage extends StatefulWidget {
 }
 
 class _NewSchedulePageState extends State<NewSchedulePage> {
-
-
-  List<OpsiPakan> options = [
+  late String currentDate;
+  List<OpsiPakan> pakanOptions = [
     OpsiPakan(id: 1, name: "100 Gram"),
     OpsiPakan(id: 2, name: "200 Gram"),
     OpsiPakan(id: 3, name: "300 Gram"),
     OpsiPakan(id: 4, name: "400 Gram"),
   ];
-  OpsiPakan selectedOption = OpsiPakan(id: 1, name: "100 Gram");
+  OpsiPakan opsiPakan = OpsiPakan(id: 1, name: "100 Gram");
 
-  List<OpsiPengulangan> options2 = [
+  List<OpsiPengulangan> pengulanganOptions = [
     OpsiPengulangan(id: 1, name: "Setiap Hari"),
     OpsiPengulangan(id: 2, name: "Satu Kali"),
   ];
-  OpsiPengulangan selectedOption2 = OpsiPengulangan(id: 1, name: "Setiap Hari");
+  OpsiPengulangan opsiPengulangan = OpsiPengulangan(id: 1, name: "Setiap Hari");
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentDate();
+  }
+
+  void _getCurrentDate() {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('MM-dd-yyyy').format(now);
+    setState(() {
+      currentDate = formattedDate;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +74,16 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           children: [
             Column(
               children: [
-                TimePickerLele(),
+                TimePickerLele(
+                  onTimeSelected: (int hour, int minute, int period) {
+
+                    String formattedHour = hour.toString().padLeft(2, '0');
+                    String formattedMinute = minute.toString().padLeft(2, '0');
+
+                    print('Selected Time: $formattedHour:$formattedMinute $period');
+                  },
+                ),
+
               ],
             ),
             SizedBox(height: 8.h),
@@ -85,18 +108,18 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                   child: Column(
                                     children: [
                                       SizedBox(height: 32.h),
-                                      for (var option in options)
+                                      for (var option in pakanOptions)
                                         InkWell(
                                           onTap: () {
                                             setState(() {
-                                              selectedOption = option;
+                                              opsiPakan = option;
                                             });
                                             Navigator.pop(context); // Tutup ModalBottomSheet
                                           },
                                           child: Container(
                                             padding: EdgeInsets.all(24.h),
                                             decoration: BoxDecoration(
-                                              color: option.id == selectedOption.id ? ListColor.primaryAccent : Colors.transparent,
+                                              color: option.id == opsiPakan.id ? ListColor.primaryAccent : Colors.transparent,
                                             ),
                                             child: Row(
                                               children: [
@@ -104,19 +127,19 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                                   option.name,
                                                 style: TextStyle(
                                                 fontFamily: 'Satoshi',
-                                                fontWeight: option.name == selectedOption.name ? FontWeight.w700 : FontWeight.w500,
+                                                fontWeight: option.name == opsiPakan.name ? FontWeight.w700 : FontWeight.w500,
                                                 height: 1.5,
                                                 fontSize: 18,
-                                                color: option.name == selectedOption.name ? ListColor.primary : ListColor.gray600,
+                                                color: option.name == opsiPakan.name ? ListColor.primary : ListColor.gray600,
                                                 ),
                                                 ),
                                                 Spacer(),
                                                 CustomRadio(
                                                   value: option.id,
-                                                  groupValue: selectedOption.id,
+                                                  groupValue: opsiPakan.id,
                                                   onChanged: (int? value) {
                                                     setState(() {
-                                                      selectedOption = options.firstWhere((opt) => opt.id == value);
+                                                      opsiPakan = pakanOptions.firstWhere((opt) => opt.id == value);
                                                     });
                                                   },
                                                 ),
@@ -147,7 +170,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextDescriptionBoldGreen("${selectedOption.name}"),
+                                  TextDescriptionBoldGreen("${opsiPakan.name}"),
                                   SizedBox(width: 8.w),
                                   SvgPicture.asset(
                                     'assets/icons/right_arrow2.svg',
@@ -178,18 +201,18 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                   child: Column(
                                     children: [
                                       SizedBox(height: 32.h),
-                                      for (var option2 in options2)
+                                      for (var option2 in pengulanganOptions)
                                       InkWell(
                                         onTap: () {
                                           setState(() {
-                                            selectedOption2 = option2;
+                                            opsiPengulangan = option2;
                                           });
                                           Navigator.pop(context);
                                         },
                                         child: Container(
                                           padding: EdgeInsets.all(24.w),
                                           decoration: BoxDecoration(
-                                            color: option2.id == selectedOption2.id ? ListColor.primaryAccent : Colors.transparent,
+                                            color: option2.id == opsiPengulangan.id ? ListColor.primaryAccent : Colors.transparent,
                                           ),
                                           child: Row(
                                             children: [
@@ -197,19 +220,19 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                                 option2.name,
                                                 style: TextStyle(
                                                   fontFamily: 'Satoshi',
-                                                  fontWeight: option2.name == selectedOption2.name ? FontWeight.w700 : FontWeight.w500,
+                                                  fontWeight: option2.name == opsiPengulangan.name ? FontWeight.w700 : FontWeight.w500,
                                                   height: 1.5,
                                                   fontSize: 18,
-                                                  color: option2.name == selectedOption2.name ? ListColor.primary : ListColor.gray600,
+                                                  color: option2.name == opsiPengulangan.name ? ListColor.primary : ListColor.gray600,
                                                 ),
                                               ),
                                               Spacer(),
                                               CustomRadio(
                                                 value: option2.id,
-                                                groupValue: selectedOption2.id,
+                                                groupValue: opsiPengulangan.id,
                                                 onChanged: (int? value) {
                                                   setState(() {
-                                                    selectedOption2 = options2.firstWhere((opt) => opt.id == value);
+                                                    opsiPengulangan = pengulanganOptions.firstWhere((opt) => opt.id == value);
                                                   });
                                                 },
                                               ),
@@ -239,7 +262,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextDescriptionBoldGreen("${selectedOption2.name}"),
+                                  TextDescriptionBoldGreen("${opsiPengulangan.name}"),
                                   SizedBox(width: 8.w),
                                   SvgPicture.asset(
                                     'assets/icons/right_arrow2.svg',

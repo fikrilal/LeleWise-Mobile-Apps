@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 
 class TimePickerLele extends StatefulWidget {
@@ -13,15 +12,29 @@ class TimePickerLele extends StatefulWidget {
 }
 
 class _TimePickerState extends State<TimePickerLele> {
-  int _selectedHour = DateTime.now().hour % 12;
-  int _selectedMinute = DateTime.now().minute;
-  int _selectedPeriod = DateTime.now().hour >= 12 ? 1 : 0; // 0 for AM, 1 for PM
+  late int _selectedHour;
+  late int _selectedMinute;
+  late int _selectedPeriod;
+  late List<String> _hours;
+  late List<String> _minutes;
+  late List<String> _periods;
 
-  final List<String> _hours =
-      List.generate(12, (index) => (index + 1).toString().padLeft(2, '0'));
-  final List<String> _minutes =
-      List.generate(60, (index) => index.toString().padLeft(2, '0'));
-  final List<String> _periods = ['AM', 'PM'];
+  @override
+  void initState() {
+    super.initState();
+    _initializeTime();
+  }
+
+  void _initializeTime() {
+    DateTime currentTime = DateTime.now();
+    _selectedHour = currentTime.hour % 12 == 0 ? 12 : currentTime.hour % 12;
+    _selectedPeriod = currentTime.hour >= 12 ? 1 : 0; // 0 for AM, 1 for PM
+    _selectedMinute = currentTime.minute;
+
+    _hours = List.generate(12, (index) => (index + 1).toString().padLeft(2, '0'));
+    _minutes = List.generate(60, (index) => index.toString().padLeft(2, '0'));
+    _periods = ['AM', 'PM'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +47,20 @@ class _TimePickerState extends State<TimePickerLele> {
             _buildPicker(_periods, _selectedPeriod, (int index) {
               setState(() {
                 _selectedPeriod = index;
-                // widget.onTimeSelected!(
-                //     _selectedPeriod, _selectedMinute, _selectedPeriod);
+                widget.onTimeSelected!(_selectedHour, _selectedMinute, _selectedPeriod);
               });
             }),
-            _buildPicker(_hours, _selectedHour, (int index) {
+            _buildPicker(_hours, _selectedHour - 1, (int index) {
               setState(() {
-                _selectedHour = index;
-
-                // widget.onTimeSelected!(
-                //     _selectedPeriod, _selectedMinute, _selectedPeriod);
+                _selectedHour = index + 1;
+                widget.onTimeSelected!(_selectedHour, _selectedMinute, _selectedPeriod);
               });
             }),
             _buildPicker(_minutes, _selectedMinute, (int index) {
               setState(() {
                 _selectedMinute = index;
-                // widget.onTimeSelected!(
-                //     _selectedPeriod, _selectedMinute, _selectedPeriod);
+                widget.onTimeSelected!(_selectedHour, _selectedMinute, _selectedPeriod);
               });
-              ;
             }),
           ],
         ),
@@ -72,18 +80,14 @@ class _TimePickerState extends State<TimePickerLele> {
         itemExtent: 100.0,
         onSelectedItemChanged: onSelectedItemChanged,
         scrollController:
-            FixedExtentScrollController(initialItem: selectedIndex),
+        FixedExtentScrollController(initialItem: selectedIndex),
         children: options
             .map((item) => Center(
-                    child: Container(
-                  child: TextDescriptionPicker(item,
-                      fontSize: selectedIndex == options.indexOf(item)
-                          ? 36.sp
-                          : 32.sp,
-                      textcolor: selectedIndex == options.indexOf(item)
-                          ? Colors.grey.shade800
-                          : Colors.grey),
-                )))
+            child: Container(
+              child: TextDescriptionPicker(item,
+                  fontSize: 36.sp,
+                  textcolor: Colors.grey.shade800),
+            )))
             .toList(),
       ),
     );
