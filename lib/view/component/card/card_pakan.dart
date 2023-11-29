@@ -7,6 +7,8 @@ import '../text/component_big_point.dart';
 import '../text/component_textsmall.dart';
 
 Widget buildPakanCard(Map<String, dynamic> data) {
+  String waktuPakanNoFilter = data['waktu_pakan'] ?? "";
+  String beratPakanNoFilter = data['berat_pakan'] ?? "";
   return Align(
     alignment: Alignment.center,
     child: Container(
@@ -45,7 +47,7 @@ Widget buildPakanCard(Map<String, dynamic> data) {
                       ),
                       SizedBox(width: 8.w),
                       TextDescriptionSmallGreen(
-                        "Pagi • ${data['waktu_pakan']}",
+                        "Pagi • $waktuPakanNoFilter",
                       ),
                     ],
                   ),
@@ -80,7 +82,7 @@ Widget buildPakanCard(Map<String, dynamic> data) {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextPointAccent("${data['berat_pakan']} Gr"),
+                  TextPointAccent("$beratPakanNoFilter Gr"),
                 ],
               ),
             ],

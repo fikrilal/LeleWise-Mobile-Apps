@@ -36,12 +36,42 @@ class _PakanDashboardState extends State<PakanDashboard> {
   FirebaseDatabase.instance.reference().child('konfigurasi_pakan');
 
   List<Map<String, dynamic>> _dataList = [];
+  List<Map<String, dynamic>> _dataListNoFilter = [];
 
   @override
   void initState() {
     super.initState();
     _getDataFromFirebase();
+    getDataFromFirebaseNoFilter();
   }
+
+  void getDataFromFirebaseNoFilter() {
+    _databaseReference.once().then((DatabaseEvent event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        List<Map<dynamic, dynamic>> dataListNoFilter = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
+        dataListNoFilter.forEach((data) {
+          String beratPakanNoFilter = data['berat_pakan'].toString();
+          String waktuPakanNoFilter = data['waktu_pakan'].toString();
+          _dataListNoFilter.add({
+            'berat_pakan': beratPakanNoFilter,
+            'waktu_pakan': waktuPakanNoFilter,
+          });
+        });
+        setState(() {});
+      }
+    });
+  }
+
+  String getDataNoFilter(String fieldName) {
+    // Assuming you want the first value, you can modify as needed
+    if (_dataListNoFilter.isNotEmpty) {
+      return _dataListNoFilter[0][fieldName] ?? "";
+    } else {
+      return "";
+    }
+  }
+
 
   Future<void> _getDataFromFirebase() async {
     final DateTime currentTime = DateTime.now();
@@ -141,7 +171,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [
-                                    ComponentTextTitle("Pakan Lele"),
+                                    ComponentTextTitle("Jadwal berikutnya"),
                                     SizedBox(height: 8.h),
                                     Align(
                                       alignment: Alignment.center,
@@ -172,7 +202,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul $_nextFeedingTime AM"), //LETAKKAN WAKTU TERDEKAT DISINI
+                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul $_nextFeedingTime AM"),
                                                   ],
                                                 ),
                                                 SizedBox(height: 10.h),
@@ -180,7 +210,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    TextPointSmall("$_beratPakan Gr"), //LETAKKAN BERAT PAKAN DARI WAKTU TERDEKAT DISINI
+                                                    TextPointSmall("$_beratPakan Gr"),
                                                     SizedBox(height: 10.h),
                                                     AnimatedContainer(
                                                       height: _isExpanded == true ? 100.h : 0,
@@ -361,7 +391,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                   children: [
                                     ComponentTextTitle("Jadwal pakan"),
                                     SizedBox(height: 8.h),
-                                    for (var data in _dataList)
+                                    for (var data in _dataListNoFilter)
                                       buildPakanCard(data),
                                     SizedBox(height: 32.h),
                                     primaryButton(
@@ -395,7 +425,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20.w, 23.h, 20.w, 0.h),
+                      padding: EdgeInsets.fromLTRB(20.w, 0.h, 20.w, 0.h),
                       child: Column(
                         children: [
                           Align(
