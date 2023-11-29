@@ -89,7 +89,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                       formattedHour = (hour + 12).toString().padLeft(2, '0');
                     }
 
-                    String selectedTime = '$formattedHour:$formattedMinute';
+                    selectedTime = '$formattedHour:$formattedMinute';
                     print('Selected Time: $selectedTime $period');
                   },
                 ),
@@ -332,9 +332,10 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
 
     // Generate the new key
     String newEntryKey = 'konfigurasi_pakan/$lastId';
-
+    DatabaseReference newEntryRef = _databaseReference.push();
     // Create a map with the data you want to save
     Map<String, dynamic> newData = {
+      '_key': lastId,
       'berat_pakan': opsiPakan.name,
       'pengulangan': opsiPengulangan.name,
       'tanggal': formattedDate,

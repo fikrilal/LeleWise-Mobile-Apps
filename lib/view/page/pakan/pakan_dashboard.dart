@@ -43,7 +43,6 @@ class _PakanDashboardState extends State<PakanDashboard> {
     super.initState();
     _getDataFromFirebase();
     getDataFromFirebaseNoFilter();
-    getDataFromFirebaseTesr();
   }
 
   void getDataFromFirebaseNoFilter() {
@@ -52,31 +51,18 @@ class _PakanDashboardState extends State<PakanDashboard> {
       if (snapshot.value != null) {
         List<Map<dynamic, dynamic>> dataListNoFilter = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
         dataListNoFilter.forEach((data) {
+          String keyNoFilter = data['_key'].toString();
+          String pengulanganNoFilter = data['pengulangan'].toString();
           String beratPakanNoFilter = data['berat_pakan'].toString();
           String waktuPakanNoFilter = data['waktu_pakan'].toString();
           _dataListNoFilter.add({
+            '_key': keyNoFilter,
+            'pengulangan': pengulanganNoFilter,
             'berat_pakan': beratPakanNoFilter,
             'waktu_pakan': waktuPakanNoFilter,
           });
         });
-        setState(() {});
-      }
-    });
-  }
-
-  void getDataFromFirebaseTesr() {
-    _databaseReference.once().then((DatabaseEvent event) {
-      DataSnapshot snapshot = event.snapshot;
-      if (snapshot.value != null) {
-        List<Map<dynamic, dynamic>> dataListNoFilter = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
-        dataListNoFilter.forEach((data) {
-          String beratPakanNoFilter = data['berat_pakan'].toString();
-          String waktuPakanNoFilter = data['waktu_pakan'].toString();
-          _dataList.add({
-            'berat_pakan': beratPakanNoFilter,
-            'waktu_pakan': waktuPakanNoFilter,
-          });
-        });
+        print("Sebelum pengurutan: $_dataListNoFilter");
         setState(() {});
       }
     });
@@ -94,16 +80,19 @@ class _PakanDashboardState extends State<PakanDashboard> {
   Future<void> _getDataFromFirebase() async {
     final DateTime currentTime = DateTime.now();
     final String formattedTime = DateFormat('HH:mm').format(currentTime);
-    print("Sebelum pengurutan: $_dataList");
     _databaseReference.once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
       if (snapshot.value != null) {
         List<Map<dynamic, dynamic>> dataList = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
         dataList.forEach((data) {
+          String key = data['_key'].toString();
+          String pengulangan = data['pengulangan'].toString();
           String beratPakan = data['berat_pakan'].toString();
           String waktuPakan = data['waktu_pakan'].toString();
 
           _dataList.add({
+            '_key': key,
+            'pengulangan': pengulangan,
             'berat_pakan': beratPakan,
             'waktu_pakan': waktuPakan,
           });

@@ -8,6 +8,8 @@ import '../text/component_big_point.dart';
 import '../text/component_textsmall.dart';
 
 Widget buildPakanCard(BuildContext context, Map<String, dynamic> data) {
+  String keyNoFilter = data['_key'] ?? "";
+  String pengulanganNoFilter = data['pengulangan'] ?? "";
   String waktuPakanNoFilter = data['waktu_pakan'] ?? "";
   String beratPakanNoFilter = data['berat_pakan'] ?? "";
   return Align(

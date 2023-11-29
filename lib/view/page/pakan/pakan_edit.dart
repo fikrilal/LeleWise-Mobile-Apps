@@ -37,8 +37,11 @@ class _EditPakanPageState extends State<EditPakanPage> {
   ];
   OpsiPengulangan opsiPengulangan = OpsiPengulangan(id: 1, name: "Setiap Hari");
 
+  late String keyNoFilter;
+  late String pengulanganNoFilter;
   late String beratPakan;
   late String waktuPakan;
+  late String displayPengulanganNoFilter;
   late String displayedBeratPakan;
   late String displayedWaktuPakan;
 
@@ -47,20 +50,27 @@ class _EditPakanPageState extends State<EditPakanPage> {
     super.initState();
     _getCurrentDate();
     _getPassedData();
+    displayPengulanganNoFilter = widget.data['pengulangan'] ?? '';
     displayedBeratPakan = widget.data['berat_pakan'] ?? '';
     displayedWaktuPakan = widget.data['waktu_pakan'] ?? '';
+    opsiPakan = pakanOptions.firstWhere((option) => option.name == displayedBeratPakan);
+    opsiPengulangan = pengulanganOptions.firstWhere((option) => option.name == displayPengulanganNoFilter);
   }
 
   void _getPassedData() {
     // Mendapatkan nilai berat_pakan dan waktu_pakan dari data yang dipassing
+    keyNoFilter = widget.data['_key'] ?? '';
+    pengulanganNoFilter = widget.data['pengulangan'] ?? '';
     beratPakan = widget.data['berat_pakan'] ?? '';
     waktuPakan = widget.data['waktu_pakan'] ?? '';
 
     setState(() {
+      displayPengulanganNoFilter = pengulanganNoFilter;
       displayedBeratPakan = beratPakan;
       displayedWaktuPakan = waktuPakan;
     });
-
+    print('Key: $keyNoFilter');
+    print('Pengulangan: $pengulanganNoFilter');
     print('Berat Pakan: $displayedBeratPakan');
     print('Waktu Pakan: $displayedWaktuPakan');
   }
@@ -124,7 +134,6 @@ class _EditPakanPageState extends State<EditPakanPage> {
                   initialHour: getInitialHour(widget.data['waktu_pakan']),
                   initialMinute: getInitialMinute(widget.data['waktu_pakan']),
                   onTimeSelected: (int hour, int minute, int period) {
-                    // Logika pengolahan waktu pilihan
                     String formattedHour = hour.toString().padLeft(2, '0');
                     String formattedMinute = minute.toString().padLeft(2, '0');
 
@@ -226,7 +235,7 @@ class _EditPakanPageState extends State<EditPakanPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    TextDescriptionBoldGreen("$displayedBeratPakan Gram"), // BERAT PAKAN DARI HASIL PASSING, AKAN BERGANTI JIKA PENGGUNA MEMILIH OPSI BARU
+                                    TextDescriptionBoldGreen("$displayedBeratPakan Gram"),
                                     SizedBox(width: 8.w),
                                     SvgPicture.asset(
                                       'assets/icons/right_arrow2.svg',
@@ -262,6 +271,7 @@ class _EditPakanPageState extends State<EditPakanPage> {
                                             onTap: () {
                                               setState(() {
                                                 opsiPengulangan = option2;
+                                                displayPengulanganNoFilter = '${option2.name}';
                                               });
                                               Navigator.pop(context);
                                             },
@@ -318,7 +328,7 @@ class _EditPakanPageState extends State<EditPakanPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    TextDescriptionBoldGreen("${opsiPengulangan.name}"),
+                                    TextDescriptionBoldGreen("$displayPengulanganNoFilter"),
                                     SizedBox(width: 8.w),
                                     SvgPicture.asset(
                                       'assets/icons/right_arrow2.svg',
@@ -347,7 +357,7 @@ class _EditPakanPageState extends State<EditPakanPage> {
                 child: primaryButton(
                   text: "Simpan",
                   onPressed: () async {
-                    await _saveDataToFirebase();
+                    await _saveDataToFirebase(keyNoFilter);
                     Navigator.pop(context); // This line will navigate back
                   },
                 ),
@@ -359,40 +369,22 @@ class _EditPakanPageState extends State<EditPakanPage> {
     );
   }
 
-  Future<void> _saveDataToFirebase() async {
+  Future<void> _saveDataToFirebase(String keyToUpdate) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('MM-dd-yyyy').format(now);
     String formattedTime = selectedTime;
 
-    // Replace 'konfigurasi_pakan' with your actual path
-    DatabaseReference _databaseReference = FirebaseDatabase.instance.reference().child('konfigurasi_pakan');
+    DatabaseReference _databaseReference = FirebaseDatabase.instance.reference().child('konfigurasi_pakan/konfigurasi_pakan');
 
-    // Get the last auto increment ID
-    int lastId = await _databaseReference.child('/autoIncrement').get().then((DataSnapshot? data) {
-      if (data != null && data.value != null) {
-        return data.value as int;
-      } else {
-        // Handle the case where data is null or the value is not an int
-        return 0; // or any default value you prefer
-      }
-    });
-
-    // Generate the new key
-    String newEntryKey = 'konfigurasi_pakan/$lastId';
-
-    // Create a map with the data you want to save
-    Map<String, dynamic> newData = {
+    Map<String, dynamic> updatedData = {
+      '_key': keyToUpdate,
       'berat_pakan': opsiPakan.name,
       'pengulangan': opsiPengulangan.name,
       'tanggal': formattedDate,
       'waktu_pakan': formattedTime,
     };
 
-    // Save the data to the database under the new key
-    await _databaseReference.child(newEntryKey).set(newData);
-
-    // Increment the auto increment ID
-    await _databaseReference.child('/autoIncrement').set(lastId + 1);
+    await _databaseReference.child(keyToUpdate).update(updatedData);
   }
 
 }
