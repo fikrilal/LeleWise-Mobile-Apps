@@ -3,19 +3,39 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../res/colors/color_libraries.dart';
+import '../../page/pakan/pakan_new_schedule.dart';
 import '../radio_button/radio_button.dart';
 import '../text/component_big_point.dart';
 import '../text/component_desc.dart';
 import '../text/component_textsmall.dart';
 
-Widget buildPakanCard(Map<String, dynamic> data) {
-  String waktuPakanNoFilter = data['waktu_pakan'] ?? "";
-  String beratPakanNoFilter = data['berat_pakan'] ?? "";
-  return Align(
-    alignment: Alignment.center,
-    child: Container(
-      decoration:
-      const BoxDecoration(boxShadow: [
+class PakanCard extends StatefulWidget {
+  List<OpsiPakan> options2 = [
+    OpsiPakan(id: 1, name: "100 Gram"),
+    OpsiPakan(id: 2, name: "200 Gram"),
+    OpsiPakan(id: 3, name: "300 Gram"),
+    OpsiPakan(id: 4, name: "400 Gram"),
+  ];
+  OpsiPakan selectedOption2 = OpsiPakan(id: 1, name: "100 Gram");
+
+  PakanCard({
+    required this.options2,
+    required this.selectedOption2,
+  });
+
+  @override
+  _PakanCardState createState() => _PakanCardState();
+}
+
+class _PakanCardState extends State<PakanCard> {
+  bool _isExpanded = false;
+  String waktuSelanjutnya  = "";
+  String beratSelanjutnya  = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(boxShadow: [
         BoxShadow(
           color: Color(0x0A000000),
           blurRadius: 50,
@@ -26,8 +46,7 @@ Widget buildPakanCard(Map<String, dynamic> data) {
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10),
           side: const BorderSide(
             color: ListColor.gray100,
             width: 1,
@@ -40,7 +59,7 @@ Widget buildPakanCard(Map<String, dynamic> data) {
             children: [
               Row(
                 children: [
-                  TextDescriptionSmall("Jadwal pakan berikutnya pukul $_nextFeedingTime AM"),
+                  TextDescriptionSmall("Jadwal pakan berikutnya pukul $waktuSelanjutnya AM"),
                 ],
               ),
               SizedBox(height: 10.h),
@@ -48,7 +67,7 @@ Widget buildPakanCard(Map<String, dynamic> data) {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextPointSmall("$_beratPakan Gr"),
+                  TextPointSmall("$beratSelanjutnya Gr"),
                   SizedBox(height: 10.h),
                   AnimatedContainer(
                     height: _isExpanded == true ? 100.h : 0,
@@ -59,69 +78,67 @@ Widget buildPakanCard(Map<String, dynamic> data) {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // const Divider(
-                          //   thickness: 0.7
-                          // ),
                           InkWell(
                             onTap: () {
                               showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                    ),
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(16),
+                                    topRight: Radius.circular(16),
                                   ),
-                                  builder: ((context) {
-                                    return IntrinsicHeight(
-                                      child: Container(
-                                        child: Column(
-                                          children: [
-                                            SizedBox(height: 32.h),
-                                            for (var option2 in options2)
-                                              InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    selectedOption2 = option2;
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.all(24.w),
-                                                  decoration: BoxDecoration(
-                                                    color: option2.id == selectedOption2.id ? ListColor.primaryAccent : Colors.transparent,
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      Text(
-                                                        option2.name,
-                                                        style: TextStyle(
-                                                          fontFamily: 'Satoshi',
-                                                          fontWeight: option2.name == selectedOption2.name ? FontWeight.w700 : FontWeight.w500,
-                                                          height: 1.5,
-                                                          fontSize: 18,
-                                                          color: option2.name == selectedOption2.name ? ListColor.primary : ListColor.gray600,
-                                                        ),
+                                ),
+                                builder: ((context) {
+                                  return IntrinsicHeight(
+                                    child: Container(
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: 32.h),
+                                          for (var option2 in widget.options2)
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  widget.selectedOption2 = option2;
+                                                });
+                                                Navigator.pop(context);
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.all(24.w),
+                                                decoration: BoxDecoration(
+                                                  color: option2.id == widget.selectedOption2.id ? ListColor.primaryAccent : Colors.transparent,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      option2.name,
+                                                      style: TextStyle(
+                                                        fontFamily: 'Satoshi',
+                                                        fontWeight: option2.name == widget.selectedOption2.name ? FontWeight.w700 : FontWeight.w500,
+                                                        height: 1.5,
+                                                        fontSize: 18,
+                                                        color: option2.name == widget.selectedOption2.name ? ListColor.primary : ListColor.gray600,
                                                       ),
-                                                      Spacer(),
-                                                      CustomRadio(
-                                                        value: option2.id,
-                                                        groupValue: selectedOption2.id,
-                                                        onChanged: (int? value) {
-                                                          setState(() {
-                                                            selectedOption2 = options2.firstWhere((opt) => opt.id == value);
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                    Spacer(),
+                                                    CustomRadio(
+                                                      value: option2.id,
+                                                      groupValue: widget.selectedOption2.id,
+                                                      onChanged: (int? value) {
+                                                        setState(() {
+                                                          widget.selectedOption2 = widget.options2.firstWhere((opt) => opt.id == value);
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                          ],
-                                        ),
+                                            ),
+                                        ],
                                       ),
-                                    );
-                                  }));
+                                    ),
+                                  );
+                                }),
+                              );
                             },
                             child: Container(
                               decoration: const BoxDecoration(
@@ -140,7 +157,7 @@ Widget buildPakanCard(Map<String, dynamic> data) {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        TextDescriptionBoldGreen("${selectedOption2.name}"),
+                                        TextDescriptionBoldGreen("${widget.selectedOption2.name}"),
                                         SizedBox(width: 8.w),
                                         SvgPicture.asset(
                                           'assets/icons/right_arrow2.svg',
@@ -155,9 +172,6 @@ Widget buildPakanCard(Map<String, dynamic> data) {
                               ),
                             ),
                           ),
-                          // const Divider(
-                          //     thickness: 0.7
-                          // ),
                         ],
                       ),
                     ),
@@ -202,6 +216,16 @@ Widget buildPakanCard(Map<String, dynamic> data) {
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
+}
+
+class OpsiPakan {
+  final int id;
+  final String name;
+
+  OpsiPakan({
+    required this.id,
+    required this.name,
+  });
 }

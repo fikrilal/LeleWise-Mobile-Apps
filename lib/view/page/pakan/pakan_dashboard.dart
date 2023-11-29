@@ -33,7 +33,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
   String _beratPakan  = "";
   bool _isExpanded = false;
   final DatabaseReference _databaseReference =
-  FirebaseDatabase.instance.reference().child('konfigurasi_pakan');
+  FirebaseDatabase.instance.reference().child('konfigurasi_pakan/konfigurasi_pakan');
 
   List<Map<String, dynamic>> _dataList = [];
   List<Map<String, dynamic>> _dataListNoFilter = [];
