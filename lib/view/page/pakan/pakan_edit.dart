@@ -22,7 +22,7 @@ class EditPakanPage extends StatefulWidget {
 
 class _EditPakanPageState extends State<EditPakanPage> {
   late String currentDate;
-  String selectedTime = '';
+  String? selectedTime;
   List<OpsiPakan> pakanOptions = [
     OpsiPakan(id: 1, name: "100"),
     OpsiPakan(id: 2, name: "200"),
@@ -372,7 +372,7 @@ class _EditPakanPageState extends State<EditPakanPage> {
   Future<void> _saveDataToFirebase(String keyToUpdate) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('MM-dd-yyyy').format(now);
-    String formattedTime = selectedTime;
+    String formattedTime = selectedTime ?? widget.data['waktu_pakan'] ?? '';
 
     DatabaseReference _databaseReference = FirebaseDatabase.instance.reference().child('konfigurasi_pakan/konfigurasi_pakan');
 

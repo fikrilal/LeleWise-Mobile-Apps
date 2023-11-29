@@ -22,7 +22,7 @@ class NewSchedulePage extends StatefulWidget {
 
 class _NewSchedulePageState extends State<NewSchedulePage> {
   late String currentDate;
-  String selectedTime = '';
+  String? selectedTime;
   List<OpsiPakan> pakanOptions = [
     OpsiPakan(id: 1, name: "100"),
     OpsiPakan(id: 2, name: "200"),
@@ -315,25 +315,21 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   Future<void> _saveDataToFirebase() async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('MM-dd-yyyy').format(now);
-    String formattedTime = selectedTime;
+    String formattedTime = selectedTime ?? DateFormat('HH:mm').format(now);
 
-    // Replace 'konfigurasi_pakan' with your actual path
     DatabaseReference _databaseReference = FirebaseDatabase.instance.reference().child('konfigurasi_pakan');
 
-    // Get the last auto increment ID
     int lastId = await _databaseReference.child('/autoIncrement').get().then((DataSnapshot? data) {
       if (data != null && data.value != null) {
         return data.value as int;
       } else {
-        // Handle the case where data is null or the value is not an int
-        return 0; // or any default value you prefer
+        return 0;
       }
     });
 
-    // Generate the new key
     String newEntryKey = 'konfigurasi_pakan/$lastId';
     DatabaseReference newEntryRef = _databaseReference.push();
-    // Create a map with the data you want to save
+
     Map<String, dynamic> newData = {
       '_key': lastId,
       'berat_pakan': opsiPakan.name,
@@ -342,10 +338,8 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
       'waktu_pakan': formattedTime,
     };
 
-    // Save the data to the database under the new key
     await _databaseReference.child(newEntryKey).set(newData);
 
-    // Increment the auto increment ID
     await _databaseReference.child('/autoIncrement').set(lastId + 1);
   }
 
