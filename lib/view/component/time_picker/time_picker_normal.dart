@@ -3,22 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 
-class TimePickerLele extends StatefulWidget {
-  final Function(int, int, int)? onTimeSelected;
-  final int initialHour;
-  final int initialMinute;
-
-  TimePickerLele({
-    this.onTimeSelected,
-    required this.initialHour,
-    required this.initialMinute,
-  });
+class TimePickerLeleNormal extends StatefulWidget {
+  Function(int, int, int)? onTimeSelected;
+  TimePickerLeleNormal({this.onTimeSelected});
 
   @override
-  State<TimePickerLele> createState() => _TimePickerState();
+  State<TimePickerLeleNormal> createState() => _TimePickerState();
 }
 
-class _TimePickerState extends State<TimePickerLele> {
+class _TimePickerState extends State<TimePickerLeleNormal> {
   late int _selectedHour;
   late int _selectedMinute;
   late int _selectedPeriod;
@@ -33,9 +26,10 @@ class _TimePickerState extends State<TimePickerLele> {
   }
 
   void _initializeTime() {
-    _selectedHour = widget.initialHour % 12 == 0 ? 12 : widget.initialHour % 12;
-    _selectedPeriod = widget.initialHour >= 12 ? 1 : 0; // 0 for AM, 1 for PM
-    _selectedMinute = widget.initialMinute;
+    DateTime currentTime = DateTime.now();
+    _selectedHour = currentTime.hour % 12 == 0 ? 12 : currentTime.hour % 12;
+    _selectedPeriod = currentTime.hour >= 12 ? 1 : 0; // 0 for AM, 1 for PM
+    _selectedMinute = currentTime.minute;
 
     _hours = List.generate(12, (index) => (index + 1).toString().padLeft(2, '0'));
     _minutes = List.generate(60, (index) => index.toString().padLeft(2, '0'));

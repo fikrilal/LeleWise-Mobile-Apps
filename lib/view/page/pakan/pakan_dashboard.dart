@@ -60,7 +60,6 @@ class _PakanDashboardState extends State<PakanDashboard> {
           });
         });
         setState(() {});
-        print("Sebelum pengurutan: $_dataListNoFilter");
       }
     });
   }
@@ -407,7 +406,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                     ComponentTextTitle("Jadwal pakan"),
                                     SizedBox(height: 8.h),
                                     for (var data in _dataListNoFilter)
-                                      buildPakanCard(data),
+                                      buildPakanCard(context, data),
                                     SizedBox(height: 32.h),
                                     primaryButton(
                                       text: "+ Jadwal Baru",

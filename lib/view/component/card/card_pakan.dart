@@ -3,10 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../res/colors/color_libraries.dart';
+import '../../page/pakan/pakan_edit.dart';
 import '../text/component_big_point.dart';
 import '../text/component_textsmall.dart';
 
-Widget buildPakanCard(Map<String, dynamic> data) {
+Widget buildPakanCard(BuildContext context, Map<String, dynamic> data) {
   String waktuPakanNoFilter = data['waktu_pakan'] ?? "";
   String beratPakanNoFilter = data['berat_pakan'] ?? "";
   return Align(
@@ -67,13 +68,19 @@ Widget buildPakanCard(Map<String, dynamic> data) {
                           ),
                         ),
                         onPressed: () {
-                          // Tindakan yang akan dijalankan ketika tombol ditekan
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditPakanPage(data: data),
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(2.w, 8.h, 2.w, 8.h),
                           child: TextDescriptionSmallButton("Edit"),
                         ),
                       ),
+
                     ],
                   ),
                 ],

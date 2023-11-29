@@ -30,7 +30,6 @@ class MainApp extends StatelessWidget {
           initialRoute: LoginPage.routeName,
           getPages: [
             GetPage(name: LoginPage.routeName, page: () => PakanDashboard()),
-            GetPage(name: TestingWidgetPage.routeName!, page: () => NotifikasiPage()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: LoginPage.routeName!, page: () => LoginPage())
           ],
@@ -40,22 +39,22 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class TestingWidgetPage extends StatefulWidget {
-  static String? routeName = "/testingWidget";
-  @override
-  _TestingWidgetPageState createState() => _TestingWidgetPageState();
-}
-
-class _TestingWidgetPageState extends State<TestingWidgetPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TimePickerLele(),
-      ),
-    );
-  }
-}
+// class TestingWidgetPage extends StatefulWidget {
+//   static String? routeName = "/testingWidget";
+//   @override
+//   _TestingWidgetPageState createState() => _TestingWidgetPageState();
+// }
+//
+// class _TestingWidgetPageState extends State<TestingWidgetPage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: TimePickerLele(),
+//       ),
+//     );
+//   }
+// }
 
 class TemplatePage extends StatefulWidget {
   static String? routeName = "/TemplatePage";

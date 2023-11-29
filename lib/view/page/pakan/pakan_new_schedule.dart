@@ -11,6 +11,7 @@ import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
 import '../../component/button/component_primary_btn.dart';
 import '../../component/time_picker/time_picker.dart';
+import '../../component/time_picker/time_picker_normal.dart';
 
 class NewSchedulePage extends StatefulWidget {
   static String? routeName = "/NewSchedulePage";
@@ -76,7 +77,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           children: [
             Column(
               children: [
-                TimePickerLele(
+                TimePickerLeleNormal(
                   onTimeSelected: (int hour, int minute, int period) {
                     String formattedHour = hour.toString().padLeft(2, '0');
                     String formattedMinute = minute.toString().padLeft(2, '0');
@@ -88,11 +89,10 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                       formattedHour = (hour + 12).toString().padLeft(2, '0');
                     }
 
-                    selectedTime = '$formattedHour:$formattedMinute';
+                    String selectedTime = '$formattedHour:$formattedMinute';
                     print('Selected Time: $selectedTime $period');
                   },
                 ),
-
               ],
             ),
             SizedBox(height: 8.h),
