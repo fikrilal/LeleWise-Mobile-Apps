@@ -43,6 +43,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
     super.initState();
     _getDataFromFirebase();
     getDataFromFirebaseNoFilter();
+    getDataFromFirebaseTesr();
   }
 
   void getDataFromFirebaseNoFilter() {
@@ -54,6 +55,25 @@ class _PakanDashboardState extends State<PakanDashboard> {
           String beratPakanNoFilter = data['berat_pakan'].toString();
           String waktuPakanNoFilter = data['waktu_pakan'].toString();
           _dataListNoFilter.add({
+            'berat_pakan': beratPakanNoFilter,
+            'waktu_pakan': waktuPakanNoFilter,
+          });
+        });
+        setState(() {});
+        print("Sebelum pengurutan: $_dataListNoFilter");
+      }
+    });
+  }
+
+  void getDataFromFirebaseTesr() {
+    _databaseReference.once().then((DatabaseEvent event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        List<Map<dynamic, dynamic>> dataListNoFilter = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
+        dataListNoFilter.forEach((data) {
+          String beratPakanNoFilter = data['berat_pakan'].toString();
+          String waktuPakanNoFilter = data['waktu_pakan'].toString();
+          _dataList.add({
             'berat_pakan': beratPakanNoFilter,
             'waktu_pakan': waktuPakanNoFilter,
           });
@@ -72,11 +92,10 @@ class _PakanDashboardState extends State<PakanDashboard> {
     }
   }
 
-
   Future<void> _getDataFromFirebase() async {
     final DateTime currentTime = DateTime.now();
     final String formattedTime = DateFormat('HH:mm').format(currentTime);
-
+    print("Sebelum pengurutan: $_dataList");
     _databaseReference.once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
       if (snapshot.value != null) {
@@ -85,18 +104,14 @@ class _PakanDashboardState extends State<PakanDashboard> {
           String beratPakan = data['berat_pakan'].toString();
           String waktuPakan = data['waktu_pakan'].toString();
 
-          if (waktuPakan.compareTo(formattedTime) > 0) {
-            _dataList.add({
-              'berat_pakan': beratPakan,
-              'waktu_pakan': waktuPakan,
-            });
-          }
+          _dataList.add({
+            'berat_pakan': beratPakan,
+            'waktu_pakan': waktuPakan,
+          });
         });
-
         _dataList.sort((a, b) {
           return DateFormat('HH:mm').parse(a['waktu_pakan']).compareTo(DateFormat('HH:mm').parse(b['waktu_pakan']));
         });
-
         if (_dataList.isNotEmpty) {
           setState(() {
             _nextFeedingTime = _dataList[0]['waktu_pakan'];
@@ -202,7 +217,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul $_nextFeedingTime AM"),
+                                                    TextDescriptionSmall("Jadwal pakan berikutnya pukul $_nextFeedingTime"),
                                                   ],
                                                 ),
                                                 SizedBox(height: 10.h),
