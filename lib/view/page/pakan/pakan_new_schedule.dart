@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,12 +22,12 @@ class NewSchedulePage extends StatefulWidget {
 class _NewSchedulePageState extends State<NewSchedulePage> {
   late String currentDate;
   List<OpsiPakan> pakanOptions = [
-    OpsiPakan(id: 1, name: "100 Gram"),
-    OpsiPakan(id: 2, name: "200 Gram"),
-    OpsiPakan(id: 3, name: "300 Gram"),
-    OpsiPakan(id: 4, name: "400 Gram"),
+    OpsiPakan(id: 1, name: "100"),
+    OpsiPakan(id: 2, name: "200"),
+    OpsiPakan(id: 3, name: "300"),
+    OpsiPakan(id: 4, name: "400"),
   ];
-  OpsiPakan opsiPakan = OpsiPakan(id: 1, name: "100 Gram");
+  OpsiPakan opsiPakan = OpsiPakan(id: 1, name: "100");
 
   List<OpsiPengulangan> pengulanganOptions = [
     OpsiPengulangan(id: 1, name: "Setiap Hari"),
@@ -76,10 +77,8 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
               children: [
                 TimePickerLele(
                   onTimeSelected: (int hour, int minute, int period) {
-
                     String formattedHour = hour.toString().padLeft(2, '0');
                     String formattedMinute = minute.toString().padLeft(2, '0');
-
                     print('Selected Time: $formattedHour:$formattedMinute $period');
                   },
                 ),
@@ -124,7 +123,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  option.name,
+                                                  '${option.name} Gram',
                                                 style: TextStyle(
                                                 fontFamily: 'Satoshi',
                                                 fontWeight: option.name == opsiPakan.name ? FontWeight.w700 : FontWeight.w500,
@@ -170,7 +169,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextDescriptionBoldGreen("${opsiPakan.name}"),
+                                  TextDescriptionBoldGreen("${opsiPakan.name} Gram"),
                                   SizedBox(width: 8.w),
                                   SvgPicture.asset(
                                     'assets/icons/right_arrow2.svg',
@@ -288,16 +287,44 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(16.w, 24.h, 16.w, 32.h),
-                child: primaryButton(text: "Simpan", onPressed: () async {Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PakanDashboard()),
-                );}),
+                child: primaryButton(
+                  text: "Simpan",
+                  onPressed: () async {
+                    await _saveDataToFirebase();
+                    Navigator.pop(context); // This line will navigate back
+                  },
+                ),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _saveDataToFirebase() async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('MM-dd-yyyy').format(now);
+    String formattedHour = now.hour.toString().padLeft(2, '0');
+    String formattedMinute = now.minute.toString().padLeft(2, '0');
+    String formattedTime = '$formattedHour:$formattedMinute';
+
+    // Replace 'konfigurasi_pakan' with your actual path
+    DatabaseReference _databaseReference = FirebaseDatabase.instance.reference().child('konfigurasi_pakan');
+
+    // Generate a unique key for each entry
+    String? newEntryKey = _databaseReference.push().key;
+
+    // Create a map with the data you want to save
+    Map<String, dynamic> newData = {
+      'berat_pakan': opsiPakan.name,
+      'pengulangan': opsiPengulangan.name,
+      'tanggal': formattedDate,
+      'waktu_pakan': formattedTime,
+    };
+
+    // Save the data to the database under the unique key
+    await _databaseReference.child(newEntryKey!).set(newData);
   }
 }
 
