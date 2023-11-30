@@ -43,6 +43,13 @@ class _PakanDashboardState extends State<PakanDashboard> {
     super.initState();
     _getDataFromFirebase();
     getDataFromFirebaseNoFilter();
+    _updatePakanCard();
+  }
+
+  void _updatePakanCard() {
+    for (var data in _dataListNoFilter)
+      buildPakanCard(context, data);
+    setState(() {});
   }
 
   void getDataFromFirebaseNoFilter() {
@@ -126,6 +133,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 0,
           bottom: const PreferredSize(

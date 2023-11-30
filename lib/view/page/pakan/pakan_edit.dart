@@ -7,6 +7,7 @@ import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/radio_button/radio_button.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
+import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
 import '../../component/button/component_primary_btn.dart';
 import '../../component/time_picker/time_picker.dart';
@@ -358,7 +359,12 @@ class _EditPakanPageState extends State<EditPakanPage> {
                   text: "Simpan",
                   onPressed: () async {
                     await _saveDataToFirebase(keyNoFilter);
-                    Navigator.pop(context); // This line will navigate back
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PakanDashboard(),
+                      ),
+                    ); // This line will navigate back
                   },
                 ),
               ),

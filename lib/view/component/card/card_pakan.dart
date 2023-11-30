@@ -12,6 +12,27 @@ Widget buildPakanCard(BuildContext context, Map<String, dynamic> data) {
   String pengulanganNoFilter = data['pengulangan'] ?? "";
   String waktuPakanNoFilter = data['waktu_pakan'] ?? "";
   String beratPakanNoFilter = data['berat_pakan'] ?? "";
+
+  List<String> timeComponents = waktuPakanNoFilter.split(":");
+  int hour = int.parse(timeComponents[0]);
+  int minute = int.parse(timeComponents[1]);
+
+  String iconPath;
+  String placeholder;
+  if (hour >= 5 && hour < 12) {
+    iconPath = 'assets/icons/sore.svg';
+    placeholder = 'Pagi';
+  } else if (hour >= 12 && hour < 15) {
+    iconPath = 'assets/icons/pagi.svg';
+    placeholder = 'Siang';
+  } else if (hour >= 15 && hour < 18) {
+    iconPath = 'assets/icons/sore.svg';
+    placeholder = 'Sore';
+  } else {
+    iconPath = 'assets/icons/malam.svg';
+    placeholder = 'Malam';
+  }
+
   return Align(
     alignment: Alignment.center,
     child: Container(
@@ -44,13 +65,13 @@ Widget buildPakanCard(BuildContext context, Map<String, dynamic> data) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        'assets/icons/pagi.svg',
+                        iconPath,
                         width: 18.w,
                         height: 18.h,
                       ),
                       SizedBox(width: 8.w),
                       TextDescriptionSmallGreen(
-                        "Pagi • $waktuPakanNoFilter",
+                        "$placeholder • $waktuPakanNoFilter",
                       ),
                     ],
                   ),
@@ -82,7 +103,6 @@ Widget buildPakanCard(BuildContext context, Map<String, dynamic> data) {
                           child: TextDescriptionSmallButton("Edit"),
                         ),
                       ),
-
                     ],
                   ),
                 ],
