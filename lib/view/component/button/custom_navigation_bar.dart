@@ -1,65 +1,28 @@
 // import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:lelewise_mobile_apps/controller/navigation_controller.dart';
-// import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 // import 'package:flutter_hicons/flutter_hicons.dart';
+// import 'package:get/get.dart';
+// import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+//
+// import '../../../controller/navigation_controller.dart';
 //
 // class CustomBottomNavigationBar extends StatelessWidget {
-//   final MainWrapperController controller;
-//
-//   CustomBottomNavigationBar({required this.controller});
+//   final MainWrapperController controller = Get.find();
 //
 //   @override
 //   Widget build(BuildContext context) {
 //     return BottomAppBar(
-//       notchMargin: 10,
 //       elevation: 0,
 //       child: Container(
-//         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-//         child: Obx(
-//               () => Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Expanded(
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     _bottomAppBarItem(context, icon: Hicons.home_3_light_outline, activeIcon: Hicons.home_3_bold, page: 0, label: "Home"),
-//                     _bottomAppBarItem(context, icon: Hicons.drop_light_outline, activeIcon: Hicons.drop_bold, page: 1, label: "Pakan"),
-//                   ],
-//                 ),
-//               ),
-//               Expanded(
-//                 child: Container(
-//                   transform: Matrix4.translationValues(0, -16, 0),
-//                   child: ZoomTapAnimation(
-//                     onTap: () {
-//                       // Add your action when the button is pressed
-//                     },
-//                     child: Transform.scale(
-//                       scale: 2, // Adjust the scale factor as needed
-//                       child: FloatingActionButton(
-//                         mini: true,
-//                         elevation: 0,
-//                         onPressed: () {},
-//                         child: Icon(Icons.add),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     _bottomAppBarItem(context, icon: Hicons.discovery_2_light_outline, activeIcon: Hicons.discovery_2_bold, page: 2, label: "Suhu"),
-//                     _bottomAppBarItem(context, icon: Hicons.virus_light_outline, activeIcon: Hicons.virus_bold, page: 3, label: "pH Air"),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
+//         child: Obx(() => Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             _bottomAppBarItem(context, icon: Hicons.home_3_light_outline, activeIcon: Hicons.home_3_bold, page: 0, label: "Home"),
+//             _bottomAppBarItem(context, icon: Hicons.drop_light_outline, activeIcon: Hicons.drop_bold, page: 1, label: "Pakan"),
+//             _bottomAppBarItem(context, icon: Hicons.voice_square_light_outline, activeIcon: Hicons.voice_square_bold, page: 2, label: "Deteksi"),
+//             _bottomAppBarItem(context, icon: Hicons.discovery_2_light_outline, activeIcon: Hicons.discovery_2_bold, page: 3, label: "Suhu"),
+//             _bottomAppBarItem(context, icon: Hicons.virus_light_outline, activeIcon: Hicons.virus_bold, page: 4, label: "pH Air"),
+//           ],
+//         )),
 //       ),
 //     );
 //   }
@@ -72,10 +35,8 @@
 //         child: Column(
 //           mainAxisSize: MainAxisSize.min,
 //           children: [
-//             Icon(
-//               controller.currentPage.value == page ? activeIcon : icon,
-//               color: controller.currentPage.value == page ? Colors.blue : Colors.grey,
-//             ),
+//             Icon(controller.currentPage.value == page ? activeIcon : icon,
+//                 color: controller.currentPage.value == page ? Colors.blue : Colors.grey),
 //             Text(
 //               label,
 //               style: TextStyle(

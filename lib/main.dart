@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lelewise_mobile_apps/view/component/time_picker/time_picker.dart';
+import 'package:lelewise_mobile_apps/view/component/button/navigation_menu.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
-import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
+import 'controller/navigation_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -14,11 +14,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final MainWrapperController mainController = MainWrapperController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,47 +29,12 @@ class MainApp extends StatelessWidget {
           theme: ThemeData(fontFamily: 'Satoshi'),
           initialRoute: LoginPage.routeName,
           getPages: [
-            GetPage(name: LoginPage.routeName, page: () => PakanDashboard()),
+            GetPage(name: LoginPage.routeName, page: () => NavigationMenu()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: LoginPage.routeName!, page: () => LoginPage())
           ],
         );
       },
-    );
-  }
-}
-
-// class TestingWidgetPage extends StatefulWidget {
-//   static String? routeName = "/testingWidget";
-//   @override
-//   _TestingWidgetPageState createState() => _TestingWidgetPageState();
-// }
-//
-// class _TestingWidgetPageState extends State<TestingWidgetPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: TimePickerLele(),
-//       ),
-//     );
-//   }
-// }
-
-class TemplatePage extends StatefulWidget {
-  static String? routeName = "/TemplatePage";
-  @override
-  _TemplatePageState createState() => _TemplatePageState();
-}
-
-class _TemplatePageState extends State<TemplatePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Iki cuman template page dadi lak pengen gae halaman baru'
-            'kopi kode class TemplatePage terus diganti semisal DashboardPage'),
-      ),
     );
   }
 }
