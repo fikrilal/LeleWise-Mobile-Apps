@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lelewise_mobile_apps/controller/image_upload_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../../../res/colors/color_libraries.dart';
@@ -10,11 +14,14 @@ import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
 
 class DeteksiPage extends StatefulWidget {
-  static String? routeName = "/DeteksiPage";
+  static String routeName = "/DeteksiPage";
   @override
   _DeteksiPageState createState() => _DeteksiPageState();
 }
 class _DeteksiPageState extends State<DeteksiPage> {
+  XFile? pickedFile;
+  ImageUploadService uploadService = ImageUploadService();
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -51,15 +58,17 @@ class _DeteksiPageState extends State<DeteksiPage> {
             ),
           ),
         ),
-        body: TabBarView(
+        body: Stack(
           children: [
-            Container(
-              decoration: const BoxDecoration(color: Colors.white),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+            TabBarView(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                           child: Column(
@@ -99,6 +108,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                   ),
                                 ),
                                 onTap: () {
+                                  takeImage();
                                 },
                               ),
                               SizedBox(height: 32.h),
@@ -106,14 +116,14 @@ class _DeteksiPageState extends State<DeteksiPage> {
                               SizedBox(height: 32.h),
                               Column(
                                 children: [
-                                  GestureDetector(
+                                  InkWell(
                                     child: DottedBorder(
                                       dashPattern: const [8, 8],
                                       color: ListColor.gray300,
                                       borderType: BorderType.RRect,
-                                      radius: Radius.circular(8),
+                                      radius: const Radius.circular(8),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                                         child: Container(
                                           width: double.infinity,
                                           padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
@@ -130,7 +140,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                                   height: 24.h,
                                                 ),
                                                 SizedBox(height: 8.h),
-                                                TextDescription("Upload"),
+                                                TextDescription("Upload Gambar"),
                                                 SizedBox(height: 2.h),
                                                 TextDescriptionSmallTinyW400("*JPG, JPEG, PNG"),
                                               ],
@@ -139,92 +149,144 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                         ),
                                       ),
                                     ),
+                                    onTap: () {
+                                      pickedImage();
+                                    },
                                   ),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                          child: Column(
-                           children: [
-                           ],
-                          ),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                              child: Column(
+                                children: [
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(color: Colors.white),
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    child: Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: const BorderSide(
-                          color: ListColor.gray200,
-                          width: 1,
-                        ),
-                      ),
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(10.w),
-                        child: Row(
-                          children: [
-                            Row(
+                Container(
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: SingleChildScrollView(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        child: Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(
+                              color: ListColor.gray200,
+                              width: 1,
+                            ),
+                          ),
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.all(10.w),
+                            child: Row(
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(
-                                    'assets/icons/lele.jpg',
-                                    width: 80.w,
-                                    height: 80.h,
-                                    fit: BoxFit.fitHeight,
-                                  ),
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/icons/lele.jpg',
+                                        width: 80.w,
+                                        height: 80.h,
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 8.w),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextDescriptionSmallTiny("Selasa 17 October · 12:32"),
+                                    SizedBox(height: 2.h),
+                                    TextDescriptionBold("Lele terjangkit penyakit"),
+                                    SizedBox(height: 8.h),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: ListColor.redAccent,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Padding (
+                                        padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
+                                        child: TextDescriptionSmallBold("Tindakan diperlukan!"),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            SizedBox(width: 8.w),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextDescriptionSmallTiny("Selasa 17 October · 12:32"),
-                                SizedBox(height: 2.h),
-                                TextDescriptionBold("Lele terjangkit penyakit"),
-                                SizedBox(height: 8.h),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: ListColor.redAccent,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Padding (
-                                    padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
-                                    child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
       ),
     );
   }
+
+  pickedImage() async {
+    final picker = ImagePicker();
+    pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    uploadService.uploadImage(pickedFile, context); // Tambahkan context
+    setState(() {});
+  }
+
+  takeImage() async {
+    final picker = ImagePicker();
+    pickedFile = await picker.pickImage(source: ImageSource.camera);
+    uploadService.uploadImage(pickedFile, context); // Tambahkan context
+    setState(() {});
+  }
 }
+
+class ImageUploadService {
+  Future<void> uploadImage(XFile? pickedFile, BuildContext context) async {
+    try {
+      Dio dio = Dio();
+
+      if (pickedFile != null) {
+        FormData formData = FormData.fromMap({
+          'gambarInput': await MultipartFile.fromFile(pickedFile.path, filename: 'image.jpg'),
+        });
+
+        Response response = await dio.post(
+          'https://c9e2-2001-448a-5040-2c48-a456-39dc-90a9-dae9.ngrok-free.app/prediksi_lele',
+          data: formData,
+        );
+
+        if (response.statusCode == 200) {
+          print("Gambar berhasil diunggah");
+          print(response.data);
+          // Alihkan ke halaman HasilDeteksi
+          Navigator.pushNamed(context, '/HasilDeteksi');
+        } else {
+          print("Gambar gagal diunggah. Error: ${response.statusCode}");
+        }
+      } else {
+        // Handle ketika tidak ada file yang dipilih
+      }
+    } catch (error) {
+      print("Error saat upload: $error");
+    }
+  }
+}
+

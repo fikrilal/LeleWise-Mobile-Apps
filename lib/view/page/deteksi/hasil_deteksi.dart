@@ -9,7 +9,7 @@ import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
 
 class HasilDeteksi extends StatefulWidget {
-  static String? routeName = "/TemplatePage";
+  static String routeName = "/HasilDeteksi";
   @override
   _HasilDeteksiState createState() => _HasilDeteksiState();
 }
