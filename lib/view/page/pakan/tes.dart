@@ -103,7 +103,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      ComponentTextTitle("Pakan Lele"),
+                                      ComponentTextTitleCenter("Pakan Lele"),
                                       SizedBox(height: 8.h),
                                       Align(
                                         alignment: Alignment.center,
@@ -322,7 +322,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      ComponentTextTitle("Jadwal pakan"),
+                                      ComponentTextTitleCenter("Jadwal pakan"),
                                       SizedBox(height: 8.h),
                                       Align(
                                         alignment: Alignment.center,

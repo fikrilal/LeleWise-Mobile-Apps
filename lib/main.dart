@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lelewise_mobile_apps/view/component/button/navigation_menu.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
+import 'package:lelewise_mobile_apps/view/page/deteksi/deteksi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 import 'controller/navigation_controller.dart';
@@ -29,7 +30,7 @@ class MainApp extends StatelessWidget {
           theme: ThemeData(fontFamily: 'Satoshi'),
           initialRoute: LoginPage.routeName,
           getPages: [
-            GetPage(name: LoginPage.routeName, page: () => NavigationMenu()),
+            GetPage(name: LoginPage.routeName, page: () => DeteksiPage()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
             GetPage(name: LoginPage.routeName!, page: () => LoginPage())
           ],

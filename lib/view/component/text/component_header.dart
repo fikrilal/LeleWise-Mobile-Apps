@@ -41,6 +41,27 @@ class ComponentTextTitle extends StatelessWidget {
   }
 }
 
+
+class ComponentTextTitleCenter extends StatelessWidget {
+  final String? text;
+
+  ComponentTextTitleCenter(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      textAlign: TextAlign.center,
+      style:  TextStyle(
+        fontFamily: 'Satoshi',
+        fontSize: SizeDimen.sizeTextTitle.sp,
+        color: ListColor.gray700,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
+
 class ComponentTextAppBar extends StatelessWidget {
   final String? text;
 

@@ -302,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column (
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ComponentTextTitle("Pakan Lele"),
+                              ComponentTextTitleCenter("Pakan Lele"),
                               SizedBox(height: 8.h),
                               Align(
                                 alignment: Alignment.center,
@@ -396,7 +396,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Row(
                               children: [
-                                ComponentTextTitle("Riwayat Pakan Lele"),
+                                ComponentTextTitleCenter("Riwayat Pakan Lele"),
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () {
@@ -477,7 +477,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column (
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ComponentTextTitle("Riwayat Deteksi Penyakit"),
+                              ComponentTextTitleCenter("Riwayat Deteksi Penyakit"),
                               SizedBox(height: 16),
                               Align(
                                 alignment: Alignment.center,

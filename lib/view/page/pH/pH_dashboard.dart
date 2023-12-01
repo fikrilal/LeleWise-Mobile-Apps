@@ -103,7 +103,7 @@ class _PHPageState extends State<PHPage> {
                     child: Column (
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ComponentTextTitle("Riwayat pH Air"),
+                        ComponentTextTitleCenter("Riwayat pH Air"),
                         SizedBox(height: 10.h),
                         Align(
                           alignment: Alignment.center,

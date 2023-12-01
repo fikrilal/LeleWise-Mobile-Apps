@@ -84,6 +84,27 @@ class TextDescriptionBold extends StatelessWidget {
   }
 }
 
+class TextDescriptionBold24 extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionBold24(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        fontSize: SizeDimen.sizeTextPointAccent,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
 class TextDescriptionBoldGreen extends StatelessWidget {
   final String? text;
   final Color? textcolor;

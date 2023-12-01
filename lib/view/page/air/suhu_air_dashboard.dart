@@ -103,7 +103,7 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                       child: Column (
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ComponentTextTitle("Riwayat Suhu Air"),
+                          ComponentTextTitleCenter("Riwayat Suhu Air"),
                           SizedBox(height: 10.h),
                           Align( // align kedua
                             alignment: Alignment.center,

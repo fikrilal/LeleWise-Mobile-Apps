@@ -24,6 +24,27 @@ class TextDescriptionSmall extends StatelessWidget {
   }
 }
 
+class TextDescriptionSmallW400 extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionSmallW400(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionSmall,
+        color: ListColor.gray400,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
 class TextDescriptionSmallGreen extends StatelessWidget {
   final String? text;
   final Color? textcolor;
@@ -59,6 +80,27 @@ class TextDescriptionSmallTiny extends StatelessWidget {
         fontWeight: FontWeight.w500,
         height: 1.5,
         fontSize: SizeDimen.textDescriptionTiny,
+        color: ListColor.gray500,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
+class TextDescriptionSmallTinyW400 extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionSmallTinyW400(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionTiny2,
         color: ListColor.gray500,
         overflow: TextOverflow.clip,
       ),

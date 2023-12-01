@@ -182,7 +182,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [
-                                    ComponentTextTitle("Jadwal berikutnya"),
+                                    ComponentTextTitleCenter("Jadwal berikutnya"),
                                     SizedBox(height: 8.h),
                                     Align(
                                       alignment: Alignment.center,
@@ -400,7 +400,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ComponentTextTitle("Jadwal pakan"),
+                                    ComponentTextTitleCenter("Jadwal pakan"),
                                     SizedBox(height: 8.h),
                                     for (var data in _dataListNoFilter)
                                       buildPakanCard(context, data),
