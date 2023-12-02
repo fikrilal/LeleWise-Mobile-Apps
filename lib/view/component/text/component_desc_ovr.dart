@@ -23,3 +23,25 @@ class TextDescriptionOver extends StatelessWidget {
     );
   }
 }
+
+class TextDescriptionCut extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionCut(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        fontSize: SizeDimen.sizeTextAppBar,
+        color: ListColor.gray700,
+        overflow: TextOverflow.ellipsis,
+      ),
+      maxLines: 3,
+    );
+  }
+}

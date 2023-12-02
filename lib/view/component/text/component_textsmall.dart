@@ -187,7 +187,7 @@ class TextDescriptionSmallBold extends StatelessWidget {
         fontFamily: 'Satoshi',
         fontWeight: FontWeight.w700,
         height: 1.5,
-        fontSize: SizeDimen.textDescriptionTiny12,
+        fontSize: SizeDimen.textDescriptionTiny,
         color: ListColor.red,
         overflow: TextOverflow.clip,
       ),

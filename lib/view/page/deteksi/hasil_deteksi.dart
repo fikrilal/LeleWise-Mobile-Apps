@@ -47,18 +47,22 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      'assets/icons/lele.jpg',
-                      width: 80.w,
-                      height: 80.h,
-                      fit: BoxFit.fitHeight,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                      child: Image.asset(
+                        'assets/icons/sample.jpg',
+                        width: double.infinity,
+                        height: 150.h,
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                    SizedBox(height: 20.h),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16.w),
+                          padding: EdgeInsets.all(12.w),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -77,11 +81,7 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  TextDescriptionOver("Lele kamu terjangkit penyakit Diare!"),
-                                ],
-                              ),
+                              TextDescriptionCut("Lele kamu terjangkit penyakit Cotton Wool!"),
                               SizedBox(height: 8.h),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,7 +111,14 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                       thickness: 0.8,
                     ),
                     SizedBox(height: 16.h),
-                    TextDescription("ph air kolam kamu mencapai 19! Kamu perlu mengganti air kolam untuk menjaga kesehatan lele! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextDescriptionBold("Tentang penyakit"),
+                        SizedBox(height: 8.h),
+                        TextDescription("Penyakit Cotton Wool pada lele adalah penyakit yang disebabkan oleh jamur Saprolegnia sp. Jamur ini tumbuh pada jaringan tubuh yang mati atau ikan yang kondisinya lemah. Gejala penyakit ini adalah munculnya benang-benang halus seperti kapas pada tubuh ikan, terutama di bagian yang terdapat luka. Ikan yang terinfeksi penyakit ini akan menjadi lemah dan sering menggosok-gosokkan tubuh pada dasar atau dinding kolam."),
+                      ],
+                    ),
                     SizedBox(height: 16.h),
                     const Divider(
                       color: ListColor.gray200,
@@ -121,9 +128,22 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextDescriptionBold("Tindakan yang diperlukan"),
+                        TextDescriptionBold("Penyebab umum"),
                         SizedBox(height: 8.h),
-                        TextDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+                        TextDescription("Kualitas air yang buruk, terutama suhu air yang rendah dan kandungan oksigen yang rendah. Kepadatan ikan yang tinggi. Ikan yang stres karena kekurangan makanan atau serangan penyakit lain. Luka pada tubuh ikan akibat benturan atau serangan predator."),
+                      ],
+                    ),
+                    const Divider(
+                      color: ListColor.gray200,
+                      thickness: 0.8,
+                    ),
+                    SizedBox(height: 16.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextDescriptionBold("Penanganan"),
+                        SizedBox(height: 8.h),
+                        TextDescription("Untuk mencegah penyakit Cotton Wool pada lele, perlu dilakukan sejumlah tindakan pencegahan yang terfokus pada perawatan kolam. Hal ini melibatkan menjaga kualitas air, seperti mempertahankan suhu antara 28-30 derajat Celcius dan kandungan oksigen pada 5-6 ppm. Selain itu, penting juga untuk menjaga kepadatan ikan sekitar 300 ekor per meter persegi, memberikan pakan berkualitas, dan secara rutin membersihkan kolam dari kotoran serta sisa pakan. Dengan langkah-langkah ini, diharapkan dapat menciptakan lingkungan yang optimal untuk pertumbuhan lele dan mengurangi risiko penyakit dalam populasi ikan."),
                       ],
                     ),
                   ],

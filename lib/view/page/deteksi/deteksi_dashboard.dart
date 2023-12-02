@@ -267,7 +267,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
                           size: 56,
                         ),
                         SizedBox(height: 2.h),
-                        TextDescriptionBoldGreen("Tunggu! AI kami sedang bekerja untukmu"),
+                        TextDescriptionBoldGreen500("Tunggu! AI kami sedang bekerja untukmu"),
                       ],
                     ),
                   ),
