@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lelewise_mobile_apps/controller/image_upload_service.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../../../res/colors/color_libraries.dart';
@@ -21,6 +20,7 @@ class DeteksiPage extends StatefulWidget {
 class _DeteksiPageState extends State<DeteksiPage> {
   XFile? pickedFile;
   ImageUploadService uploadService = ImageUploadService();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +74,13 @@ class _DeteksiPageState extends State<DeteksiPage> {
                           child: Column(
                             children: [
                               SizedBox(height: 8.h),
-                              ComponentTextTitleCenter("Ingin Mendeteksi Penyakit Lele Kamu?"),
+                              ComponentTextTitleCenter(
+                                  "Ingin Mendeteksi Penyakit Lele Kamu?"),
                               SizedBox(height: 32.h),
                               ZoomTapAnimation(
                                 child: Container(
-                                  padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                  padding: EdgeInsets.fromLTRB(
+                                      12.w, 12.h, 12.w, 12.h),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
@@ -94,7 +96,8 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
                                       children: [
                                         SvgPicture.asset(
                                           'assets/icons/Scan.svg',
@@ -123,10 +126,12 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                       borderType: BorderType.RRect,
                                       radius: const Radius.circular(8),
                                       child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8)),
                                         child: Container(
                                           width: double.infinity,
-                                          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                          padding: EdgeInsets.fromLTRB(
+                                              16.w, 16.h, 16.w, 16.h),
                                           decoration: const BoxDecoration(
                                             color: ListColor.gray50,
                                           ),
@@ -140,9 +145,11 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                                   height: 24.h,
                                                 ),
                                                 SizedBox(height: 8.h),
-                                                TextDescription("Upload Gambar"),
+                                                TextDescription(
+                                                    "Upload Gambar"),
                                                 SizedBox(height: 2.h),
-                                                TextDescriptionSmallTinyW400("*JPG, JPEG, PNG"),
+                                                TextDescriptionSmallTinyW400(
+                                                    "*JPG, JPEG, PNG"),
                                               ],
                                             ),
                                           ),
@@ -161,7 +168,8 @@ class _DeteksiPageState extends State<DeteksiPage> {
                         Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                              padding: EdgeInsets.fromLTRB(
+                                  16.w, 16.h, 16.w, 16.h),
                               child: Column(
                                 children: [
                                 ],
@@ -211,18 +219,22 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    TextDescriptionSmallTiny("Selasa 17 October · 12:32"),
+                                    TextDescriptionSmallTiny(
+                                        "Selasa 17 October · 12:32"),
                                     SizedBox(height: 2.h),
-                                    TextDescriptionBold("Lele terjangkit penyakit"),
+                                    TextDescriptionBold(
+                                        "Lele terjangkit penyakit"),
                                     SizedBox(height: 8.h),
                                     Container(
                                       decoration: BoxDecoration(
                                         color: ListColor.redAccent,
                                         borderRadius: BorderRadius.circular(50),
                                       ),
-                                      child: Padding (
-                                        padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
-                                        child: TextDescriptionSmallBold("Tindakan diperlukan!"),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            12.w, 4.h, 12.w, 4.h),
+                                        child: TextDescriptionSmallBold(
+                                            "Tindakan diperlukan!"),
                                       ),
                                     ),
                                   ],
@@ -237,6 +249,42 @@ class _DeteksiPageState extends State<DeteksiPage> {
                 ),
               ],
             ),
+            if (isLoading)
+              Center(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(24, 10, 40, 24), // Add padding around the content
+                  decoration: BoxDecoration(
+                    color: Colors.white, // White background color
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.black.withOpacity(0.1), // Shadow for better visibility
+                    //     spreadRadius: 5,
+                    //     blurRadius: 7,
+                    //     offset: Offset(0, 3),
+                    //   ),
+                    // ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min, // Keep column size to its children size
+                    children: [
+                      LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.blue,
+                        size: 50,
+                      ),
+                      SizedBox(height: 2.h),
+                      const Text(
+                        "Tunggu! AI kami sedang bekerja untukmu",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -246,20 +294,25 @@ class _DeteksiPageState extends State<DeteksiPage> {
   pickedImage() async {
     final picker = ImagePicker();
     pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    uploadService.uploadImage(pickedFile, context); // Tambahkan context
-    setState(() {});
+    setState(() => isLoading = true);
+    await uploadService.uploadImage(pickedFile, context, () =>
+        setState(() =>
+        isLoading = false));
   }
 
   takeImage() async {
+     // Set loading to true
     final picker = ImagePicker();
     pickedFile = await picker.pickImage(source: ImageSource.camera);
-    uploadService.uploadImage(pickedFile, context); // Tambahkan context
-    setState(() {});
+    setState(() => isLoading = true);
+    await uploadService.uploadImage(pickedFile, context, () =>
+        setState(() =>
+        isLoading = false));
   }
 }
 
 class ImageUploadService {
-  Future<void> uploadImage(XFile? pickedFile, BuildContext context) async {
+  Future<void> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
     try {
       Dio dio = Dio();
 
@@ -284,8 +337,10 @@ class ImageUploadService {
       } else {
         // Handle ketika tidak ada file yang dipilih
       }
+      onComplete();
     } catch (error) {
       print("Error saat upload: $error");
+      onComplete();
     }
   }
 }

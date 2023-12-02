@@ -15,7 +15,7 @@ class ImageUploadService {
         });
 
         Response response = await dio.post(
-          'https://c9e2-2001-448a-5040-2c48-a456-39dc-90a9-dae9.ngrok-free.app/prediksi_lele',
+          'https://lelewise.pythonanywhere.com/',
           data: formData,
         );
 
