@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
+import '../../../controller/image_upload_service.dart';
 import '../../../res/colors/color_libraries.dart';
 import '../../component/text/component_desc.dart';
 import '../../component/text/component_header.dart';
@@ -252,39 +253,27 @@ class _DeteksiPageState extends State<DeteksiPage> {
             if (isLoading)
               Center(
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(24, 10, 40, 24), // Add padding around the content
-                  decoration: BoxDecoration(
-                    color: Colors.white, // White background color
-                    borderRadius: BorderRadius.circular(10), // Rounded corners
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.black.withOpacity(0.1), // Shadow for better visibility
-                    //     spreadRadius: 5,
-                    //     blurRadius: 7,
-                    //     offset: Offset(0, 3),
-                    //   ),
-                    // ],
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min, // Keep column size to its children size
-                    children: [
-                      LoadingAnimationWidget.staggeredDotsWave(
-                        color: Colors.blue,
-                        size: 50,
-                      ),
-                      SizedBox(height: 2.h),
-                      const Text(
-                        "Tunggu! AI kami sedang bekerja untukmu",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: ListColor.primary,
+                          size: 56,
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 2.h),
+                        TextDescriptionBoldGreen("Tunggu! AI kami sedang bekerja untukmu"),
+                      ],
+                    ),
                   ),
                 ),
               ),
+
           ],
         ),
       ),
@@ -308,40 +297,6 @@ class _DeteksiPageState extends State<DeteksiPage> {
     await uploadService.uploadImage(pickedFile, context, () =>
         setState(() =>
         isLoading = false));
-  }
-}
-
-class ImageUploadService {
-  Future<void> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
-    try {
-      Dio dio = Dio();
-
-      if (pickedFile != null) {
-        FormData formData = FormData.fromMap({
-          'gambarInput': await MultipartFile.fromFile(pickedFile.path, filename: 'image.jpg'),
-        });
-
-        Response response = await dio.post(
-          'https://c9e2-2001-448a-5040-2c48-a456-39dc-90a9-dae9.ngrok-free.app/prediksi_lele',
-          data: formData,
-        );
-
-        if (response.statusCode == 200) {
-          print("Gambar berhasil diunggah");
-          print(response.data);
-          // Alihkan ke halaman HasilDeteksi
-          Navigator.pushNamed(context, '/HasilDeteksi');
-        } else {
-          print("Gambar gagal diunggah. Error: ${response.statusCode}");
-        }
-      } else {
-        // Handle ketika tidak ada file yang dipilih
-      }
-      onComplete();
-    } catch (error) {
-      print("Error saat upload: $error");
-      onComplete();
-    }
   }
 }
 

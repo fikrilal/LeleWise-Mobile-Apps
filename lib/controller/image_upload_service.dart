@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ImageUploadService {
-  Future<void> uploadImage(XFile? pickedFile, BuildContext context) async {
+  Future<void> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
     try {
       Dio dio = Dio();
 
@@ -15,7 +15,7 @@ class ImageUploadService {
         });
 
         Response response = await dio.post(
-          'https://lelewise.pythonanywhere.com/',
+          'https://59f5-35-224-24-241.ngrok-free.app/upload',
           data: formData,
         );
 
@@ -30,8 +30,10 @@ class ImageUploadService {
       } else {
         // Handle ketika tidak ada file yang dipilih
       }
+      onComplete();
     } catch (error) {
       print("Error saat upload: $error");
+      onComplete();
     }
   }
 }
