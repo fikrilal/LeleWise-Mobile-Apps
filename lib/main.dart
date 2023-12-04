@@ -29,12 +29,13 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(fontFamily: 'Satoshi'),
-          initialRoute: HomePage.routeName,
+          initialRoute: PakanDashboard.routeName,
           getPages: [
+            GetPage(name: PakanDashboard.routeName, page: () => PakanDashboard()),
             GetPage(name: DeteksiPage.routeName, page: () => DeteksiPage()),
             GetPage(name: HasilDeteksi.routeName, page: () => HasilDeteksi()),
             GetPage(name: HomePage.routeName, page: () => HomePage()),
-            GetPage(name: LoginPage.routeName!, page: () => LoginPage())
+            GetPage(name: LoginPage.routeName, page: () => LoginPage())
           ],
         );
       },

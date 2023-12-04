@@ -10,12 +10,13 @@ import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
 
+import '../../../controller/data_pakan/get_data_pakan.dart';
 import '../../component/button/component_primary_btn.dart';
 import '../../component/card/card_pakan.dart';
 import '../../component/radio_button/radio_button.dart';
 
 class PakanDashboard extends StatefulWidget {
-  static String? routeName = "/PakanDashboard";
+  static String routeName = "/PakanDashboard";
 
   @override
   _PakanDashboardState createState() => _PakanDashboardState();
@@ -41,91 +42,35 @@ class _PakanDashboardState extends State<PakanDashboard> {
   @override
   void initState() {
     super.initState();
-    _getDataFromFirebase();
-    getDataFromFirebaseNoFilter();
+    getDataPakan();
+    getDataPakanNoFilter();
     _updatePakanCard();
   }
 
   void _updatePakanCard() {
-    for (var data in _dataListNoFilter)
+    for (var data in _dataListNoFilter) {
       buildPakanCard(context, data);
+    }
     setState(() {});
   }
 
-  void getDataFromFirebaseNoFilter() {
-    _databaseReference.once().then((DatabaseEvent event) {
-      DataSnapshot snapshot = event.snapshot;
-      if (snapshot.value != null) {
-        List<Map<dynamic, dynamic>> dataListNoFilter = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
-        dataListNoFilter.forEach((data) {
-          String keyNoFilter = data['_key'].toString();
-          String pengulanganNoFilter = data['pengulangan'].toString();
-          String beratPakanNoFilter = data['berat_pakan'].toString();
-          String waktuPakanNoFilter = data['waktu_pakan'].toString();
-          _dataListNoFilter.add({
-            '_key': keyNoFilter,
-            'pengulangan': pengulanganNoFilter,
-            'berat_pakan': beratPakanNoFilter,
-            'waktu_pakan': waktuPakanNoFilter,
-          });
-        });
-        print("Sebelum pengurutan: $_dataListNoFilter");
-        setState(() {});
-      }
+  void getDataPakanNoFilter() async {
+    List<Map<String, dynamic>> data = await PakanDataHelper.getDataPakanNoFilter();
+    setState(() {
+      _dataListNoFilter = data;
     });
   }
 
-  String getDataNoFilter(String fieldName) {
-    // Assuming you want the first value, you can modify as needed
-    if (_dataListNoFilter.isNotEmpty) {
-      return _dataListNoFilter[0][fieldName] ?? "";
-    } else {
-      return "";
-    }
-  }
-
-  Future<void> _getDataFromFirebase() async {
-    final DateTime currentTime = DateTime.now();
-    final String formattedTime = DateFormat('HH:mm').format(currentTime);
-    _databaseReference.once().then((DatabaseEvent event) {
-      DataSnapshot snapshot = event.snapshot;
-      if (snapshot.value != null) {
-        List<Map<dynamic, dynamic>> dataList = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
-        dataList.forEach((data) {
-          String key = data['_key'].toString();
-          String pengulangan = data['pengulangan'].toString();
-          String beratPakan = data['berat_pakan'].toString();
-          String waktuPakan = data['waktu_pakan'].toString();
-
-          _dataList.add({
-            '_key': key,
-            'pengulangan': pengulangan,
-            'berat_pakan': beratPakan,
-            'waktu_pakan': waktuPakan,
-          });
-        });
-        _dataList.sort((a, b) {
-          return DateFormat('HH:mm').parse(a['waktu_pakan']).compareTo(DateFormat('HH:mm').parse(b['waktu_pakan']));
-        });
-        if (_dataList.isNotEmpty) {
-          setState(() {
-            _nextFeedingTime = _dataList[0]['waktu_pakan'];
-            _beratPakan = _dataList[0]['berat_pakan'];
-          });
-        } else {
-          setState(() {
-            _nextFeedingTime = "";
-            _beratPakan = "";
-          });
-        }
+  Future<void> getDataPakan() async {
+    List<Map<String, dynamic>> data = await PakanDataHelper.getDataPakan();
+    setState(() {
+      _dataList = data;
+      if (_dataList.isNotEmpty) {
+        _nextFeedingTime = _dataList[0]['waktu_pakan'];
+        _beratPakan = _dataList[0]['berat_pakan'];
       }
     });
   }
-
-  String getBeratPakan() {
-    return _beratPakan;
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +127,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [
-                                    ComponentTextTitleCenter("Jadwal berikutnya"),
+                                    ComponentTextTitle("Jadwal berikutnya"),
                                     SizedBox(height: 8.h),
                                     Align(
                                       alignment: Alignment.center,
@@ -400,7 +345,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ComponentTextTitleCenter("Jadwal pakan"),
+                                    ComponentTextTitle("Jadwal pakan"),
                                     SizedBox(height: 8.h),
                                     for (var data in _dataListNoFilter)
                                       buildPakanCard(context, data),
