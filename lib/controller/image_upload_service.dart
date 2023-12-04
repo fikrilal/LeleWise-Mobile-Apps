@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:intl/intl.dart';
 
 class ImageUploadService {
   Future<void> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
@@ -10,12 +10,21 @@ class ImageUploadService {
       Dio dio = Dio();
 
       if (pickedFile != null) {
+        // Mendapatkan waktu sekarang
+        DateTime now = DateTime.now();
+
+        // Format tanggal dan waktu sesuai dengan kebutuhan
+        String formattedDateTime = DateFormat('ddMMyyyy_HHmmss').format(now);
+
+        // Menyusun nama file sesuai dengan format
+        String fileName = 'image_$formattedDateTime.jpg';
+
         FormData formData = FormData.fromMap({
-          'gambarInput': await MultipartFile.fromFile(pickedFile.path, filename: 'image.jpg'),
+          'gambarInput': await MultipartFile.fromFile(pickedFile.path, filename: fileName),
         });
 
         Response response = await dio.post(
-          'https://59f5-35-224-24-241.ngrok-free.app/upload',
+          'https://970c-34-133-77-80.ngrok-free.app/upload',
           data: formData,
         );
 

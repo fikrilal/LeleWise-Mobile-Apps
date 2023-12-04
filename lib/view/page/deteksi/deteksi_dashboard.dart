@@ -221,7 +221,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextDescriptionSmallTiny(
-                                        "Selasa 17 October · 12:32"),
+                                        "Selasa 17 October · 14:50"),
                                     SizedBox(height: 2.h),
                                     TextDescriptionBold(
                                         "Lele terjangkit penyakit"),

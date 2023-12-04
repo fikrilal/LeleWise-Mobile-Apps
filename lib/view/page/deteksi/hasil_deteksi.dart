@@ -97,7 +97,7 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                                       child: TextDescriptionSmallBold("Tindakan diperlukan!"),
                                     ),
                                   ),
-                                  TextDescriptionSmallTiny400("Hari ini · 12:30"),
+                                  TextDescriptionSmallTiny400("Hari ini · 14:50"),
                                 ],
                               ),
                             ],
