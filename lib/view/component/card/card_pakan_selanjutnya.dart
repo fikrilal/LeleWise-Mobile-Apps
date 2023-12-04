@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,11 +12,13 @@ import '../text/component_textsmall.dart';
 class PakanSelanjutnyaCard extends StatefulWidget {
   final String nextFeedingTime;
   final String beratPakan;
+  final String idkey;
 
   PakanSelanjutnyaCard({
     Key? key,
     required this.nextFeedingTime,
     required this.beratPakan,
+    required this.idkey,
   }) : super(key: key);
 
   @override
@@ -24,15 +27,29 @@ class PakanSelanjutnyaCard extends StatefulWidget {
 
 class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
   bool _isExpanded = false;
+  late String displayedBeratPakan;
+
+  final DatabaseReference _databaseReference =
+  FirebaseDatabase.instance.reference().child('konfigurasi_pakan/konfigurasi_pakan');
 
   List<OpsiPakan> options = [
-    OpsiPakan(id: 1, name: "100 Gram"),
-    OpsiPakan(id: 2, name: "200 Gram"),
-    OpsiPakan(id: 3, name: "300 Gram"),
-    OpsiPakan(id: 4, name: "400 Gram"),
+    OpsiPakan(id: 1, name: "100"),
+    OpsiPakan(id: 2, name: "200"),
+    OpsiPakan(id: 3, name: "300"),
+    OpsiPakan(id: 4, name: "400"),
   ];
-  OpsiPakan selectedOption = OpsiPakan(id: 1, name: "100 Gram");
+  OpsiPakan selectedOption = OpsiPakan(id: 1, name: "100");
 
+  @override
+  void initState() {
+    super.initState();
+    displayedBeratPakan = widget.beratPakan ?? '';
+    selectedOption = options.firstWhere(
+          (option) => option.name == displayedBeratPakan,
+      orElse: () => options.first, // provide a default value, e.g., the first element
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -71,9 +88,6 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // const Divider(
-                        //   thickness: 0.7
-                        // ),
                         InkWell(
                           onTap: () {
                             showModalBottomSheet(
@@ -95,6 +109,7 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                                               onTap: () {
                                                 setState(() {
                                                   selectedOption = option;
+                                                  displayedBeratPakan = '${option.name}';
                                                 });
                                                 Navigator.pop(context);
                                               },
@@ -106,7 +121,7 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                                                 child: Row(
                                                   children: [
                                                     Text(
-                                                      option.name,
+                                                      '${option.name} Gram',
                                                       style: TextStyle(
                                                         fontFamily: 'Satoshi',
                                                         fontWeight: option.name == selectedOption.name ? FontWeight.w700 : FontWeight.w500,
@@ -152,7 +167,7 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      TextDescriptionBoldGreen(selectedOption.name),
+                                      TextDescriptionBoldGreen("$displayedBeratPakan Gram"),
                                       SizedBox(width: 8.w),
                                       SvgPicture.asset(
                                         'assets/icons/right_arrow2.svg',
@@ -167,9 +182,6 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                             ),
                           ),
                         ),
-                        // const Divider(
-                        //     thickness: 0.7
-                        // ),
                       ],
                     ),
                   ),
@@ -193,6 +205,7 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                           setState(() {
                             _isExpanded = false;
                           });
+                          updateFirebaseData();
                         } else {
                           setState(() {
                             _isExpanded = true;
@@ -213,6 +226,19 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
         ),
       ),
     );
+  }
+
+  Future<void> updateFirebaseData() async {
+    try {
+      await _databaseReference
+          .child(widget.idkey)
+          .update({
+        'berat_pakan': selectedOption.name,
+      });
+      print("Data updated successfully");
+    } catch (e) {
+      print("An error occurred while updating data: $e");
+    }
   }
 }
 

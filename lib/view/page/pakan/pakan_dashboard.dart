@@ -1,20 +1,14 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
-import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
-import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_new_schedule.dart';
 
 import '../../../controller/data_pakan/get_data_pakan.dart';
 import '../../component/button/component_primary_btn.dart';
 import '../../component/card/card_pakan.dart';
 import '../../component/card/card_pakan_selanjutnya.dart';
-import '../../component/radio_button/radio_button.dart';
 
 class PakanDashboard extends StatefulWidget {
   static String routeName = "/PakanDashboard";
@@ -26,6 +20,7 @@ class PakanDashboard extends StatefulWidget {
 class _PakanDashboardState extends State<PakanDashboard> {
   String _nextFeedingTime  = "";
   String _beratPakan  = "";
+  String _key  = "";
   List<Map<String, dynamic>> _dataList = [];
   List<Map<String, dynamic>> _dataListNoFilter = [];
 
@@ -56,6 +51,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
     setState(() {
       _dataList = data;
       if (_dataList.isNotEmpty) {
+        _key = _dataList[0]['_key'];
         _nextFeedingTime = _dataList[0]['waktu_pakan'];
         _beratPakan = _dataList[0]['berat_pakan'];
       }
@@ -134,6 +130,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                         child: PakanSelanjutnyaCard(
                                           nextFeedingTime: _nextFeedingTime,
                                           beratPakan: _beratPakan,
+                                          idkey: _key,
                                         )
                                       ),
                                     ),
