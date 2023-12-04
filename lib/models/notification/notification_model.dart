@@ -7,7 +7,7 @@ class NotificationModel {
   final Function(String) onMessagePHUpdate;
   final Function(String) onMessageSuhuUpdate;
 
-  NotificationModel(this.onMessagePHUpdate, this.onMessageSuhuUpdate) {
+  NotificationModel({required this.onMessagePHUpdate, required this.onMessageSuhuUpdate}) {
     _phStream = _getPHandTemperature.getPHStream();
     _phStream.listen(_handlePHChange);
 
@@ -29,9 +29,9 @@ class NotificationModel {
 
   void _handleTemperatureChange(double temperature) {
     String message;
-    if (temperature > 40) {
+    if (temperature > 31.0) {
       message = "Terlalu tinggi";
-    } else if (temperature >= 28 && temperature <= 39) {
+    } else if (temperature >= 26.0 && temperature <= 30.0) {
       message = "Kondisi baik";
     } else {
       message = "Terlalu rendah";

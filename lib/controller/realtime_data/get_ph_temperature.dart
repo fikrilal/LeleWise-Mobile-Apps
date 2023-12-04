@@ -17,7 +17,7 @@ class GetPHandTemperature {
 
   Stream<double> getPHStream() {
     return _databaseReference
-        .child('datafirebase/ph') // Sesuaikan dengan jalur data pH yang tepat di database Anda
+        .child('datafirebase/ph')
         .onValue
         .map((event) {
       final phValue = event.snapshot.value;
@@ -29,12 +29,12 @@ class GetPHandTemperature {
   }
   Stream<double> getTemperatureStream() {
     return _databaseReference
-        .child('datafirebase/temperature') // Sesuaikan dengan jalur data suhu yang tepat di database Anda
+        .child('datafirebase/temperature')
         .onValue
         .map((event) {
       final temperatureValue = event.snapshot.value;
       if (temperatureValue != null) {
-        return double.tryParse(temperatureValue.toString()) ?? 0;
+        return double.tryParse(temperatureValue.toString()) ?? 0.0;
       }
       return 0;
     });

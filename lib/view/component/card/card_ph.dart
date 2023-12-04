@@ -24,7 +24,7 @@ class PHCard extends StatelessWidget {
         textWidget = TextDescriptionAlert(phMessage);
         break;
       case "good":
-        iconPath = 'assets/icons/checklist_icon.svg';
+        iconPath = 'assets/icons/cheklist_icon.svg';
         textWidget = TextDescriptionTiny(phMessage);
         break;
       case "low":
@@ -32,7 +32,7 @@ class PHCard extends StatelessWidget {
         textWidget = TextDescriptionAlert(phMessage);
         break;
       default:
-        iconPath = 'assets/icons/default_icon.svg';
+        iconPath = 'assets/icons/cheklist_icon.svg';
         textWidget = TextDescriptionTiny(phMessage);
     }
 

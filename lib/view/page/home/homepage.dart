@@ -44,23 +44,24 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
+
     getPHandTemperature.getPHStream().listen((newPh) {
       setState(() {
-        ph = newPh;
+        ph = double.parse(newPh.toStringAsFixed(2));
       });
     });
 
     getPHandTemperature.getTemperatureStream().listen((newTemperature) {
       setState(() {
-        suhu = newTemperature;
+        suhu = double.parse(newTemperature.toStringAsFixed(1));
       });
     });
 
+    // Membuat instansi NotificationModel dengan memberikan callback yang sesuai
     NotificationModel(
-          (message) {
+      onMessagePHUpdate: (message) {
         setState(() {
           phMessage = message;
-          // Tentukan phCondition berdasarkan message
           if (message == "Terlalu tinggi") {
             phCondition = "high";
           } else if (message == "Kondisi baik") {
@@ -68,8 +69,11 @@ class _HomePageState extends State<HomePage> {
           } else {
             phCondition = "low";
           }
-          phMessage = message;
-          // Tentukan phCondition berdasarkan message
+        });
+      },
+      onMessageSuhuUpdate: (message) {
+        setState(() {
+          suhuMessage = message;
           if (message == "Terlalu tinggi") {
             suhuCondition = "high";
           } else if (message == "Kondisi baik") {
@@ -79,7 +83,6 @@ class _HomePageState extends State<HomePage> {
           }
         });
       },
-          (message) => setState(() => suhuMessage = message),
     );
   }
 

@@ -24,7 +24,7 @@ class SuhuCard extends StatelessWidget {
         textWidget = TextDescriptionAlert(suhuMessage);
         break;
       case "good":
-        iconPath = 'assets/icons/checklist_icon.svg';
+        iconPath = 'assets/icons/cheklist_icon.svg';
         textWidget = TextDescriptionTiny(suhuMessage);
         break;
       case "low":
@@ -32,7 +32,7 @@ class SuhuCard extends StatelessWidget {
         textWidget = TextDescriptionAlert(suhuMessage);
         break;
       default:
-        iconPath = 'assets/icons/default_icon.svg';
+        iconPath = 'assets/icons/cheklist_icon.svg';
         textWidget = TextDescriptionTiny(suhuMessage);
     }
 
