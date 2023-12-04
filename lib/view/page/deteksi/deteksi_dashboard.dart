@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-import '../../../controller/image_upload_service.dart';
+import '../../../controller/deteksi/image_upload_service.dart';
 import '../../../res/colors/color_libraries.dart';
 import '../../component/text/component_desc.dart';
 import '../../component/text/component_header.dart';

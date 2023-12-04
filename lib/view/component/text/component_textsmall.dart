@@ -217,3 +217,26 @@ class TextDescriptionTiny extends StatelessWidget {
     );
   }
 }
+
+class TextDescriptionAlert extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionAlert(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Text(
+      "${text}",
+      maxLines: 1,
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionTiny,
+        color: ListColor.red,
+        overflow: TextOverflow.clip,
+      ),
+    ),
+    );
+  }
+}

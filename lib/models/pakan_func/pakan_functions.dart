@@ -10,6 +10,7 @@ class PakanFunctions {
       Function setState) {
     databaseReference.once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
+      
       if (snapshot.value != null) {
         List<Map<dynamic, dynamic>> dataListNoFilter =
         List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);

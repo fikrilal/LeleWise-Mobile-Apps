@@ -15,6 +15,31 @@ class GetPHandTemperature {
     }
   }
 
+  Stream<double> getPHStream() {
+    return _databaseReference
+        .child('datafirebase/ph') // Sesuaikan dengan jalur data pH yang tepat di database Anda
+        .onValue
+        .map((event) {
+      final phValue = event.snapshot.value;
+      if (phValue != null) {
+        return double.tryParse(phValue.toString()) ?? 0.0;
+      }
+      return 0.0;
+    });
+  }
+  Stream<int> getTemperatureStream() {
+    return _databaseReference
+        .child('datafirebase/temperature') // Sesuaikan dengan jalur data suhu yang tepat di database Anda
+        .onValue
+        .map((event) {
+      final temperatureValue = event.snapshot.value;
+      if (temperatureValue != null) {
+        return int.tryParse(temperatureValue.toString()) ?? 0;
+      }
+      return 0;
+    });
+  }
+
   Future<String> getDay() async {
     Map<String, dynamic> data = await getDataFromFirebase();
     return data['day'] ?? "";

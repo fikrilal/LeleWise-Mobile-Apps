@@ -18,6 +18,7 @@ import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
 import '../../../controller/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
+import '../../../models/notification/notification_model.dart';
 import '../pakan/pakan_new_schedule.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,23 +33,31 @@ class _HomePageState extends State<HomePage> {
   final MainWrapperController controller = Get.put(MainWrapperController());
   double ph = 0;
   int suhu = 0;
+  String phMessage = "Memuat data pH...";
+  String suhuMessage = "Memuat data suhu...";
 
   @override
   void initState() {
     super.initState();
-    getRealTimeData();
-  }
-
-  void getRealTimeData() async {
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
-
-    double newPh = await getPHandTemperature.getPH();
-    int newSuhu = await getPHandTemperature.getTemperature();
-    setState(() {
-      suhu = newSuhu;
-      ph = newPh;
+    getPHandTemperature.getPHStream().listen((newPh) {
+      setState(() {
+        ph = newPh;
+      });
     });
+
+    getPHandTemperature.getTemperatureStream().listen((newTemperature) {
+      setState(() {
+        suhu = newTemperature;
+      });
+    });
+
+    NotificationModel(
+            (message) => setState(() => phMessage = message),
+            (message) => setState(() => suhuMessage = message)
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                     height: 28.h,
                                   ),
                                   SizedBox(width: 16.w),
-                                  TextDescriptionOver("Lele kamu dalam keadaan baik!")
+                                  TextDescriptionOver("notificationMessage")
                                 ],
                               ),
                             ),
@@ -216,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                                                     height: 20.h,
                                                   ),
                                                   SizedBox(width: 8.w),
-                                                  TextDescriptionTiny("Kondisi baik")
+                                                  TextDescriptionTiny(phMessage)
                                                 ],
                                               ),
                                             ],
@@ -287,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                                                     height: 20.h,
                                                   ),
                                                   SizedBox(width: 8.w),
-                                                  TextDescriptionTiny("Kondisi baik")
+                                                  TextDescriptionTiny(suhuMessage)
                                                 ],
                                               ),
                                             ],
