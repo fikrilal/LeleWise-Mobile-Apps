@@ -6,34 +6,34 @@ import '../../../res/colors/color_libraries.dart';
 import '../text/component_big_point.dart';
 import '../text/component_textsmall.dart';
 
-class PHCard extends StatelessWidget {
-  final double ph;
-  final String phMessage;
-  final String phCondition;
+class SuhuCard extends StatelessWidget {
+  final double suhu;
+  final String suhuMessage;
+  final String suhuCondition;
 
-  PHCard({Key? key, required this.ph, required this.phMessage, required this.phCondition}) : super(key: key);
+  SuhuCard({Key? key, required this.suhu, required this.suhuMessage, required this.suhuCondition}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String iconPath;
     Widget textWidget;
 
-    switch (phCondition) {
+    switch (suhuCondition) {
       case "high":
         iconPath = 'assets/icons/alert.svg';
-        textWidget = TextDescriptionAlert(phMessage);
+        textWidget = TextDescriptionAlert(suhuMessage);
         break;
       case "good":
         iconPath = 'assets/icons/checklist_icon.svg';
-        textWidget = TextDescriptionTiny(phMessage);
+        textWidget = TextDescriptionTiny(suhuMessage);
         break;
       case "low":
         iconPath = 'assets/icons/alert.svg';
-        textWidget = TextDescriptionAlert(phMessage);
+        textWidget = TextDescriptionAlert(suhuMessage);
         break;
       default:
         iconPath = 'assets/icons/default_icon.svg';
-        textWidget = TextDescriptionTiny(phMessage);
+        textWidget = TextDescriptionTiny(suhuMessage);
     }
 
     return Container(
@@ -61,7 +61,7 @@ class PHCard extends StatelessWidget {
             children: [
               Row( //row pertama
                 children: [
-                  TextDescriptionSmall("pH Air"),
+                  TextDescriptionSmall("Suhu Air"),
                   Spacer(),
                   SvgPicture.asset(
                     'assets/icons/arrow_btn.svg',
@@ -74,7 +74,7 @@ class PHCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextPointSmall("$ph"),
+                  TextPointSmall("$suhu"),
                   SizedBox(height: 10.h),
                   Row(
                     children: [

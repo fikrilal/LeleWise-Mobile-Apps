@@ -19,6 +19,8 @@ import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 import '../../../controller/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
+import '../../component/card/card_ph.dart';
+import '../../component/card/card_suhu.dart';
 import '../pakan/pakan_new_schedule.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,9 +34,11 @@ class _HomePageState extends State<HomePage> {
 
   final MainWrapperController controller = Get.put(MainWrapperController());
   double ph = 0;
-  int suhu = 0;
+  double suhu = 0;
   String phMessage = "Memuat data pH...";
   String suhuMessage = "Memuat data suhu...";
+  String phCondition = "unknown";
+  String suhuCondition = "unknown";
 
   @override
   void initState() {
@@ -53,11 +57,31 @@ class _HomePageState extends State<HomePage> {
     });
 
     NotificationModel(
-            (message) => setState(() => phMessage = message),
-            (message) => setState(() => suhuMessage = message)
+          (message) {
+        setState(() {
+          phMessage = message;
+          // Tentukan phCondition berdasarkan message
+          if (message == "Terlalu tinggi") {
+            phCondition = "high";
+          } else if (message == "Kondisi baik") {
+            phCondition = "good";
+          } else {
+            phCondition = "low";
+          }
+          phMessage = message;
+          // Tentukan phCondition berdasarkan message
+          if (message == "Terlalu tinggi") {
+            suhuCondition = "high";
+          } else if (message == "Kondisi baik") {
+            suhuCondition = "good";
+          } else {
+            suhuCondition = "low";
+          }
+        });
+      },
+          (message) => setState(() => suhuMessage = message),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -177,64 +201,7 @@ class _HomePageState extends State<HomePage> {
                                     MaterialPageRoute(builder: (context) => PHPage()),
                                   );
                                 },
-                                child: Container(
-                                  decoration: const BoxDecoration(boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0x0A000000),
-                                      blurRadius: 50,
-                                      offset: Offset(1, 6),
-                                      spreadRadius: 0,
-                                    ),
-                                  ]),
-                                  child: Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: const BorderSide(
-                                        color: ListColor.gray100,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16.w),
-                                      child: Column(
-                                        children: [
-                                          Row( //row pertama
-                                            children: [
-                                              TextDescriptionSmall("pH Air"),
-                                              Spacer(),
-                                              SvgPicture.asset(
-                                                'assets/icons/arrow_btn.svg',
-                                                width: 20.w,
-                                                height: 20.h,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10.h),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              TextPointSmall("$ph"),
-                                              SizedBox(height: 10.h),
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/icons/cheklist_icon.svg',
-                                                    width: 20.w,
-                                                    height: 20.h,
-                                                  ),
-                                                  SizedBox(width: 8.w),
-                                                  TextDescriptionTiny(phMessage)
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                child: PHCard(ph: ph, phMessage: phMessage, phCondition: phCondition),
                               )
                             ),
                             ),
@@ -248,64 +215,7 @@ class _HomePageState extends State<HomePage> {
                                     MaterialPageRoute(builder: (context) => SuhuAirPage()),
                                   );
                                 },
-                                child: Container(
-                                  decoration: const BoxDecoration(boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0x0A000000),
-                                      blurRadius: 50,
-                                      offset: Offset(1, 6),
-                                      spreadRadius: 0,
-                                    ),
-                                  ]),
-                                  child: Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: const BorderSide(
-                                        color: ListColor.gray100,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16.w),
-                                      child: Column(
-                                        children: [
-                                          Row( //row pertama
-                                            children: [
-                                              TextDescriptionSmall("Suhu air"),
-                                              Spacer(),
-                                              SvgPicture.asset(
-                                                'assets/icons/arrow_btn.svg',
-                                                width: 20.w,
-                                                height: 20.h,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10.h),
-                                          Column( // row kedua
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              TextPointSmall("$suhu°C"),
-                                              SizedBox(height: 10.h),
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/icons/cheklist_icon.svg',
-                                                    width: 20.w,
-                                                    height: 20.h,
-                                                  ),
-                                                  SizedBox(width: 8.w),
-                                                  TextDescriptionTiny(suhuMessage)
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                child: SuhuCard(suhu: suhu, suhuMessage: suhuMessage, suhuCondition: suhuCondition),
                               ),
                             ),
                             ),

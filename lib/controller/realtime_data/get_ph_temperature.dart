@@ -27,14 +27,14 @@ class GetPHandTemperature {
       return 0.0;
     });
   }
-  Stream<int> getTemperatureStream() {
+  Stream<double> getTemperatureStream() {
     return _databaseReference
         .child('datafirebase/temperature') // Sesuaikan dengan jalur data suhu yang tepat di database Anda
         .onValue
         .map((event) {
       final temperatureValue = event.snapshot.value;
       if (temperatureValue != null) {
-        return int.tryParse(temperatureValue.toString()) ?? 0;
+        return double.tryParse(temperatureValue.toString()) ?? 0;
       }
       return 0;
     });
@@ -65,7 +65,7 @@ class GetPHandTemperature {
     return data['status_kondisi'] ?? "";
   }
 
-  Future<int> getTemperature() async {
+  Future<double> getTemperature() async {
     Map<String, dynamic> data = await getDataFromFirebase();
     return data['temperature'] ?? "";
   }

@@ -3,7 +3,7 @@ import '../../controller/realtime_data/get_ph_temperature.dart';
 class NotificationModel {
   final GetPHandTemperature _getPHandTemperature = GetPHandTemperature();
   late final Stream<double> _phStream;
-  late final Stream<int> _temperatureStream;
+  late final Stream<double> _temperatureStream;
   final Function(String) onMessagePHUpdate;
   final Function(String) onMessageSuhuUpdate;
 
@@ -27,7 +27,7 @@ class NotificationModel {
     onMessagePHUpdate(message);
   }
 
-  void _handleTemperatureChange(int temperature) {
+  void _handleTemperatureChange(double temperature) {
     String message;
     if (temperature > 40) {
       message = "Terlalu tinggi";

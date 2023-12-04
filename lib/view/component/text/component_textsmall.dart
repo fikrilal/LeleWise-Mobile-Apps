@@ -233,7 +233,7 @@ class TextDescriptionAlert extends StatelessWidget {
         fontWeight: FontWeight.w500,
         height: 1.5,
         fontSize: SizeDimen.textDescriptionTiny,
-        color: ListColor.red,
+        color: ListColor.orange,
         overflow: TextOverflow.clip,
       ),
     ),

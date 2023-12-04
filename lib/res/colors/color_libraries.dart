@@ -18,4 +18,5 @@ class ListColor {
   static const primaryAccent = Color(0x1E0A9830);
   static const redAccent = Color(0x33EB5757);
   static const red = Color(0xFFEB5757);
+  static const orange = Color(0xFFFF5A1F);
 }
