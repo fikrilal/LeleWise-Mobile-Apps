@@ -74,7 +74,7 @@ class SuhuCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextPointSmall("$suhu"),
+                  TextPointSmall("$suhu°C"),
                   SizedBox(height: 10.h),
                   Row(
                     children: [

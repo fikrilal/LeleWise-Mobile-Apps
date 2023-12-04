@@ -21,6 +21,7 @@ import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
 import '../../component/card/card_ph.dart';
 import '../../component/card/card_suhu.dart';
+import '../../component/card/notification_card.dart';
 import '../pakan/pakan_new_schedule.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,51 +40,58 @@ class _HomePageState extends State<HomePage> {
   String suhuMessage = "Memuat data suhu...";
   String phCondition = "unknown";
   String suhuCondition = "unknown";
+  String universalMessage = "Memuat data...";
 
   @override
   void initState() {
     super.initState();
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
 
+    final notificationModel = NotificationModel(
+        onMessagePHUpdate: (message) {
+          setState(() {
+            phMessage = message;
+            if (message == "Terlalu tinggi") {
+              phCondition = "high";
+            } else if (message == "Kondisi baik") {
+              phCondition = "good";
+            } else {
+              phCondition = "low";
+            }
+          });
+        },
+        onMessageSuhuUpdate: (message) {
+          setState(() {
+            suhuMessage = message;
+            if (message == "Terlalu tinggi") {
+              suhuCondition = "high";
+            } else if (message == "Kondisi baik") {
+              suhuCondition = "good";
+            } else {
+              suhuCondition = "low";
+            }
+          });
+        },
+        onUniversalMessageUpdate: (message) {
+          setState(() => universalMessage = message);
+        }
+    );
+
     getPHandTemperature.getPHStream().listen((newPh) {
+      double formattedPh = double.parse(newPh.toStringAsFixed(2));
       setState(() {
-        ph = double.parse(newPh.toStringAsFixed(2));
+        ph = formattedPh;
       });
+      notificationModel.handlePHChange(formattedPh);
     });
 
     getPHandTemperature.getTemperatureStream().listen((newTemperature) {
+      double formattedTemperature = double.parse(newTemperature.toStringAsFixed(1));
       setState(() {
-        suhu = double.parse(newTemperature.toStringAsFixed(1));
+        suhu = formattedTemperature;
       });
+      notificationModel.handleTemperatureChange(formattedTemperature);
     });
-
-    // Membuat instansi NotificationModel dengan memberikan callback yang sesuai
-    NotificationModel(
-      onMessagePHUpdate: (message) {
-        setState(() {
-          phMessage = message;
-          if (message == "Terlalu tinggi") {
-            phCondition = "high";
-          } else if (message == "Kondisi baik") {
-            phCondition = "good";
-          } else {
-            phCondition = "low";
-          }
-        });
-      },
-      onMessageSuhuUpdate: (message) {
-        setState(() {
-          suhuMessage = message;
-          if (message == "Terlalu tinggi") {
-            suhuCondition = "high";
-          } else if (message == "Kondisi baik") {
-            suhuCondition = "good";
-          } else {
-            suhuCondition = "low";
-          }
-        });
-      },
-    );
   }
 
   @override
@@ -110,30 +118,7 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(builder: (context) => NotifikasiPage()),
                             );
                           },
-                          child: Card(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: const BorderSide(
-                                color: ListColor.gray300,
-                                width: 1,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/ai_icon.svg',
-                                    width: 28.w,
-                                    height: 28.h,
-                                  ),
-                                  SizedBox(width: 16.w),
-                                  TextDescriptionOver("notificationMessage")
-                                ],
-                              ),
-                            ),
-                          ),
+                          child: NotificationCard(message: universalMessage),
                         ),
                         SizedBox(height: 8.h),
                         Align(

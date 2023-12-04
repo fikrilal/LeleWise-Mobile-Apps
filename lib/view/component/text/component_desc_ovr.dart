@@ -20,6 +20,7 @@ class TextDescriptionOver extends StatelessWidget {
         color: ListColor.gray600,
         overflow: TextOverflow.ellipsis,
       ),
+      maxLines: 1,
     );
   }
 }
@@ -42,6 +43,50 @@ class TextDescriptionCut extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       maxLines: 3,
+    );
+  }
+}
+
+class TextDescriptionOverGood extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionOverGood(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescription,
+        color: ListColor.primary,
+        overflow: TextOverflow.ellipsis,
+      ),
+      maxLines: 1,
+    );
+  }
+}
+
+class TextDescriptionOverAlert extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescriptionOverAlert(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescription,
+        color: ListColor.orange,
+        overflow: TextOverflow.ellipsis,
+      ),
+      maxLines: 1,
     );
   }
 }
