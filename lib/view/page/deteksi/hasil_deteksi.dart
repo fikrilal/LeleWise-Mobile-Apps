@@ -115,25 +115,23 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  //TAMPILKAN KONDISI DISINI
                                   TextDescriptionCut("Lele kamu terjangkit penyakit Cotton Wool!"),
-                                  TextDescriptionCut(selectedHistory.condition),
+                                  // TextDescriptionCut(selectedHistory.condition),
                                   SizedBox(height: 8.h),
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: ListColor.redAccent,
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Padding (
-                                          padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
-                                          child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                        ),
-                                      ),
-                                      // TAMPILKAN WAKTU DISINI
+                                      // Container(
+                                      //   decoration: BoxDecoration(
+                                      //     color: ListColor.redAccent,
+                                      //     borderRadius: BorderRadius.circular(50),
+                                      //   ),
+                                      //   child: Padding (
+                                      //     padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
+                                      //     child: TextDescriptionSmallBold("Tindakan diperlukan!"),
+                                      //   ),
+                                      // ),
                                       TextDescriptionSmallTiny400("${selectedHistory.date} · ${selectedHistory.time}"),
                                     ],
                                   ),
