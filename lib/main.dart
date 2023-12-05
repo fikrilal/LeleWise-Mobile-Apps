@@ -28,6 +28,7 @@ class MainApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(fontFamily: 'Satoshi'),
           initialRoute: PakanDashboard.routeName,
           getPages: [

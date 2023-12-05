@@ -104,7 +104,6 @@ class _EditPakanPageState extends State<EditPakanPage> {
     return DateTime.now().minute;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +116,7 @@ class _EditPakanPageState extends State<EditPakanPage> {
             Navigator.of(context).pop();
           },
         ),
-        title: ComponentTextAppBar("Jadwal Baru"),
+        title: ComponentTextAppBar("Edit Jadwal"),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(1.0),
           child: Container(

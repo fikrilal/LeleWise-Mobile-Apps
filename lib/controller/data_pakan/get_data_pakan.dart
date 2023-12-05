@@ -57,6 +57,4 @@ class PakanDataHelper {
       return [];
     }
   }
-
-// Tambahkan fungsi lainnya jika diperlukan
 }
