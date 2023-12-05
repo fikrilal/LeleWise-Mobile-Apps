@@ -9,14 +9,14 @@ Widget primaryButton({
   return ElevatedButton(
     onPressed: onPressed,
     style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xff0A9830), // Warna latar belakang tombol
+      backgroundColor: const Color(0xff0A9830),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(60),
       ),
-      minimumSize: Size(double.infinity, 0), // Lebar mengikuti parent
+      minimumSize: Size(double.infinity, 0),
       padding: const EdgeInsets.symmetric(
-          vertical: 16), // Padding atas dan bawah sebesar 16
-      elevation: 0, // Menghilangkan shadow
+          vertical: 16),
+      elevation: 0,
     ),
     child: Text(
       text,
@@ -24,7 +24,7 @@ Widget primaryButton({
         color: Colors.white,
         fontSize: 18,
         fontFamily: 'Satoshi',
-        fontWeight: FontWeight.w600, // Warna teks pada tombol
+        fontWeight: FontWeight.w600,
       ),
     ),
   );
@@ -37,7 +37,7 @@ Widget secondaryButton({
   return ElevatedButton(
     onPressed: onPressed,
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
         side: const BorderSide(
@@ -45,7 +45,7 @@ Widget secondaryButton({
           width: 1,
         ),
       ),
-      minimumSize: Size(double.infinity, 0), // Lebar mengikuti parent
+      minimumSize: Size(double.infinity, 0),
       padding: const EdgeInsets.symmetric(
           vertical: 12),
       elevation: 0,

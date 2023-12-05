@@ -209,7 +209,7 @@ class TextDescriptionTiny extends StatelessWidget {
         fontFamily: 'Satoshi',
         fontWeight: FontWeight.w500,
         height: 1.5,
-        fontSize: SizeDimen.textDescriptionTiny,
+        fontSize: SizeDimen.textDescriptionTiny13,
         color: ListColor.primary,
         overflow: TextOverflow.clip,
       ),

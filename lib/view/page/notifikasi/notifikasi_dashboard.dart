@@ -96,29 +96,9 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            children: [
-                                              TextDescriptionOver("pH air kolam kamu tinggi!"),
-                                            ],
-                                          ),
-                                          SizedBox(height: 8.h),
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: ListColor.redAccent,
-                                                  borderRadius: BorderRadius.circular(50),
-                                                ),
-                                                child: Padding (
-                                                  padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
-                                                  child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                                ),
-                                              ),
-                                              TextDescriptionSmallTiny400("Hari ini · 12:30"),
-                                            ],
-                                          ),
+                                          TextDescriptionOver("pH air kolam kamu tinggi!"),
+                                          SizedBox(height: 4.h),
+                                          TextDescriptionSmallTiny400("Hari ini · 12:30"),
                                         ],
                                       ),
                                     ),

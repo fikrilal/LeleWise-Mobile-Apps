@@ -14,6 +14,7 @@ import '../../../res/colors/color_libraries.dart';
 import '../../component/text/component_desc.dart';
 import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
+import 'hasil_deteksi.dart';
 
 class DeteksiPage extends StatefulWidget {
   const DeteksiPage({super.key});
@@ -44,6 +45,16 @@ class _DeteksiPageState extends State<DeteksiPage> {
     String url = await FirebaseStorage.instance.ref('image_history/$imageName').getDownloadURL();
     return url;
   }
+
+  void navigateToHasilDeteksi(DetectionHistory selectedHistory) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HasilDeteksi(history: selectedHistory),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -221,85 +232,90 @@ class _DeteksiPageState extends State<DeteksiPage> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             DetectionHistory history = snapshot.data![index];
-                            return Column(
-                              children: [
-                                Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(
-                                      color: ListColor.gray200,
-                                      width: 1,
+                            return InkWell(
+                              onTap: () {
+                                navigateToHasilDeteksi(history);
+                              },
+                              child: Column(
+                                children: [
+                                  Card(
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: const BorderSide(
+                                        color: ListColor.gray200,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10.w),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: FutureBuilder<String>(
+                                              future: getImageUrl(history.imageName),
+                                              builder: (BuildContext context, AsyncSnapshot<String> imageSnapshot) {
+                                                if (imageSnapshot.connectionState == ConnectionState.waiting) {
+                                                  return const CircularProgressIndicator();
+                                                } else if (imageSnapshot.hasError) {
+                                                  print('Error loading image: ${imageSnapshot.error}');
+                                                  return const Icon(Icons.error);
+                                                } else if (!imageSnapshot.hasData) {
+                                                  return const Text('No image data');
+                                                } else {
+                                                  return Image.network(
+                                                    imageSnapshot.data!,
+                                                    width: 80.w,
+                                                    height: 80.h,
+                                                    fit: BoxFit.fitHeight,
+                                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                                      if (loadingProgress == null) {
+                                                        return child;
+                                                      } else {
+                                                        return const CircularProgressIndicator(
+                                                          valueColor:
+                                                          AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                                        );
+                                                      }
+                                                    },
+                                                  );
+                                                }
+                                              },
+                              
+                                            ),
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                TextDescriptionSmallTiny("${history.date} · ${history.time}"),
+                                                SizedBox(height: 2.h),
+                                                TextDescriptionBold(history.condition),
+                                                SizedBox(height: 8.h),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    color: ListColor.redAccent,
+                                                    borderRadius: BorderRadius.circular(50),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.fromLTRB(
+                                                        12.w, 4.h, 12.w, 4.h),
+                                                    child: TextDescriptionSmallBold("Tindakan diperlukan!"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10.w),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: FutureBuilder<String>(
-                                            future: getImageUrl(history.imageName),
-                                            builder: (BuildContext context, AsyncSnapshot<String> imageSnapshot) {
-                                              if (imageSnapshot.connectionState == ConnectionState.waiting) {
-                                                return const CircularProgressIndicator();
-                                              } else if (imageSnapshot.hasError) {
-                                                print('Error loading image: ${imageSnapshot.error}');
-                                                return const Icon(Icons.error);
-                                              } else if (!imageSnapshot.hasData) {
-                                                return const Text('No image data');
-                                              } else {
-                                                return Image.network(
-                                                  imageSnapshot.data!,
-                                                  width: 80.w,
-                                                  height: 80.h,
-                                                  fit: BoxFit.fitHeight,
-                                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                    if (loadingProgress == null) {
-                                                      return child;
-                                                    } else {
-                                                      return const CircularProgressIndicator(
-                                                        valueColor:
-                                                        AlwaysStoppedAnimation<Color>(ListColor.primary),
-                                                      );
-                                                    }
-                                                  },
-                                                );
-                                              }
-                                            },
-
-                                          ),
-                                        ),
-                                        SizedBox(width: 8.w),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              TextDescriptionSmallTiny("${history.date} · ${history.time}"),
-                                              SizedBox(height: 2.h),
-                                              TextDescriptionBold(history.condition),
-                                              SizedBox(height: 8.h),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: ListColor.redAccent,
-                                                  borderRadius: BorderRadius.circular(50),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      12.w, 4.h, 12.w, 4.h),
-                                                  child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 4.h),
-                              ],
+                                  SizedBox(height: 4.h),
+                                ],
+                              ),
                             );
                           },
                         );

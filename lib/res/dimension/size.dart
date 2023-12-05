@@ -11,6 +11,7 @@ class SizeDimen{
   static double sizeTextPointSmall = 32;
   static double sizeTextPointAccent= 24;
   static double textDescriptionTiny12 = 12.0;
+  static double textDescriptionTiny13 = 13.0;
 
 
 }
