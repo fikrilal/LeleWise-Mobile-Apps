@@ -14,7 +14,8 @@ import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
 
 class DeteksiPage extends StatefulWidget {
-  static String routeName = "/DeteksiPage";
+  const DeteksiPage({super.key});
+
   @override
   _DeteksiPageState createState() => _DeteksiPageState();
 }

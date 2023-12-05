@@ -51,7 +51,7 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
 
   Future<List<OpsiPakan>> _fetchOptions() async {
     // harusnya pake waktu yang aktual dari database
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: 10));
     return options;
   }
 
@@ -75,18 +75,19 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
                   width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
-                      child: Column(
-                        children: [
-                          const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(ListColor.primary),
-                          ),
-                          SizedBox(height: 4.h),
-                          TextDescriptionSmall("Sedang memuat data.."),
-                        ],
-                      ),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                    child: Column(
+                      children: [
+                        const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(ListColor.primary),
+                        ),
+                        SizedBox(height: 4.h),
+                        TextDescriptionSmall("Sedang memuat data.."),
+                      ],
                     ),
+                  ),
                 );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');

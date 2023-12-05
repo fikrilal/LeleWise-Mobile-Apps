@@ -11,16 +11,16 @@ import '../../component/card/card_pakan.dart';
 import '../../component/card/card_pakan_selanjutnya.dart';
 
 class PakanDashboard extends StatefulWidget {
-  static String routeName = "/PakanDashboard";
+  const PakanDashboard({super.key});
 
   @override
-  _PakanDashboardState createState() => _PakanDashboardState();
+  PakanDashboardState createState() => PakanDashboardState();
 }
 
-class _PakanDashboardState extends State<PakanDashboard> {
-  String _nextFeedingTime  = "";
-  String _beratPakan  = "";
-  String _key  = "";
+class PakanDashboardState extends State<PakanDashboard> {
+  String _nextFeedingTime = "";
+  String _beratPakan = "";
+  String _key = "";
   List<Map<String, dynamic>> _dataList = [];
   List<Map<String, dynamic>> _dataListNoFilter = [];
 
@@ -40,7 +40,8 @@ class _PakanDashboardState extends State<PakanDashboard> {
   }
 
   void getDataPakanNoFilter() async {
-    List<Map<String, dynamic>> data = await PakanDataHelper.getDataPakanNoFilter();
+    List<Map<String, dynamic>> data =
+        await PakanDataHelper.getDataPakanNoFilter();
     setState(() {
       _dataListNoFilter = data;
     });
@@ -108,18 +109,16 @@ class _PakanDashboardState extends State<PakanDashboard> {
                           padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                           child: Column(
                             children: [
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    ComponentTextTitle("Jadwal berikutnya"),
-                                    SizedBox(height: 8.h),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ComponentTextTitle("Jadwal berikutnya"),
+                                  SizedBox(height: 8.h),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
                                         decoration:
-                                        const BoxDecoration(boxShadow: [
+                                            const BoxDecoration(boxShadow: [
                                           BoxShadow(
                                             color: Color(0x0A000000),
                                             blurRadius: 50,
@@ -131,11 +130,9 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                           nextFeedingTime: _nextFeedingTime,
                                           beratPakan: _beratPakan,
                                           idkey: _key,
-                                        )
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                        )),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -152,30 +149,23 @@ class _PakanDashboardState extends State<PakanDashboard> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ComponentTextTitle("Jadwal pakan"),
-                                    SizedBox(height: 8.h),
-                                    for (var data in _dataListNoFilter)
-                                      buildPakanCard(context, data),
-                                    SizedBox(height: 32.h),
-                                    primaryButton(
-                                      text: "+ Jadwal Baru",
-                                      onPressed: () async {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                NewSchedulePage(),
-                                          ),
-                                        );
-                                      },
+                              ComponentTextTitle("Jadwal pakan"),
+                              SizedBox(height: 8.h),
+                              for (var data in _dataListNoFilter)
+                                buildPakanCard(context, data),
+                              SizedBox(height: 32.h),
+                              primaryButton(
+                                text: "+ Jadwal Baru",
+                                onPressed: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NewSchedulePage(),
                                     ),
-                                  ],
-                                ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -235,7 +225,7 @@ class _PakanDashboardState extends State<PakanDashboard> {
                                         ),
                                         TableCell(
                                           verticalAlignment:
-                                          TableCellVerticalAlignment.middle,
+                                              TableCellVerticalAlignment.middle,
                                           child: Padding(
                                             padding: EdgeInsets.only(
                                               bottom: 24.h,

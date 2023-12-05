@@ -14,7 +14,7 @@ import '../../component/time_picker/time_picker.dart';
 import '../../component/time_picker/time_picker_normal.dart';
 
 class NewSchedulePage extends StatefulWidget {
-  static String? routeName = "/NewSchedulePage";
+  const NewSchedulePage({super.key});
 
   @override
   _NewSchedulePageState createState() => _NewSchedulePageState();

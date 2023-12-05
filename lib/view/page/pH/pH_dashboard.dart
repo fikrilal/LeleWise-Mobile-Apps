@@ -10,7 +10,8 @@ import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dar
 import '../../component/text/component_desc_ovr.dart';
 
 class PHPage extends StatefulWidget {
-  static String? routeName = "/TemplatePage";
+  const PHPage({super.key});
+
   @override
   _PHPageState createState() => _PHPageState();
 }

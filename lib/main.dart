@@ -8,7 +8,7 @@ import 'package:lelewise_mobile_apps/view/page/deteksi/deteksi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/deteksi/hasil_deteksi.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
-import 'controller/navigation_controller.dart';
+import 'controller/navigation/navigation_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,24 +20,16 @@ void main() async {
 }
 
 class MainApp extends StatelessWidget {
-  final MainWrapperController mainController = MainWrapperController();
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       minTextAdapt: true,
       builder: (context, child) {
-        return GetMaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(fontFamily: 'Satoshi'),
-          initialRoute: PakanDashboard.routeName,
-          getPages: [
-            GetPage(name: PakanDashboard.routeName, page: () => PakanDashboard()),
-            GetPage(name: DeteksiPage.routeName, page: () => DeteksiPage()),
-            GetPage(name: HasilDeteksi.routeName, page: () => HasilDeteksi()),
-            GetPage(name: HomePage.routeName, page: () => HomePage()),
-            GetPage(name: LoginPage.routeName, page: () => LoginPage())
-          ],
+          routerConfig: NavigationController.router,
         );
       },
     );

@@ -16,16 +16,16 @@ import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.d
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
-import '../../../controller/navigation_controller.dart';
+import '../../../controller/navigation/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
 import '../../component/card/card_ph.dart';
 import '../../component/card/card_suhu.dart';
 import '../../component/card/notification_card.dart';
-import '../pakan/pakan_new_schedule.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
-  static String routeName = "/HomePage";
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -33,7 +33,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final MainWrapperController controller = Get.put(MainWrapperController());
   double ph = 0;
   double suhu = 0;
   String phMessage = "Memuat data pH...";
