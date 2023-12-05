@@ -38,6 +38,7 @@ dependencies:
   weather: ^3.1.1
   cached_network_image: ^3.3.0
   sliding_clipped_nav_bar: ^3.1.0+4
+  firebase_storage: ^11.5.3
 
 dev_dependencies:
   flutter_test:

@@ -51,7 +51,7 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
 
   Future<List<OpsiPakan>> _fetchOptions() async {
     // harusnya pake waktu yang aktual dari database
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 3));
     return options;
   }
 

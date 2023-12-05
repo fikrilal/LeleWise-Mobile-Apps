@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../../../controller/deteksi/image_upload_service.dart';
 import '../../../res/colors/color_libraries.dart';
 import '../../component/text/component_desc.dart';
@@ -23,6 +25,25 @@ class _DeteksiPageState extends State<DeteksiPage> {
   XFile? pickedFile;
   ImageUploadService uploadService = ImageUploadService();
   bool isLoading = false;
+
+  Future<List<DetectionHistory>> fetchHistory() async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_deteksi');
+    DatabaseEvent event = await ref.once();
+    List<DetectionHistory> histories = [];
+
+    if (event.snapshot.value != null) {
+      Map<dynamic, dynamic> values = Map.from(event.snapshot.value as Map);
+      values.forEach((key, value) {
+        histories.add(DetectionHistory.fromMap(value));
+      });
+    }
+    return histories;
+  }
+
+  Future<String> getImageUrl(String imageName) async {
+    String url = await FirebaseStorage.instance.ref('image_history/$imageName').getDownloadURL();
+    return url;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +96,6 @@ class _DeteksiPageState extends State<DeteksiPage> {
                           padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                           child: Column(
                             children: [
-                              SizedBox(height: 8.h),
                               ComponentTextTitleCenter(
                                   "Ingin Mendeteksi Penyakit Lele Kamu?"),
                               SizedBox(height: 32.h),
@@ -167,86 +187,124 @@ class _DeteksiPageState extends State<DeteksiPage> {
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  16.w, 16.h, 16.w, 16.h),
-                              child: Column(
-                                children: [
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.all(16),
                   decoration: const BoxDecoration(color: Colors.white),
-                  child: SingleChildScrollView(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        child: Card(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(
-                              color: ListColor.gray200,
-                              width: 1,
-                            ),
-                          ),
-                          color: Colors.white,
+                  child: FutureBuilder<List<DetectionHistory>>(
+                    future: fetchHistory(),
+                    builder: (BuildContext context, AsyncSnapshot<List<DetectionHistory>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container(
+                          width: double.infinity,
                           child: Padding(
-                            padding: EdgeInsets.all(10.w),
-                            child: Row(
+                            padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+                            child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        'assets/icons/lele.jpg',
-                                        width: 80.w,
-                                        height: 80.h,
-                                        fit: BoxFit.fitHeight,
-                                      ),
-                                    ),
-                                  ],
+                                const CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(ListColor.primary),
                                 ),
-                                SizedBox(width: 8.w),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextDescriptionSmallTiny(
-                                        "Selasa 17 October · 14:50"),
-                                    SizedBox(height: 2.h),
-                                    TextDescriptionBold(
-                                        "Lele terjangkit penyakit"),
-                                    SizedBox(height: 8.h),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: ListColor.redAccent,
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            12.w, 4.h, 12.w, 4.h),
-                                        child: TextDescriptionSmallBold(
-                                            "Tindakan diperlukan!"),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                SizedBox(height: 4.h),
+                                TextDescriptionSmall("Sedang memuat data.."),
                               ],
                             ),
                           ),
-                        ),
-                      ),
-                    ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            DetectionHistory history = snapshot.data![index];
+                            return Column(
+                              children: [
+                                Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: const BorderSide(
+                                      color: ListColor.gray200,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10.w),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: FutureBuilder<String>(
+                                            future: getImageUrl(history.imageName),
+                                            builder: (BuildContext context, AsyncSnapshot<String> imageSnapshot) {
+                                              if (imageSnapshot.connectionState == ConnectionState.waiting) {
+                                                return const CircularProgressIndicator();
+                                              } else if (imageSnapshot.hasError) {
+                                                print('Error loading image: ${imageSnapshot.error}');
+                                                return const Icon(Icons.error);
+                                              } else if (!imageSnapshot.hasData) {
+                                                return const Text('No image data');
+                                              } else {
+                                                return Image.network(
+                                                  imageSnapshot.data!,
+                                                  width: 80.w,
+                                                  height: 80.h,
+                                                  fit: BoxFit.fitHeight,
+                                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                                    if (loadingProgress == null) {
+                                                      return child;
+                                                    } else {
+                                                      return const CircularProgressIndicator(
+                                                        valueColor:
+                                                        AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                                      );
+                                                    }
+                                                  },
+                                                );
+                                              }
+                                            },
+
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              TextDescriptionSmallTiny("${history.date} · ${history.time}"),
+                                              SizedBox(height: 2.h),
+                                              TextDescriptionBold(history.condition),
+                                              SizedBox(height: 8.h),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: ListColor.redAccent,
+                                                  borderRadius: BorderRadius.circular(50),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      12.w, 4.h, 12.w, 4.h),
+                                                  child: TextDescriptionSmallBold("Tindakan diperlukan!"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 4.h),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
@@ -301,3 +359,25 @@ class _DeteksiPageState extends State<DeteksiPage> {
   }
 }
 
+class DetectionHistory {
+  final String time;
+  final String condition;
+  final String imageName;
+  final String date;
+
+  DetectionHistory({
+    required this.time,
+    required this.condition,
+    required this.imageName,
+    required this.date,
+  });
+
+  factory DetectionHistory.fromMap(Map<dynamic, dynamic> data) {
+    return DetectionHistory(
+      time: data['jam'] ?? '',
+      condition: data['kondisi'] ?? '',
+      imageName: data['nama_gambar'] ?? '',
+      date: data['tanggal'] ?? '',
+    );
+  }
+}
