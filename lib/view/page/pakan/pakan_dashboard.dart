@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
@@ -9,6 +10,7 @@ import '../../../controller/data_pakan/get_data_pakan.dart';
 import '../../component/button/component_primary_btn.dart';
 import '../../component/card/card_pakan.dart';
 import '../../component/card/card_pakan_selanjutnya.dart';
+import '../../component/text/component_textsmall.dart';
 
 class PakanDashboard extends StatefulWidget {
   const PakanDashboard({super.key});
@@ -197,52 +199,83 @@ class PakanDashboardState extends State<PakanDashboard> {
                                   spreadRadius: 0,
                                 ),
                               ]),
-                              child: Table(
-                                border: const TableBorder(
-                                  horizontalInside: BorderSide(
-                                    width: 1.0,
-                                    color: ListColor.gray200,
-                                  ),
-                                  bottom: BorderSide(
-                                    width: 1.0,
-                                    color: ListColor.gray200,
-                                  ),
-                                ),
-                                children: [
-                                  for (var item in dataArray)
-                                    TableRow(
-                                      children: [
-                                        TableCell(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              bottom: 24.h,
-                                              top: 24.h,
-                                            ),
-                                            child: TextDescription(
-                                              item["name"] ?? "",
-                                            ),
-                                          ),
-                                        ),
-                                        TableCell(
-                                          verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              bottom: 24.h,
-                                              top: 24.h,
-                                            ),
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
+                              child: FutureBuilder<List<Map<String, String>>>(
+                                future: PakanDataHelper.fetchRiwayatPakanData(),
+                                builder: (BuildContext context, AsyncSnapshot<List<Map<String, String>>> snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return SizedBox(
+                                      width: double.infinity,
+                                      child: Padding(
+                                      padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                                      child: Column(
+                                        children: [
+                                          const CircularProgressIndicator(
+                                          valueColor:
+                                          AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                           ),
+                                          SizedBox(height: 4.h),
+                                        TextDescriptionSmall("Sedang memuat data.."),
+                                      ],
+                                    ),
+                                      ),
+                                    );
+                                  }
+                                  if (snapshot.hasError) {
+                                    return Center(child: Text("Error: ${snapshot.error}"));
+                                  }
+                                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                    return Center(child: Text("No data available"));
+                                  }
+
+                                  return Table(
+                                    border: const TableBorder(
+                                      horizontalInside: BorderSide(
+                                        width: 1.0,
+                                        color: ListColor.gray200,
+                                      ),
+                                      bottom: BorderSide(
+                                        width: 1.0,
+                                        color: ListColor.gray200,
+                                      ),
+                                    ),
+                                    children: snapshot.data!
+                                        .map(
+                                          (item) => TableRow(
+                                        children: [
+                                          TableCell(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                bottom: 24.h,
+                                                top: 24.h,
+                                              ),
                                               child: TextDescription(
-                                                item["date"] ?? "",
+                                                item["name"] ?? "",
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                ],
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                bottom: 24.h,
+                                                top: 24.h,
+                                              ),
+                                              child: Align(
+                                                alignment: Alignment.centerRight,
+                                                child: TextDescription(
+                                                  item["date"] ?? "",
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                        .toList(),
+                                  );
+                                },
                               ),
+
                             ),
                           ),
                         ],

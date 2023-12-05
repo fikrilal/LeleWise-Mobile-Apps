@@ -57,4 +57,21 @@ class PakanDataHelper {
       return [];
     }
   }
+
+  static Future<List<Map<String, String>>> fetchRiwayatPakanData() async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_pakan');
+    DatabaseEvent event = await ref.once();
+    List<Map<String, String>> dataList = [];
+
+    if (event.snapshot.value != null) {
+      Map<dynamic, dynamic> values = Map.from(event.snapshot.value as Map);
+      values.forEach((key, value) {
+        dataList.add({
+          "name": "${value['berat_pakan']} Gr",
+          "date": "${value['tanggal']} • ${value['waktu_pakan']}"
+        });
+      });
+    }
+    return dataList;
+  }
 }
