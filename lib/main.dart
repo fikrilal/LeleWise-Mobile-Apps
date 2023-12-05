@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lelewise_mobile_apps/view/component/button/navigation_menu.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/deteksi/deteksi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/deteksi/hasil_deteksi.dart';

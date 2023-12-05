@@ -36,19 +36,29 @@ class _MainWrapperState extends State<MainWrapper> {
         height: double.infinity,
         child: widget.navigationShell,
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        child: Padding(
-          padding: EdgeInsets.only(left: 5.w, right: 5.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _bottomAppBarItem(Hicons.home_3_light_outline, Hicons.home_3_bold, 'Home', 0),
-              _bottomAppBarItem(Hicons.drop_light_outline, Hicons.drop_bold, 'Pakan', 1),
-              _bottomAppBarItem(Hicons.voice_square_light_outline, Hicons.voice_square_bold, 'Deteksi', 2),
-              _bottomAppBarItem(Hicons.discovery_2_light_outline, Hicons.discovery_2_bold, 'Suhu', 3),
-              _bottomAppBarItem(Hicons.virus_light_outline, Hicons.virus_bold, 'pH Air', 4),
-            ],
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: ListColor.gray200, // Color of the border
+              width: 1.0, // Thickness of the border
+            ),
+          ),
+        ),
+        child: BottomAppBar(
+          elevation: 0,
+          child: Padding(
+            padding: EdgeInsets.only(left: 5.w, right: 5.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _bottomAppBarItem(Hicons.home_3_light_outline, Hicons.home_3_bold, 'Home', 0),
+                _bottomAppBarItem(Hicons.drop_light_outline, Hicons.drop_bold, 'Pakan', 1),
+                _bottomAppBarItem(Hicons.voice_square_light_outline, Hicons.voice_square_bold, 'Deteksi', 2),
+                _bottomAppBarItem(Hicons.discovery_2_light_outline, Hicons.discovery_2_bold, 'Suhu', 3),
+                _bottomAppBarItem(Hicons.virus_light_outline, Hicons.virus_bold, 'pH Air', 4),
+              ],
+            ),
           ),
         ),
       ),
@@ -71,6 +81,7 @@ class _MainWrapperState extends State<MainWrapper> {
               selectedIndex == page ? activeIcon : icon,
               color: selectedIndex == page ? ListColor.primary : ListColor.gray400,
             ),
+            SizedBox(height: 2.h),
             Text(
               label,
               style: TextStyle(

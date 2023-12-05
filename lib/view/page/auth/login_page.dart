@@ -11,8 +11,6 @@ import 'package:lelewise_mobile_apps/view/component/text/component_textlabel.dar
 import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_textfield.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
-import '../../component/button/navigation_menu.dart';
-
 class LoginPage extends StatefulWidget {
   static String routeName = "/LoginPage";
 
