@@ -5,18 +5,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ImageUploadService {
-  Future<void> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
+  Future<String?> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
     try {
       Dio dio = Dio();
 
       if (pickedFile != null) {
-        // Mendapatkan waktu sekarang
         DateTime now = DateTime.now();
-
-        // Format tanggal dan waktu sesuai dengan kebutuhan
         String formattedDateTime = DateFormat('ddMMyyyy_HHmmss').format(now);
-
-        // Menyusun nama file sesuai dengan format
         String fileName = 'image_$formattedDateTime.jpg';
 
         FormData formData = FormData.fromMap({
@@ -24,14 +19,19 @@ class ImageUploadService {
         });
 
         Response response = await dio.post(
-          'https://970c-34-133-77-80.ngrok-free.app/upload',
+          'https://lelewise.kencang.id/lele',
           data: formData,
         );
 
         if (response.statusCode == 200) {
           print("Gambar berhasil diunggah");
           print(response.data);
-          // Alihkan ke halaman HasilDeteksi
+
+          if (response.data.containsKey('penyakit')) {
+            String penyakitMessage = response.data['penyakit'];
+            print("Pesan penyakit: $penyakitMessage");
+            return penyakitMessage;
+          }
           Navigator.pushNamed(context, '/HasilDeteksi');
         } else {
           print("Gambar gagal diunggah. Error: ${response.statusCode}");
@@ -40,9 +40,11 @@ class ImageUploadService {
         // Handle ketika tidak ada file yang dipilih
       }
       onComplete();
+      return null;
     } catch (error) {
       print("Error saat upload: $error");
       onComplete();
+      return null;
     }
   }
 }

@@ -74,7 +74,20 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                         future: imageUrl,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return CircularProgressIndicator();
+                              return Container(
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+                                  child: const Column(
+                                    children: [
+                                      CircularProgressIndicator(
+                                        valueColor:
+                                        AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
                             } else if (snapshot.hasError) {
                               return Text('Error loading image');
                             } else {

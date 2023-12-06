@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -26,6 +25,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
   XFile? pickedFile;
   ImageUploadService uploadService = ImageUploadService();
   bool isLoading = false;
+  String? penyakitMessage;
 
   Future<List<DetectionHistory>> fetchHistory() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_deteksi');
@@ -54,7 +54,6 @@ class _DeteksiPageState extends State<DeteksiPage> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +116,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: Color(0x7F0A9830),
+                                      color: const Color(0x7F0A9830),
                                       width: 1.0,
                                     ),
                                   ),
@@ -203,13 +202,13 @@ class _DeteksiPageState extends State<DeteksiPage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: const BoxDecoration(color: Colors.white),
                   child: FutureBuilder<List<DetectionHistory>>(
                     future: fetchHistory(),
                     builder: (BuildContext context, AsyncSnapshot<List<DetectionHistory>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Container(
+                        return SizedBox(
                           width: double.infinity,
                           child: Padding(
                             padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
@@ -260,7 +259,9 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                                 if (imageSnapshot.connectionState == ConnectionState.waiting) {
                                                   return const CircularProgressIndicator();
                                                 } else if (imageSnapshot.hasError) {
-                                                  print('Error loading image: ${imageSnapshot.error}');
+                                                  if (kDebugMode) {
+                                                    print('Error loading image: ${imageSnapshot.error}');
+                                                  }
                                                   return const Icon(Icons.error);
                                                 } else if (!imageSnapshot.hasData) {
                                                   return const Text('No image data');
@@ -359,19 +360,16 @@ class _DeteksiPageState extends State<DeteksiPage> {
     final picker = ImagePicker();
     pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() => isLoading = true);
-    await uploadService.uploadImage(pickedFile, context, () =>
-        setState(() =>
-        isLoading = false));
+    penyakitMessage = await uploadService.uploadImage(pickedFile, context, () =>
+        setState(() => isLoading = false));
   }
 
   takeImage() async {
-     // Set loading to true
     final picker = ImagePicker();
     pickedFile = await picker.pickImage(source: ImageSource.camera);
     setState(() => isLoading = true);
-    await uploadService.uploadImage(pickedFile, context, () =>
-        setState(() =>
-        isLoading = false));
+    penyakitMessage = await uploadService.uploadImage(pickedFile, context, () =>
+        setState(() => isLoading = false));
   }
 }
 
