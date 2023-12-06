@@ -92,7 +92,7 @@ class _HistoryHasilDeteksiState extends State<HistoryHasilDeteksi> {
                               return Text('Error loading image');
                             } else {
                               return Image.network(
-                                snapshot.data as String, // Use the imageUrl from the snapshot
+                                snapshot.data as String,
                                 width: double.infinity,
                                 height: 150.h,
                                 fit: BoxFit.cover,
@@ -102,6 +102,7 @@ class _HistoryHasilDeteksiState extends State<HistoryHasilDeteksi> {
                       ),
                     ),
                     SizedBox(height: 20.h),
+                    if (widget.history.condition == 'Sakit')
                     Column(
                       children: [
                         Row(
@@ -118,7 +119,7 @@ class _HistoryHasilDeteksiState extends State<HistoryHasilDeteksi> {
                                 ),
                               ),
                               child: SvgPicture.asset(
-                                'assets/icons/ai_icon.svg',
+                                'assets/icons/ai_icon_alert.svg',
                                 width: 24.w,
                                 height: 24.h,
                               ),
@@ -196,6 +197,68 @@ class _HistoryHasilDeteksiState extends State<HistoryHasilDeteksi> {
                         ),
                       ],
                     )
+                    else if (widget.history.condition == 'Sehat')
+                      Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(12.w),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: ListColor.gray200,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/icons/ai_icon.svg',
+                                  width: 24.w,
+                                  height: 24.h,
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextDescriptionCut("Hola! Lele kamu dalam keadaan sehat!"),
+                                    // TextDescriptionCut(selectedHistory.condition),
+                                    SizedBox(height: 8.h),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextDescriptionSmallTiny400("06/12/2023 · 09:21"),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16.h),
+                          const Divider(
+                            color: ListColor.gray200,
+                            thickness: 0.8,
+                          ),
+                          SizedBox(height: 16.h),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextDescriptionBold("Lele kamu dalam keadaan sehat. Kamu bisa menjaga kesehatan lele dengan tips-tips berikut:"),
+                              SizedBox(height: 8.h),
+                              TextDescription("1. Pastikan kualitas air tetap baik dengan menjaga suhu dan oksigen.\n"
+                                  "2. Berikan pakan berkualitas sesuai dengan kebutuhan lele.\n"
+                                  "3. Monitor kepadatan ikan dalam kolam agar tidak terlalu tinggi.\n"
+                                  "4. Periksa secara rutin kondisi kesehatan lele.\n"
+                                  "5. Jaga kebersihan kolam dan hindari penumpukan kotoran."),
+                            ],
+                          ),
+                        ],
+                      )
                   ],
                 ),
               ),

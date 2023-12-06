@@ -104,7 +104,7 @@ class _HasilDeteksi extends State<HasilDeteksi> {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    if (widget.penyakitMessage == 'Sehat')
+                    if (widget.penyakitMessage == 'Sakit')
                       Column(
                         children: [
                           Row(
@@ -121,7 +121,7 @@ class _HasilDeteksi extends State<HasilDeteksi> {
                                   ),
                                 ),
                                 child: SvgPicture.asset(
-                                  'assets/icons/ai_icon.svg',
+                                  'assets/icons/ai_icon_alert.svg',
                                   width: 24.w,
                                   height: 24.h,
                                 ),
@@ -189,7 +189,7 @@ class _HasilDeteksi extends State<HasilDeteksi> {
                           ),
                         ],
                       )
-                    else if (widget.penyakitMessage == 'Sakit')
+                    else if (widget.penyakitMessage == 'Sehat')
                       Column(
                         children: [
                           Row(
