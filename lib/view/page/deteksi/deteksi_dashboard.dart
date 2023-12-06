@@ -14,6 +14,7 @@ import '../../component/text/component_desc.dart';
 import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
 import 'hasil_deteksi.dart';
+import 'history_hasil_deteksi.dart';
 
 class DeteksiPage extends StatefulWidget {
   const DeteksiPage({super.key});
@@ -26,6 +27,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
   ImageUploadService uploadService = ImageUploadService();
   bool isLoading = false;
   String? penyakitMessage;
+  DetectionHistory? selectedHistory;
 
   Future<List<DetectionHistory>> fetchHistory() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_deteksi');
@@ -46,14 +48,30 @@ class _DeteksiPageState extends State<DeteksiPage> {
     return url;
   }
 
-  void navigateToHasilDeteksi(DetectionHistory selectedHistory) {
+  void navigateToHasilDeteksiHistory(DetectionHistory history) {
+    setState(() {
+      selectedHistory = history;
+    });
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HasilDeteksi(history: selectedHistory),
+        builder: (context) => HistoryHasilDeteksi(history: history),
       ),
     );
   }
+
+  void navigateToHasilDeteksi(ImageUploadResult result) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HasilDeteksi(penyakitMessage: result.penyakitMessage, image: result.imageUrl),
+      ),
+    ).then((_) {
+      // Atur kembali isLoading ke false setelah kembali dari HasilDeteksi
+      setState(() => isLoading = false);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +251,7 @@ class _DeteksiPageState extends State<DeteksiPage> {
                             DetectionHistory history = snapshot.data![index];
                             return InkWell(
                               onTap: () {
-                                navigateToHasilDeteksi(history);
+                                navigateToHasilDeteksiHistory(history);
                               },
                               child: Column(
                                 children: [
@@ -284,7 +302,6 @@ class _DeteksiPageState extends State<DeteksiPage> {
                                                   );
                                                 }
                                               },
-                              
                                             ),
                                           ),
                                           SizedBox(width: 8.w),
@@ -349,7 +366,6 @@ class _DeteksiPageState extends State<DeteksiPage> {
                   ),
                 ),
               ),
-
           ],
         ),
       ),
@@ -360,17 +376,24 @@ class _DeteksiPageState extends State<DeteksiPage> {
     final picker = ImagePicker();
     pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() => isLoading = true);
-    penyakitMessage = await uploadService.uploadImage(pickedFile, context, () =>
+    ImageUploadResult? result = await uploadService.uploadImage(pickedFile, context, () =>
         setState(() => isLoading = false));
+    if (result != null) {
+      navigateToHasilDeteksi(result);
+    }
   }
 
   takeImage() async {
     final picker = ImagePicker();
     pickedFile = await picker.pickImage(source: ImageSource.camera);
     setState(() => isLoading = true);
-    penyakitMessage = await uploadService.uploadImage(pickedFile, context, () =>
+    ImageUploadResult? result = await uploadService.uploadImage(pickedFile, context, () =>
         setState(() => isLoading = false));
+    if (result != null) {
+      navigateToHasilDeteksi(result);
+    }
   }
+
 }
 
 class DetectionHistory {

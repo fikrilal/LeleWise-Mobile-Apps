@@ -4,8 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+class ImageUploadResult {
+  final String? penyakitMessage;
+  final String? imageUrl;
+
+  ImageUploadResult({this.penyakitMessage, this.imageUrl});
+}
+
 class ImageUploadService {
-  Future<String?> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
+  Future<ImageUploadResult?> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
     try {
       Dio dio = Dio();
 
@@ -29,10 +36,11 @@ class ImageUploadService {
 
           if (response.data.containsKey('penyakit')) {
             String penyakitMessage = response.data['penyakit'];
+            String imageUrl = response.data['gambar'];
             print("Pesan penyakit: $penyakitMessage");
-            return penyakitMessage;
+            return ImageUploadResult(penyakitMessage: penyakitMessage, imageUrl: imageUrl);
           }
-          Navigator.pushNamed(context, '/HasilDeteksi');
+          // Navigator.pushNamed(context, '/HasilDeteksi');
         } else {
           print("Gambar gagal diunggah. Error: ${response.statusCode}");
         }
@@ -48,3 +56,4 @@ class ImageUploadService {
     }
   }
 }
+
