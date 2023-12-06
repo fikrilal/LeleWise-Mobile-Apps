@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hicons/flutter_hicons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,7 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../../controller/deteksi/image_upload_service.dart';
 import '../../../res/colors/color_libraries.dart';
+import '../../component/card/card_history_deteksi.dart';
 import '../../component/text/component_desc.dart';
 import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
@@ -255,81 +257,11 @@ class _DeteksiPageState extends State<DeteksiPage> {
                               },
                               child: Column(
                                 children: [
-                                  Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: const BorderSide(
-                                        color: ListColor.gray200,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.w),
-                                      child: Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(8),
-                                            child: FutureBuilder<String>(
-                                              future: getImageUrl(history.imageName),
-                                              builder: (BuildContext context, AsyncSnapshot<String> imageSnapshot) {
-                                                if (imageSnapshot.connectionState == ConnectionState.waiting) {
-                                                  return const CircularProgressIndicator();
-                                                } else if (imageSnapshot.hasError) {
-                                                  if (kDebugMode) {
-                                                    print('Error loading image: ${imageSnapshot.error}');
-                                                  }
-                                                  return const Icon(Icons.error);
-                                                } else if (!imageSnapshot.hasData) {
-                                                  return const Text('No image data');
-                                                } else {
-                                                  return Image.network(
-                                                    imageSnapshot.data!,
-                                                    width: 80.w,
-                                                    height: 80.h,
-                                                    fit: BoxFit.fitHeight,
-                                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                      if (loadingProgress == null) {
-                                                        return child;
-                                                      } else {
-                                                        return const CircularProgressIndicator(
-                                                          valueColor:
-                                                          AlwaysStoppedAnimation<Color>(ListColor.primary),
-                                                        );
-                                                      }
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(width: 8.w),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                TextDescriptionSmallTiny("${history.date} · ${history.time}"),
-                                                SizedBox(height: 2.h),
-                                                TextDescriptionBold(history.condition),
-                                                SizedBox(height: 8.h),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: ListColor.redAccent,
-                                                    borderRadius: BorderRadius.circular(50),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        12.w, 4.h, 12.w, 4.h),
-                                                    child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                  HistoryCard(
+                                    imageUrl: history.imageName,
+                                    date: history.date,
+                                    time: history.time,
+                                    condition: history.condition,
                                   ),
                                   SizedBox(height: 4.h),
                                 ],

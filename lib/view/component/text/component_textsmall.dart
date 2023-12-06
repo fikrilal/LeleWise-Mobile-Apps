@@ -195,6 +195,48 @@ class TextDescriptionSmallBold extends StatelessWidget {
   }
 }
 
+class TextDescriptionSmallBoldAlert extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionSmallBoldAlert(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        fontSize: SizeDimen.textDescriptionTiny,
+        color: ListColor.red,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
+class TextDescriptionSmallBoldGood extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+
+  TextDescriptionSmallBoldGood(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w700,
+        fontSize: SizeDimen.textDescriptionTiny,
+        color: ListColor.primary,
+        overflow: TextOverflow.clip,
+      ),
+    );
+  }
+}
+
 class TextDescriptionTiny extends StatelessWidget {
   final String? text;
   final Color? textcolor;
