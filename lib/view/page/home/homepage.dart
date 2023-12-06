@@ -16,9 +16,11 @@ import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.d
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
+import '../../../controller/data_pakan/get_data_pakan.dart';
 import '../../../controller/navigation/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
+import '../../component/card/card_pakan_selanjutnya.dart';
 import '../../component/card/card_ph.dart';
 import '../../component/card/card_suhu.dart';
 import '../../component/card/notification_card.dart';
@@ -32,6 +34,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _nextFeedingTime = "";
+  String _beratPakan = "";
+  String _key = "";
 
   double ph = 0;
   double suhu = 0;
@@ -41,9 +46,12 @@ class _HomePageState extends State<HomePage> {
   String suhuCondition = "unknown";
   String universalMessage = "Memuat data...";
 
+  List<Map<String, dynamic>> _dataList = [];
+
   @override
   void initState() {
     super.initState();
+    getDataPakan();
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
 
     final notificationModel = NotificationModel(
@@ -90,6 +98,18 @@ class _HomePageState extends State<HomePage> {
         suhu = formattedTemperature;
       });
       notificationModel.handleTemperatureChange(formattedTemperature);
+    });
+  }
+
+  Future<void> getDataPakan() async {
+    List<Map<String, dynamic>> data = await PakanDataHelper.getDataPakan();
+    setState(() {
+      _dataList = data;
+      if (_dataList.isNotEmpty) {
+        _key = _dataList[0]['_key'];
+        _nextFeedingTime = _dataList[0]['waktu_pakan'];
+        _beratPakan = _dataList[0]['berat_pakan'];
+      }
     });
   }
 
@@ -241,60 +261,10 @@ class _HomePageState extends State<HomePage> {
                                       spreadRadius: 0,
                                     ),
                                   ]),
-                                  child: Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: const BorderSide(
-                                        color: ListColor.gray100,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16.w),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              TextDescriptionSmall("Jadwal pakan berikutnya pukul 12.00 AM"),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10.h),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              TextPointSmall("500 Gr"),
-                                              SizedBox(height: 12.h),
-                                              Row(
-                                                children: [
-                                                  ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                      primary: Colors.white,
-                                                      shadowColor: Colors.transparent,
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(50),
-                                                        side: const BorderSide(
-                                                          color: ListColor.gray300,
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      // Tindakan yang akan dijalankan ketika tombol ditekan
-                                                    },
-                                                    child: Padding(
-                                                      padding: EdgeInsets.all(8.0),
-                                                      child: TextDescriptionSmallButton("Edit Cepat"),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                  child: PakanSelanjutnyaCard(
+                                    nextFeedingTime: _nextFeedingTime,
+                                    beratPakan: _beratPakan,
+                                    idkey: _key,
                                   ),
                                 ),
                               ),
