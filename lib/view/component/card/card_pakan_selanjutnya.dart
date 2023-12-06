@@ -101,8 +101,10 @@ class _PakanSelanjutnyaCardState extends State<PakanSelanjutnyaCard> {
                   children: [
                     Row(
                       children: [
-                        TextDescriptionSmall(
-                            "Jadwal pakan berikutnya pukul ${widget.nextFeedingTime}"),
+                        Expanded(
+                          child: TextDescriptionSmall(
+                              "Jadwal pakan berikutnya pukul ${widget.nextFeedingTime}"),
+                        ),
                       ],
                     ),
                     SizedBox(height: 10.h),

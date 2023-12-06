@@ -320,36 +320,81 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(height: 16.h),
                             Align(
                               alignment: Alignment.center,
-                              child: Container(
-                                child: Table(
-                                  border: const TableBorder(
-                                    horizontalInside: BorderSide(width: 1.0, color: ListColor.gray200),
-                                    bottom: BorderSide(width: 1.0, color: ListColor.gray200),
-                                  ),
-                                  children: [
-                                    for (var item in dataArray)
-                                      TableRow(
+                              child: FutureBuilder<List<Map<String, String>>>(
+                                future: PakanDataHelper.fetchRiwayatPakanData(),
+                                builder: (BuildContext context, AsyncSnapshot<List<Map<String, String>>> snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return SizedBox(
+                                      width: double.infinity,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                                        child: Column(
+                                          children: [
+                                            const CircularProgressIndicator(
+                                              valueColor:
+                                              AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                            ),
+                                            SizedBox(height: 4.h),
+                                            TextDescriptionSmall("Sedang memuat data.."),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  if (snapshot.hasError) {
+                                    return Center(child: Text("Error: ${snapshot.error}"));
+                                  }
+                                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                    return Center(child: Text("No data available"));
+                                  }
+                                  List<Map<String, String>> limitedData = snapshot.data!.take(5).toList();
+                                  return Table(
+                                    border: const TableBorder(
+                                      horizontalInside: BorderSide(
+                                        width: 1.0,
+                                        color: ListColor.gray200,
+                                      ),
+                                      bottom: BorderSide(
+                                        width: 1.0,
+                                        color: ListColor.gray200,
+                                      ),
+                                    ),
+                                    children: limitedData
+                                        .map(
+                                          (item) => TableRow(
                                         children: [
                                           TableCell(
                                             child: Padding(
-                                              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
-                                              child: TextDescription(item["name"] ?? ""),
+                                              padding: EdgeInsets.only(
+                                                bottom: 24.h,
+                                                top: 24.h,
+                                              ),
+                                              child: TextDescription(
+                                                item["name"] ?? "",
+                                              ),
                                             ),
                                           ),
                                           TableCell(
                                             verticalAlignment: TableCellVerticalAlignment.middle,
                                             child: Padding(
-                                              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
+                                              padding: EdgeInsets.only(
+                                                bottom: 24.h,
+                                                top: 24.h,
+                                              ),
                                               child: Align(
                                                 alignment: Alignment.centerRight,
-                                                child: TextDescription(item["date"] ?? ""),
+                                                child: TextDescription(
+                                                  item["date"] ?? "",
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                  ],
-                                ),
+                                    )
+                                        .toList(),
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -445,13 +490,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-List<Map<String, String>> dataArray = [
-  {"name": "500 Gr", "date": "Selasa 17 Oct • 07:30"},
-  {"name": "500 Gr", "date": "Rabu 18 Oct • 03:30"},
-  {"name": "500 Gr", "date": "Rabu 18 Oct • 12:30"},
-  {"name": "500 Gr", "date": "Rabu 18 Oct • 08:30"},
-  {"name": "500 Gr", "date": "Selasa 17 Oct • 07:30"},
-  {"name": "500 Gr", "date": "Rabu 18 Oct • 08:30"},
-  //
-];
