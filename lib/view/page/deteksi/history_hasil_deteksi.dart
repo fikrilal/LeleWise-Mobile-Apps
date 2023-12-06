@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../controller/deteksi/history_service.dart';
 import '../../../res/colors/color_libraries.dart';
 import '../../component/text/component_desc.dart';
 import '../../component/text/component_desc_ovr.dart';
@@ -22,6 +23,10 @@ class HistoryHasilDeteksi extends StatefulWidget {
 
 class _HistoryHasilDeteksiState extends State<HistoryHasilDeteksi> {
   late Future<String> imageUrl;
+
+  Future<List<DetectionHistory>> fetchHistory() async {
+    return HistoryService.fetchHistory();
+  }
 
   @override
   void initState() {

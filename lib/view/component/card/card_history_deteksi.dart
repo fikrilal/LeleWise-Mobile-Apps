@@ -65,8 +65,8 @@ class _HistoryCardState extends State<HistoryCard> {
                   } else {
                     return Image.network(
                       imageSnapshot.data!,
-                      width: 80.w,
-                      height: 80.h,
+                      width: 100,
+                      height: 100,
                       fit: BoxFit.fitHeight,
                       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {

@@ -20,6 +20,7 @@ import '../../../controller/data_pakan/get_data_pakan.dart';
 import '../../../controller/navigation/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
+import '../../component/card/card_history_deteksi.dart';
 import '../../component/card/card_pakan_selanjutnya.dart';
 import '../../component/card/card_ph.dart';
 import '../../component/card/card_suhu.dart';
@@ -419,63 +420,16 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ComponentTextTitleCenter("Riwayat Deteksi Penyakit"),
-                              SizedBox(height: 16),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  child: Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: const BorderSide(
-                                        color: ListColor.gray200,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.w),
-                                      child: Row(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.circular(8),
-                                                child: Image.asset(
-                                                  'assets/icons/lele.jpg',
-                                                  width: 80.w,
-                                                  height: 80.h,
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(width: 8.w),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              TextDescriptionSmallTiny("Selasa 17 October · 12:32"),
-                                              SizedBox(height: 2.h),
-                                              TextDescriptionBold("Lele terjangkit penyakit"),
-                                              SizedBox(height: 8.h),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: ListColor.redAccent,
-                                                  borderRadius: BorderRadius.circular(50),
-                                                ),
-                                                child: Padding (
-                                                  padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
-                                                  child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              SizedBox(height: 16.h),
+                              // Align(
+                              //   alignment: Alignment.center,
+                              //   child: HistoryCard(
+                              //     imageUrl: history.imageName,
+                              //     date: history.date,
+                              //     time: history.time,
+                              //     condition: history.condition,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

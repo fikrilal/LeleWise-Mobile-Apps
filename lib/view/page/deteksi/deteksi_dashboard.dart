@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import '../../../controller/deteksi/history_service.dart';
 import '../../../controller/deteksi/image_upload_service.dart';
 import '../../../res/colors/color_libraries.dart';
 import '../../component/card/card_history_deteksi.dart';
@@ -31,23 +32,13 @@ class _DeteksiPageState extends State<DeteksiPage> {
   String? penyakitMessage;
   DetectionHistory? selectedHistory;
 
-  Future<List<DetectionHistory>> fetchHistory() async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_deteksi');
-    DatabaseEvent event = await ref.once();
-    List<DetectionHistory> histories = [];
-
-    if (event.snapshot.value != null) {
-      Map<dynamic, dynamic> values = Map.from(event.snapshot.value as Map);
-      values.forEach((key, value) {
-        histories.add(DetectionHistory.fromMap(value));
-      });
-    }
-    return histories;
-  }
-
   Future<String> getImageUrl(String imageName) async {
     String url = await FirebaseStorage.instance.ref('image_history/$imageName').getDownloadURL();
     return url;
+  }
+
+  Future<List<DetectionHistory>> fetchHistory() async {
+    return HistoryService.fetchHistory();
   }
 
   void navigateToHasilDeteksiHistory(DetectionHistory history) {
@@ -69,11 +60,9 @@ class _DeteksiPageState extends State<DeteksiPage> {
         builder: (context) => HasilDeteksi(penyakitMessage: result.penyakitMessage, image: result.imageUrl),
       ),
     ).then((_) {
-      // Atur kembali isLoading ke false setelah kembali dari HasilDeteksi
       setState(() => isLoading = false);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -326,27 +315,4 @@ class _DeteksiPageState extends State<DeteksiPage> {
     }
   }
 
-}
-
-class DetectionHistory {
-  final String time;
-  final String condition;
-  final String imageName;
-  final String date;
-
-  DetectionHistory({
-    required this.time,
-    required this.condition,
-    required this.imageName,
-    required this.date,
-  });
-
-  factory DetectionHistory.fromMap(Map<dynamic, dynamic> data) {
-    return DetectionHistory(
-      time: data['jam'] ?? '',
-      condition: data['kondisi'] ?? '',
-      imageName: data['nama_gambar'] ?? '',
-      date: data['tanggal'] ?? '',
-    );
-  }
 }
