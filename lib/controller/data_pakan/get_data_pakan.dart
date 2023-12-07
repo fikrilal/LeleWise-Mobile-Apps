@@ -61,17 +61,40 @@ class PakanDataHelper {
   static Future<List<Map<String, String>>> fetchRiwayatPakanData() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_pakan');
     DatabaseEvent event = await ref.once();
-    List<Map<String, String>> dataList = [];
+    List<Map<String, dynamic>> dataList = [];
 
     if (event.snapshot.value != null) {
       Map<dynamic, dynamic> values = Map.from(event.snapshot.value as Map);
       values.forEach((key, value) {
         dataList.add({
           "name": "${value['berat_pakan']} Gr",
-          "date": "${value['tanggal']} • ${value['waktu_pakan']}"
+          "date": "${value['tanggal']} • ${value['waktu_pakan']}",
+          "dateTime": _parseDateTime(value['tanggal'], value['waktu_pakan'])
         });
       });
     }
-    return dataList;
+
+    // Sort the dataList based on dateTime
+    dataList.sort((a, b) => b['dateTime'].compareTo(a['dateTime']));
+
+    // Convert to List<Map<String, String>> while removing the 'dateTime' field
+    return dataList.map<Map<String, String>>((data) {
+      return {
+        "name": data['name'] as String,
+        "date": data['date'] as String
+      };
+    }).toList();
   }
+
+  static DateTime _parseDateTime(String date, String time) {
+    try {
+      // Adjust the format to match your date and time strings
+      DateFormat format = DateFormat("dd-MM-yyyy H:m");
+      return format.parse("$date $time");
+    } catch (e) {
+      // Handle parsing error if necessary
+      return DateTime(0); // Return an early date in case of error
+    }
+  }
+
 }

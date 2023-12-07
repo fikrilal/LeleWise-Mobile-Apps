@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,6 +18,7 @@ import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
 
 import '../../../controller/data_pakan/get_data_pakan.dart';
+import '../../../controller/deteksi/history_service.dart';
 import '../../../controller/navigation/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
@@ -26,6 +28,8 @@ import '../../component/card/card_ph.dart';
 import '../../component/card/card_suhu.dart';
 import '../../component/card/notification_card.dart';
 import 'package:go_router/go_router.dart';
+
+import '../deteksi/history_hasil_deteksi.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,7 +42,6 @@ class _HomePageState extends State<HomePage> {
   String _nextFeedingTime = "";
   String _beratPakan = "";
   String _key = "";
-
   double ph = 0;
   double suhu = 0;
   String phMessage = "Memuat data pH...";
@@ -46,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   String phCondition = "unknown";
   String suhuCondition = "unknown";
   String universalMessage = "Memuat data...";
+  DetectionHistory? selectedHistory;
 
   List<Map<String, dynamic>> _dataList = [];
 
@@ -112,6 +116,27 @@ class _HomePageState extends State<HomePage> {
         _beratPakan = _dataList[0]['berat_pakan'];
       }
     });
+  }
+
+  Future<String> getImageUrl(String imageName) async {
+    String url = await FirebaseStorage.instance.ref('image_history/$imageName').getDownloadURL();
+    return url;
+  }
+
+  Future<List<DetectionHistory>> fetchHistory() async {
+    return HistoryService.fetchHistory();
+  }
+
+  void navigateToHasilDeteksiHistory(DetectionHistory history) {
+    setState(() {
+      selectedHistory = history;
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HistoryHasilDeteksi(history: history),
+      ),
+    );
   }
 
   @override
@@ -410,33 +435,68 @@ class _HomePageState extends State<HomePage> {
                 height: 8,
                 color: ListColor.gray100,
               ),
-              Column(
-                children: [
-                  Padding(padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Column (
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ComponentTextTitleCenter("Riwayat Deteksi Penyakit"),
-                              SizedBox(height: 16.h),
-                              // Align(
-                              //   alignment: Alignment.center,
-                              //   child: HistoryCard(
-                              //     imageUrl: history.imageName,
-                              //     date: history.date,
-                              //     time: history.time,
-                              //     condition: history.condition,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),)
-                ],
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ComponentTextTitleCenter("Riwayat Deteksi Penyakit"),
+                    SizedBox(height: 16.h),
+                    Container(
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: FutureBuilder<List<DetectionHistory>>(
+                        future: fetchHistory(),
+                        builder: (BuildContext context, AsyncSnapshot<List<DetectionHistory>> snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return SizedBox(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+                                child: Column(
+                                  children: [
+                                    const CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                    ),
+                                    SizedBox(height: 4.h),
+                                    TextDescriptionSmall("Sedang memuat data.."),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            List<DetectionHistory> limitedData = snapshot.data!.take(5).toList();
+                            return Column(
+                              children: limitedData.map((history) {
+                                return InkWell(
+                                  onTap: () {
+                                    navigateToHasilDeteksiHistory(history);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      HistoryCard(
+                                        imageUrl: history.imageName, // Make sure this is a correct URL
+                                        date: history.date,
+                                        time: history.time,
+                                        condition: history.condition,
+                                      ),
+                                      SizedBox(height: 4.h),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          } else {
+                            return Text("No data available");
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
             ],
           ),
         ),

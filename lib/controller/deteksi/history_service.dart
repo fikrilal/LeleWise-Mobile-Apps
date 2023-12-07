@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class DetectionHistory {
   final String time;
@@ -34,7 +35,24 @@ class HistoryService {
       values.forEach((key, value) {
         histories.add(DetectionHistory.fromMap(value));
       });
+
+      // Mengurutkan riwayat berdasarkan tanggal dan waktu
+      histories.sort((a, b) {
+        DateTime aDateTime = _parseDateTime(a.date, a.time);
+        DateTime bDateTime = _parseDateTime(b.date, b.time);
+        return bDateTime.compareTo(aDateTime); // Urutan descending
+      });
     }
     return histories;
+  }
+
+  static DateTime _parseDateTime(String date, String time) {
+    try {
+      DateFormat format = DateFormat("dd/MM/yyyy HH:mm");
+      return format.parse("$date $time");
+    } catch (e) {
+      // Handle parsing error
+      return DateTime(0);
+    }
   }
 }
