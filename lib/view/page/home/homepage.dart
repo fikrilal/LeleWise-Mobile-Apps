@@ -1,12 +1,15 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lelewise_mobile_apps/controller/realtime_data/get_weather_data.dart';
+import 'package:lelewise_mobile_apps/controller/realtime_data/weather_map_client.dart';
+import 'package:lelewise_mobile_apps/controller/state/weather_state.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
-import 'package:lelewise_mobile_apps/res/dimension/size.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc_ovr.dart';
@@ -16,10 +19,10 @@ import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/notifikasi/notifikasi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pakan/pakan_dashboard.dart';
+import 'package:location/location.dart';
 
 import '../../../controller/data_pakan/get_data_pakan.dart';
 import '../../../controller/deteksi/history_service.dart';
-import '../../../controller/navigation/navigation_controller.dart';
 import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../../models/notification/notification_model.dart';
 import '../../component/card/card_history_deteksi.dart';
@@ -27,7 +30,6 @@ import '../../component/card/card_pakan_selanjutnya.dart';
 import '../../component/card/card_ph.dart';
 import '../../component/card/card_suhu.dart';
 import '../../component/card/notification_card.dart';
-import 'package:go_router/go_router.dart';
 
 import '../deteksi/history_hasil_deteksi.dart';
 
@@ -39,6 +41,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final controller = Get.put(MyStateController());
+  var location = Location();
+  late StreamSubscription listener;
+  late PermissionStatus permissionStatus;
   String _nextFeedingTime = "";
   String _beratPakan = "";
   String _key = "";
@@ -56,6 +62,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
+      enableLocationListener();
+    });
     getDataPakan();
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
 
@@ -140,6 +149,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    listener.cancel(); // Only cancel if listener is not null
+      super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -168,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(height: 8.h),
                         Align(
                           alignment: Alignment.center,
-                          child: Container(
+                          child: Obx(() => Container(
                             decoration: const BoxDecoration(boxShadow: [
                               BoxShadow(
                                 color: Color(0x0A000000),
@@ -177,50 +192,69 @@ class _HomePageState extends State<HomePage> {
                                 spreadRadius: 0,
                               ),
                             ]),
-                            child: Card(
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: const BorderSide(
-                                  color: ListColor.gray100,
-                                  width: 1,
-                                ),
-                              ),
-                              color: Colors.white,
-                              child: Padding(
-                                padding: EdgeInsets.all(16.w),
-                                child: Column(
-                                  children: [
-                                    Row( //row pertama
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icons/maps_icon.svg',
-                                          width: 18.w,
-                                          height: 18.h,
-                                        ),
-                                        SizedBox(width: 8.w),
-                                        TextDescriptionOver("Mojoroto, Kediri")
-                                      ],
+                            child: controller.locationData.value.latitude != null ?
+                            FutureBuilder(future: OpenWeatherMapClient().getWeather(controller.locationData.value),
+                                builder: (context, snapshot){
+                              if(snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              } else if (snapshot.hasError) {
+                                return Center(child: Text(snapshot.error.toString()));
+                              } else if (!snapshot.hasData) {
+                                return Center(child: Text('Tidak ada data'));
+                              } else {
+                                var data = snapshot.data as WeatherData;
+                                double temperature = data.main!.temp ?? 0.0;
+                                double minTemp = data.main!.tempMin ?? 0.0;
+                                double maxTemp = data.main!.tempMax ?? 0.0;
+                                return Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: const BorderSide(
+                                      color: ListColor.gray100,
+                                      width: 1,
                                     ),
-                                    SizedBox(height: 16.h),
-                                    Row(
+                                  ),
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.w),
+                                    child: Column(
                                       children: [
-                                        TextPoint("32°C"),
-                                        SizedBox(width: 10.w),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children:[
-                                            TextDescriptionSmall("Kemarin: 31°C"),
-                                            TextDescriptionSmall("Rata-rata: 33°C")
+                                        Row( //row pertama
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/icons/maps_icon.svg',
+                                              width: 18.w,
+                                              height: 18.h,
+                                            ),
+                                            SizedBox(width: 8.w),
+                                            TextDescriptionOver("${data.name}, Indonesia")
+                                          ],
+                                        ),
+                                        SizedBox(height: 10.h),
+                                        Row(
+                                          children: [
+                                            TextPoint("${temperature.toStringAsFixed(0)}°C"),
+                                            SizedBox(width: 10.w),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children:[
+                                                TextDescriptionSmall("Terendah: ${minTemp.toStringAsFixed(0)}°C"),
+                                                TextDescriptionSmall("Tertinggi: ${maxTemp.toStringAsFixed(0)}°C")
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
+                                );
+                              }
+                            }
+                            )
+                                : const Center(child: Text('Menunggu data')
                                 ),
-                              ),
-                            ),
-                          ),
+                          ),)
                         ),
                         Row(
                           children: [
@@ -502,5 +536,28 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> enableLocationListener() async {
+    controller.isEnableLocation.value = await location.serviceEnabled();
+    if(!controller.isEnableLocation.value) {
+      controller.isEnableLocation.value = await location.requestService();
+      if(!controller.isEnableLocation.value) {
+        return;
+      }
+    }
+
+    permissionStatus = await location.hasPermission();
+    if(permissionStatus == PermissionStatus.denied) {
+      permissionStatus = await location.requestPermission();
+      if(permissionStatus != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    controller.locationData.value = await location.getLocation();
+    listener = location.onLocationChanged.listen((event) {
+
+    });
   }
 }

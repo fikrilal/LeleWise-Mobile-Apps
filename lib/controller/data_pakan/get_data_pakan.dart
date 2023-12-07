@@ -74,10 +74,7 @@ class PakanDataHelper {
       });
     }
 
-    // Sort the dataList based on dateTime
     dataList.sort((a, b) => b['dateTime'].compareTo(a['dateTime']));
-
-    // Convert to List<Map<String, String>> while removing the 'dateTime' field
     return dataList.map<Map<String, String>>((data) {
       return {
         "name": data['name'] as String,
@@ -88,12 +85,10 @@ class PakanDataHelper {
 
   static DateTime _parseDateTime(String date, String time) {
     try {
-      // Adjust the format to match your date and time strings
       DateFormat format = DateFormat("dd-MM-yyyy H:m");
       return format.parse("$date $time");
     } catch (e) {
-      // Handle parsing error if necessary
-      return DateTime(0); // Return an early date in case of error
+      return DateTime(0);
     }
   }
 
