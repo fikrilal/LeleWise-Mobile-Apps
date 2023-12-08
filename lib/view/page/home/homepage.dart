@@ -470,7 +470,7 @@ class _HomePageState extends State<HomePage> {
                 color: ListColor.gray100,
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

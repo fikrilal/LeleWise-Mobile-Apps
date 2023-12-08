@@ -7,6 +7,8 @@ import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_header.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_textsmall.dart';
 
+import '../../../controller/ph_suhu/get_history_ph_suhu.dart';
+import '../../../controller/realtime_data/get_ph_temperature.dart';
 import '../../component/text/component_desc_ovr.dart';
 
 class PHPage extends StatefulWidget {
@@ -17,6 +19,21 @@ class PHPage extends StatefulWidget {
 }
 
 class _PHPageState extends State<PHPage> {
+  double ph = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    GetPHandTemperature getPHandTemperature = GetPHandTemperature();
+
+    getPHandTemperature.getTemperatureStream().listen((newTemperature) {
+      double formattedTemperature = double.parse(newTemperature.toStringAsFixed(1));
+      setState(() {
+        ph = formattedTemperature;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +85,7 @@ class _PHPageState extends State<PHPage> {
                           SizedBox(height: 16.h),
                           Row(
                             children: [
-                              TextPoint("32°C"),
+                              TextPoint("$ph"),
                               SizedBox(width: 10.w),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,49 +115,26 @@ class _PHPageState extends State<PHPage> {
                 ),
               ),
               SizedBox(height: 24.h),
-              Column(
+              Column (
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Column (
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ComponentTextTitleCenter("Riwayat pH Air"),
-                        SizedBox(height: 10.h),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            child: Table(
-                              border: const TableBorder(
-                                horizontalInside: BorderSide(width: 1.0, color: ListColor.gray200),
-                                bottom: BorderSide(width: 1.0, color: ListColor.gray200),
-                              ),
-                              children: [
-                                for (var item in dataArray)
-                                  TableRow(
-                                    children: [
-                                      TableCell(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
-                                          child: TextDescription(item["name"] ?? ""),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: TextDescription(item["date"] ?? ""),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                  ComponentTextTitleCenter("Riwayat pH Air"),
+                  SizedBox(height: 10.h),
+                  Align(
+                    alignment: Alignment.center,
+                    child: FutureBuilder<List<PHAndTemperatureHistory>>(
+                      future: HistoryService.fetchPHAndTemperatureHistory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else if (snapshot.hasData) {
+                          return buildTemperatureTable(snapshot.data!);
+                        } else {
+                          return Text("No data available");
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -153,15 +147,22 @@ class _PHPageState extends State<PHPage> {
   }
 }
 
-List<Map<String, String>> dataArray = [
-  {"name": "5,69", "date": "Selasa 17 Oct"},
-  {"name": "5,69", "date": "Rabu 18 Oct"},
-  {"name": "5,69", "date": "Selasa 17 Oct"},
-  {"name": "5,69", "date": "Rabu 18 Oct"},
-  {"name": "5,69", "date": "Selasa 17 Oct"},
-  {"name": "5,69", "date": "Rabu 18 Oct"},
-  {"name": "5,69", "date": "Selasa 17 Oct"},
-  {"name": "5,69", "date": "Rabu 18 Oct"},
-
-  // ...Tambahkan data lainnya ke dalam array
-];
+Widget buildTemperatureTable(List<PHAndTemperatureHistory> data) {
+  return Table(
+    border: const TableBorder(
+      horizontalInside: BorderSide(width: 1.0, color: ListColor.gray200),
+      bottom: BorderSide(width: 1.0, color: ListColor.gray200),
+    ),
+    children: data.map((item) => TableRow(
+      children: [
+        TableCell(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
+            child: TextDescription("${item.ph}"),
+          ),
+        ),
+        // Include other cells if needed
+      ],
+    )).toList(),
+  );
+}
