@@ -10,7 +10,6 @@ import 'package:lelewise_mobile_apps/view/component/textfield/component_primary_
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 
 class LoginPage extends StatefulWidget {
-  static String routeName = "/LoginPage";
 
   const LoginPage({super.key});
   @override
@@ -119,11 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                   buildContext: context,
                 );
                 print(user);
-                if (user != null) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                } else {
+                  if (user != null) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  }
+                  else {
                   // Handle the case when login fails
                   // You might want to show a snackbar or an alert
                   print("Login failed");

@@ -26,8 +26,8 @@ class _PHPageState extends State<PHPage> {
     super.initState();
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
 
-    getPHandTemperature.getTemperatureStream().listen((newTemperature) {
-      double formattedTemperature = double.parse(newTemperature.toStringAsFixed(1));
+    getPHandTemperature.getPHStream().listen((nePH) {
+      double formattedTemperature = double.parse(nePH.toStringAsFixed(1));
       setState(() {
         ph = formattedTemperature;
       });
@@ -97,17 +97,17 @@ class _PHPageState extends State<PHPage> {
                             ],
                           ),
                           SizedBox(height: 10.h),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/cheklist_icon.svg',
-                                width: 20.w,
-                                height: 20.h,
-                              ),
-                              SizedBox(width: 8.w),
-                              TextDescriptionTiny("Dalam keadaan baik")
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     SvgPicture.asset(
+                          //       'assets/icons/cheklist_icon.svg',
+                          //       width: 20.w,
+                          //       height: 20.h,
+                          //     ),
+                          //     SizedBox(width: 8.w),
+                          //     TextDescriptionTiny("Dalam keadaan baik")
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),

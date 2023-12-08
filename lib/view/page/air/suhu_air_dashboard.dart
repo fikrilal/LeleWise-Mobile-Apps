@@ -97,17 +97,17 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                               ],
                             ),
                             SizedBox(height: 10.h),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/cheklist_icon.svg',
-                                  width: 20.w,
-                                  height: 20.h,
-                                ),
-                                SizedBox(width: 8.w),
-                                TextDescriptionTiny("Dalam keadaan baik")
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     SvgPicture.asset(
+                            //       'assets/icons/cheklist_icon.svg',
+                            //       width: 20.w,
+                            //       height: 20.h,
+                            //     ),
+                            //     SizedBox(width: 8.w),
+                            //     TextDescriptionTiny("Dalam keadaan baik")
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
+import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/deteksi/deteksi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
@@ -12,7 +13,7 @@ import '../../view/page/pakan/pakan_new_schedule.dart';
 class NavigationController {
   NavigationController._();
 
-  static String initR = '/HomePage';
+  static String initR = '/LoginPage';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
   static final _rootNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
@@ -20,6 +21,7 @@ class NavigationController {
   static final _rootNavigatorDeteksi = GlobalKey<NavigatorState>(debugLabel: 'shellDeteksi');
   static final _rootNavigatorSuhu = GlobalKey<NavigatorState>(debugLabel: 'shellSuhu');
   static final _rootNavigatorPH = GlobalKey<NavigatorState>(debugLabel: 'shellPH');
+  static final _rootNavigatorLogin = GlobalKey<NavigatorState>(debugLabel: 'shellLogin');
 
   static final GoRouter router =
   GoRouter(
@@ -108,6 +110,20 @@ class NavigationController {
                         key: state.pageKey,
                       );
                     },
+                )
+              ],
+            ),
+
+            StatefulShellBranch(
+              navigatorKey: _rootNavigatorLogin,
+              routes: [
+                GoRoute(path: '/LoginPage',
+                  name: 'LoginPage',
+                  builder: (context, state) {
+                    return LoginPage(
+                      key: state.pageKey,
+                    );
+                  },
                 )
               ],
             ),
