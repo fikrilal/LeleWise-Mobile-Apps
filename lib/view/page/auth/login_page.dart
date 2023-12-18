@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/button/component_primary_btn.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
@@ -91,43 +92,46 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 2.h,
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                    onPressed: () async {
-                    },
-                    child: const Text(
-                      "Lupa password?",
-                      style: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: ListColor.blue600,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: TextButton(
+                //     onPressed: () async {
+                //     },
+                //     child: const Text(
+                //       "Lupa password?",
+                //       style: TextStyle(
+                //         fontFamily: 'Satoshi',
+                //         fontWeight: FontWeight.w500,
+                //         fontSize: 18,
+                //         color: ListColor.blue600,
+                //         decoration: TextDecoration.underline,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 32.h,
                 ),
-                primaryButton(text: "Masuk", onPressed: () async {
-                  User? user = await loginUsingEmailPassword(
-                  email: _emailTextController.text,
-                  password: _passwordTextController.text,
-                  buildContext: context,
-                );
-                print(user);
-                  if (user != null) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  }
-                  else {
-                  // Handle the case when login fails
-                  // You might want to show a snackbar or an alert
-                  print("Login failed");
-                }}),
+                primaryButton(
+                    text: "Masuk",
+                    onPressed: () async {
+                      User? user = await loginUsingEmailPassword(
+                        email: _emailTextController.text,
+                        password: _passwordTextController.text,
+                        buildContext: context,
+                      );
+                      print(user);
+                      if (user != null) {
+                        // Use GoRouter to navigate
+                        context.go('/HomePage');
+                      } else {
+                        // Handle the case when login fails
+                        // You might want to show a snackbar or an alert
+                        print("Login failed");
+                      }
+                    }
+                ),
+
               ],
             ),
           ),

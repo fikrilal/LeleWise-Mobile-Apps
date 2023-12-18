@@ -21,38 +21,46 @@ class NavigationController {
   static final _rootNavigatorDeteksi = GlobalKey<NavigatorState>(debugLabel: 'shellDeteksi');
   static final _rootNavigatorSuhu = GlobalKey<NavigatorState>(debugLabel: 'shellSuhu');
   static final _rootNavigatorPH = GlobalKey<NavigatorState>(debugLabel: 'shellPH');
-  static final _rootNavigatorLogin = GlobalKey<NavigatorState>(debugLabel: 'shellLogin');
 
-  static final GoRouter router =
-  GoRouter(
+  static final GoRouter router = GoRouter(
     initialLocation: initR,
-      navigatorKey: _rootNavigatorKey,
-      routes: <RouteBase>[
-        StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) {
-            return MainWrapper(navigationShell: navigationShell);
-          },
-          branches: <StatefulShellBranch>
-          [
-            StatefulShellBranch(
-              navigatorKey: _rootNavigatorHome,
-                routes: [
-                  GoRoute(path: '/HomePage',
-                  name: 'HomePage',
-                  builder: (context, state) {
-                    return HomePage(
-                      key: state.pageKey,
-                    );
-                  },
-                    // routes:
-                  )
-                ],
-            ),
+    navigatorKey: _rootNavigatorKey,
+    routes: <RouteBase>[
+      GoRoute(
+        path: '/LoginPage',
+        name: 'LoginPage',
+        builder: (context, state) {
+          return LoginPage(
+            key: state.pageKey,
+          );
+        },
+      ),
 
-            StatefulShellBranch(
-              navigatorKey: _rootNavigatorPakan,
-              routes: [
-                GoRoute(path: '/PakanDashboard',
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainWrapper(navigationShell: navigationShell);
+        },
+        branches: <StatefulShellBranch>
+        [
+          StatefulShellBranch(
+            navigatorKey: _rootNavigatorHome,
+            routes: [
+              GoRoute(path: '/HomePage',
+                name: 'HomePage',
+                builder: (context, state) {
+                  return HomePage(
+                    key: state.pageKey,
+                  );
+                },
+                // routes:
+              )
+            ],
+          ),
+
+          StatefulShellBranch(
+            navigatorKey: _rootNavigatorPakan,
+            routes: [
+              GoRoute(path: '/PakanDashboard',
                   name: 'PakanDashboard',
                   builder: (context, state) {
                     return PakanDashboard(
@@ -61,74 +69,60 @@ class NavigationController {
                   },
                   routes: [
                     GoRoute(path: 'NewSchedulePage',
-                    name: 'NewSchedulePage',
-                    builder: (context, state) {
-                      return NewSchedulePage(
-                        key: state.pageKey,
-                      );
-                    })
+                        name: 'NewSchedulePage',
+                        builder: (context, state) {
+                          return NewSchedulePage(
+                            key: state.pageKey,
+                          );
+                        })
                   ]
-                )
-              ],
-            ),
+              )
+            ],
+          ),
 
-            StatefulShellBranch(
-              navigatorKey: _rootNavigatorDeteksi,
-              routes: [
-                GoRoute(path: '/DeteksiPage',
-                  name: 'DeteksiPage',
-                  builder: (context, state) {
-                    return DeteksiPage(
-                      key: state.pageKey,
-                    );
-                  },
-                )
-              ],
-            ),
+          StatefulShellBranch(
+            navigatorKey: _rootNavigatorDeteksi,
+            routes: [
+              GoRoute(path: '/DeteksiPage',
+                name: 'DeteksiPage',
+                builder: (context, state) {
+                  return DeteksiPage(
+                    key: state.pageKey,
+                  );
+                },
+              )
+            ],
+          ),
 
-            StatefulShellBranch(
-              navigatorKey: _rootNavigatorSuhu,
-              routes: [
-                GoRoute(path: '/SuhuAirPage',
-                  name: 'SuhuAirPage',
-                  builder: (context, state) {
-                    return SuhuAirPage(
-                      key: state.pageKey,
-                    );
-                  },
-                )
-              ],
-            ),
+          StatefulShellBranch(
+            navigatorKey: _rootNavigatorSuhu,
+            routes: [
+              GoRoute(path: '/SuhuAirPage',
+                name: 'SuhuAirPage',
+                builder: (context, state) {
+                  return SuhuAirPage(
+                    key: state.pageKey,
+                  );
+                },
+              )
+            ],
+          ),
 
-            StatefulShellBranch(
-              navigatorKey: _rootNavigatorPH,
-              routes: [
-                GoRoute(path: '/PHPage',
-                    name: 'PHPage',
-                    builder: (context, state) {
-                      return PHPage(
-                        key: state.pageKey,
-                      );
-                    },
-                )
-              ],
-            ),
-
-            StatefulShellBranch(
-              navigatorKey: _rootNavigatorLogin,
-              routes: [
-                GoRoute(path: '/LoginPage',
-                  name: 'LoginPage',
-                  builder: (context, state) {
-                    return LoginPage(
-                      key: state.pageKey,
-                    );
-                  },
-                )
-              ],
-            ),
-          ],
-        )
-      ],
+          StatefulShellBranch(
+            navigatorKey: _rootNavigatorPH,
+            routes: [
+              GoRoute(path: '/PHPage',
+                name: 'PHPage',
+                builder: (context, state) {
+                  return PHPage(
+                    key: state.pageKey,
+                  );
+                },
+              )
+            ],
+          ),
+        ],
+      )
+    ],
   );
 }
