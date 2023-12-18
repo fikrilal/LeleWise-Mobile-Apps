@@ -67,7 +67,7 @@ class NotificationModel {
     } else if (_phCondition == "low" && _suhuCondition == "high") {
       universalMessage = "PH terlalu rendah & suhu terlalu tinggi!";
     } else if (_phCondition == "low" && _suhuCondition == "good") {
-      universalMessage = "PH air kolam kamu terlalu rendah";
+      universalMessage = "PH air kolam kamu terlalu rendah!";
     } else if (_phCondition == "low" && _suhuCondition == "low") {
       universalMessage = "PH dan suhu air kolam kamu terlalu rendah!";
     } else {

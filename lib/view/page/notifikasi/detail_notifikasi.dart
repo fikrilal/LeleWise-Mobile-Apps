@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../models/notification/notification_helper.dart';
 import '../../../res/colors/color_libraries.dart';
 import '../../component/text/component_desc.dart';
 import '../../component/text/component_desc_ovr.dart';
@@ -9,7 +10,8 @@ import '../../component/text/component_header.dart';
 import '../../component/text/component_textsmall.dart';
 
 class DetailNotifikasi extends StatefulWidget {
-  static String? routeName = "/TemplatePage";
+  final String universalMessage;
+  DetailNotifikasi({Key? key, required this.universalMessage}) : super(key: key);
   @override
   _DetailNotifikasiState createState() => _DetailNotifikasiState();
 }
@@ -17,6 +19,20 @@ class DetailNotifikasi extends StatefulWidget {
 class _DetailNotifikasiState extends State<DetailNotifikasi> {
   @override
   Widget build(BuildContext context) {
+    String iconPath;
+    Widget textWidget;
+    Map<String, String> details = NotificationHelper.getDetails(widget.universalMessage);
+    String deskripsi = details['deskripsi']!;
+    String tindakan = details['tindakan']!;
+
+
+    if (widget.universalMessage == "Kolam lele kamu dalam keadaan baik!") {
+      iconPath = 'assets/icons/ai_icon.svg';
+      textWidget = TextDescriptionOverGood(widget.universalMessage);
+    } else {
+      iconPath = 'assets/icons/ai_icon_alert.svg';
+      textWidget = TextDescriptionOver2(widget.universalMessage);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -24,7 +40,6 @@ class _DetailNotifikasiState extends State<DetailNotifikasi> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: ListColor.gray500),
           onPressed: () {
-            // Tindakan saat tombol kembali ditekan
             Navigator.of(context).pop();
           },
         ),
@@ -62,7 +77,7 @@ class _DetailNotifikasiState extends State<DetailNotifikasi> {
                               ),
                             ),
                             child: SvgPicture.asset(
-                              'assets/icons/ai_icon.svg',
+                              iconPath,
                               width: 24.w,
                               height: 24.h,
                             ),
@@ -72,29 +87,8 @@ class _DetailNotifikasiState extends State<DetailNotifikasi> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    TextDescriptionOver("pH air kolam kamu tinggi!"),
-                                  ],
-                                ),
+                                textWidget,
                                 SizedBox(height: 8.h),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: ListColor.redAccent,
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Padding (
-                                        padding: EdgeInsets.fromLTRB(12.w, 4.h, 12.w, 4.h),
-                                        child: TextDescriptionSmallBold("Tindakan diperlukan!"),
-                                      ),
-                                    ),
-                                    TextDescriptionSmallTiny400("Hari ini · 12:30"),
-                                  ],
-                                ),
                               ],
                             ),
                           ),
@@ -106,7 +100,7 @@ class _DetailNotifikasiState extends State<DetailNotifikasi> {
                         thickness: 0.8,
                       ),
                       SizedBox(height: 16.h),
-                      TextDescription("ph air kolam kamu mencapai 19! Kamu perlu mengganti air kolam untuk menjaga kesehatan lele! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+                      TextDescription('${deskripsi}'),
                       SizedBox(height: 16.h),
                       const Divider(
                         color: ListColor.gray200,
@@ -118,7 +112,7 @@ class _DetailNotifikasiState extends State<DetailNotifikasi> {
                         children: [
                           TextDescriptionBold("Tindakan yang diperlukan"),
                           SizedBox(height: 8.h),
-                          TextDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+                          TextDescription('${tindakan}'),
                         ],
                       ),
                     ],

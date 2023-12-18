@@ -32,6 +32,7 @@ import '../../component/card/card_suhu.dart';
 import '../../component/card/notification_card.dart';
 
 import '../deteksi/history_hasil_deteksi.dart';
+import '../notifikasi/detail_notifikasi.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => NotifikasiPage()),
+                              MaterialPageRoute(builder: (context) => DetailNotifikasi(universalMessage: universalMessage)),
                             );
                           },
                           child: NotificationCard(message: universalMessage),
