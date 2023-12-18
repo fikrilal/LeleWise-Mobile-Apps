@@ -9,24 +9,30 @@ class PakanDataHelper {
     DataSnapshot snapshot = event.snapshot;
 
     if (snapshot.value != null) {
-      List<Map<dynamic, dynamic>> dataList = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
-      List<Map<String, dynamic>> formattedDataList = [];
-      for (var data in dataList) {
-        String key = data['_key'].toString();
-        String pengulangan = data['pengulangan'].toString();
-        String beratPakan = data['berat_pakan'].toString();
-        String waktuPakan = data['waktu_pakan'].toString();
+      if (snapshot.value is List<Object?>) {
+        List<Object?> dataList = snapshot.value as List<Object?>;
+        List<Map<String, dynamic>> formattedDataList = [];
 
-        formattedDataList.add({
-          '_key': key,
-          'pengulangan': pengulangan,
-          'berat_pakan': beratPakan,
-          'waktu_pakan': waktuPakan,
-        });
+        for (var data in dataList) {
+          if (data is Map<dynamic, dynamic>) {
+            String key = data['_key'].toString();
+            String pengulangan = data['pengulangan'].toString();
+            String beratPakan = data['berat_pakan'].toString();
+            String waktuPakan = data['waktu_pakan'].toString();
+
+            formattedDataList.add({
+              '_key': key,
+              'pengulangan': pengulangan,
+              'berat_pakan': beratPakan,
+              'waktu_pakan': waktuPakan,
+            });
+          }
+        }
+        formattedDataList.sort((a, b) => DateFormat('HH:mm').parse(a['waktu_pakan']).compareTo(DateFormat('HH:mm').parse(b['waktu_pakan'])));
+        return formattedDataList;
+      } else {
+        return [];
       }
-
-      formattedDataList.sort((a, b) => DateFormat('HH:mm').parse(a['waktu_pakan']).compareTo(DateFormat('HH:mm').parse(b['waktu_pakan'])));
-      return formattedDataList;
     } else {
       return [];
     }
@@ -37,26 +43,34 @@ class PakanDataHelper {
     DataSnapshot snapshot = event.snapshot;
 
     if (snapshot.value != null) {
-      List<Map<dynamic, dynamic>> dataListNoFilter = List<Map<dynamic, dynamic>>.from(snapshot.value as List<Object?>? ?? []);
-      List<Map<String, dynamic>> formattedDataListNoFilter = [];
-      for (var data in dataListNoFilter) {
-        String keyNoFilter = data['_key'].toString();
-        String pengulanganNoFilter = data['pengulangan'].toString();
-        String beratPakanNoFilter = data['berat_pakan'].toString();
-        String waktuPakanNoFilter = data['waktu_pakan'].toString();
+      if (snapshot.value is List<Object?>) {
+        List<Object?> dataListNoFilter = snapshot.value as List<Object?>;
+        List<Map<String, dynamic>> formattedDataListNoFilter = [];
 
-        formattedDataListNoFilter.add({
-          '_key': keyNoFilter,
-          'pengulangan': pengulanganNoFilter,
-          'berat_pakan': beratPakanNoFilter,
-          'waktu_pakan': waktuPakanNoFilter,
-        });
+        for (var data in dataListNoFilter) {
+          if (data is Map<dynamic, dynamic>) {
+            String keyNoFilter = data['_key'].toString();
+            String pengulanganNoFilter = data['pengulangan'].toString();
+            String beratPakanNoFilter = data['berat_pakan'].toString();
+            String waktuPakanNoFilter = data['waktu_pakan'].toString();
+
+            formattedDataListNoFilter.add({
+              '_key': keyNoFilter,
+              'pengulangan': pengulanganNoFilter,
+              'berat_pakan': beratPakanNoFilter,
+              'waktu_pakan': waktuPakanNoFilter,
+            });
+          }
+        }
+        return formattedDataListNoFilter;
+      } else {
+        return [];
       }
-      return formattedDataListNoFilter;
     } else {
       return [];
     }
   }
+
 
   static Future<List<Map<String, String>>> fetchRiwayatPakanData() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('riwayat_pakan');
