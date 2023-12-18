@@ -187,6 +187,7 @@ class _HistoryHasilDeteksiState extends State<HistoryHasilDeteksi> {
                             TextDescription("Kualitas air yang buruk, terutama suhu air yang rendah dan kandungan oksigen yang rendah. Kepadatan ikan yang tinggi. Ikan yang stres karena kekurangan makanan atau serangan penyakit lain. Luka pada tubuh ikan akibat benturan atau serangan predator."),
                           ],
                         ),
+                        SizedBox(height: 16.h),
                         const Divider(
                           color: ListColor.gray200,
                           thickness: 0.8,
