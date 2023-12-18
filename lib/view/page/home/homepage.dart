@@ -184,79 +184,126 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(height: 8.h),
                         Align(
                           alignment: Alignment.center,
-                          child: Obx(() => Container(
-                            decoration: const BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Color(0x0A000000),
-                                blurRadius: 50,
-                                offset: Offset(1, 6),
-                                spreadRadius: 0,
-                              ),
-                            ]),
-                            child: controller.locationData.value.latitude != null ?
-                            FutureBuilder(future: OpenWeatherMapClient().getWeather(controller.locationData.value),
-                                builder: (context, snapshot){
-                              if(snapshot.connectionState == ConnectionState.waiting) {
-                                return Center(child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return Center(child: Text(snapshot.error.toString()));
-                              } else if (!snapshot.hasData) {
-                                return Center(child: Text('Tidak ada data'));
-                              } else {
-                                var data = snapshot.data as WeatherData;
-                                double temperature = data.main!.temp ?? 0.0;
-                                double minTemp = data.main!.tempMin ?? 0.0;
-                                double maxTemp = data.main!.tempMax ?? 0.0;
-                                return Card(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(
-                                      color: ListColor.gray100,
-                                      width: 1,
+                          child: Obx(
+                                () => Container(
+                              decoration: const BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x0A000000),
+                                      blurRadius: 50,
+                                      offset: Offset(1, 6),
+                                      spreadRadius: 0,
                                     ),
-                                  ),
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16.w),
-                                    child: Column(
-                                      children: [
-                                        Row( //row pertama
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/icons/maps_icon.svg',
-                                              width: 18.w,
-                                              height: 18.h,
-                                            ),
-                                            SizedBox(width: 8.w),
-                                            TextDescriptionOver("${data.name}, Indonesia")
-                                          ],
+                                  ]
+                              ),
+                              child: controller.locationData.value.latitude != null
+                                  ? FutureBuilder(
+                                  future: OpenWeatherMapClient().getWeather(controller.locationData.value),
+                                  builder: (context, snapshot) {
+                                    Widget content;
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      content = SizedBox(
+                                        width: double.infinity,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                                          child: Column(
+                                            children: [
+                                              const CircularProgressIndicator(
+                                                valueColor:
+                                                AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              TextDescriptionSmall("Sedang memuat data.."),
+                                            ],
+                                          ),
                                         ),
-                                        SizedBox(height: 10.h),
-                                        Row(
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      content = Center(child: Text(snapshot.error.toString()));
+                                    } else if (!snapshot.hasData) {
+                                      content = const Center(child: Text('Tidak ada data'));
+                                    } else {
+                                      var data = snapshot.data as WeatherData;
+                                      double temperature = data.main!.temp ?? 0.0;
+                                      double minTemp = data.main!.tempMin ?? 0.0;
+                                      double maxTemp = data.main!.tempMax ?? 0.0;
+                                      content = Padding(
+                                        padding: EdgeInsets.all(16.w),
+                                        child: Column(
                                           children: [
-                                            TextPoint("${temperature.toStringAsFixed(0)}°C"),
-                                            SizedBox(width: 10.w),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children:[
-                                                TextDescriptionSmall("Terendah: ${minTemp.toStringAsFixed(0)}°C"),
-                                                TextDescriptionSmall("Tertinggi: ${maxTemp.toStringAsFixed(0)}°C")
+                                            Row( //row pertama
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/maps_icon.svg',
+                                                  width: 18.w,
+                                                  height: 18.h,
+                                                ),
+                                                SizedBox(width: 8.w),
+                                                TextDescriptionOver("${data.name}, Indonesia")
+                                              ],
+                                            ),
+                                            SizedBox(height: 10.h),
+                                            Row(
+                                              children: [
+                                                TextPoint("${temperature.toStringAsFixed(0)}°C"),
+                                                SizedBox(width: 10.w),
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children:[
+                                                    TextDescriptionSmall("Terendah: ${minTemp.toStringAsFixed(0)}°C"),
+                                                    TextDescriptionSmall("Tertinggi: ${maxTemp.toStringAsFixed(0)}°C")
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ],
                                         ),
+                                      );
+                                    }
+                                    return Card(
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: const BorderSide(
+                                          color: ListColor.gray100,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      color: Colors.white,
+                                      child: content, // Menampilkan content yang sesuai
+                                    );
+                                  }
+                              ) : Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: const BorderSide(
+                                    color: ListColor.gray100,
+                                    width: 1,
+                                  ),
+                                ),
+                                color: Colors.white,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+                                    child: Column(
+                                      children: [
+                                        const CircularProgressIndicator(
+                                          valueColor:
+                                          AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                        ),
+                                        SizedBox(height: 4.h),
+                                        TextDescriptionSmall("Sedang memuat data.."),
                                       ],
                                     ),
                                   ),
-                                );
-                              }
-                            }
-                            )
-                                : const Center(child: Text('Menunggu data')
                                 ),
-                          ),)
+                              ),
+                            ),
+                          ),
                         ),
+
                         Row(
                           children: [
                             Expanded(child:
