@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:lelewise_mobile_apps/res/colors/color_libraries.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_big_point.dart';
 import 'package:lelewise_mobile_apps/view/component/text/component_desc.dart';
@@ -97,17 +98,17 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                               ],
                             ),
                             SizedBox(height: 10.h),
-                            // Row(
-                            //   children: [
-                            //     SvgPicture.asset(
-                            //       'assets/icons/cheklist_icon.svg',
-                            //       width: 20.w,
-                            //       height: 20.h,
-                            //     ),
-                            //     SizedBox(width: 8.w),
-                            //     TextDescriptionTiny("Dalam keadaan baik")
-                            //   ],
-                            // ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/cheklist_icon.svg',
+                                  width: 20.w,
+                                  height: 20.h,
+                                ),
+                                SizedBox(width: 8.w),
+                                TextDescriptionTiny("Dalam keadaan baik")
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -148,21 +149,49 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
 }
 
 Widget buildTemperatureTable(List<PHAndTemperatureHistory> data) {
+  List<String> pastDates = generatePastDates(DateTime.now(), data.length);
+
   return Table(
     border: const TableBorder(
       horizontalInside: BorderSide(width: 1.0, color: ListColor.gray200),
       bottom: BorderSide(width: 1.0, color: ListColor.gray200),
     ),
-    children: data.map((item) => TableRow(
-      children: [
-        TableCell(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
-            child: TextDescription("${item.temperature}°C"),
+    children: List<TableRow>.generate(data.length, (index) {
+      PHAndTemperatureHistory item = data[index];
+      return TableRow(
+        children: [
+          TableCell(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
+              child: TextDescription("${item.temperature}°C"),
+            ),
           ),
-        ),
-        // Include other cells if needed
-      ],
-    )).toList(),
+          TableCell(
+            verticalAlignment: TableCellVerticalAlignment.middle,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: TextDescription(pastDates[index]),
+              ),
+            ),
+          ),
+          // Include other cells if needed
+        ],
+      );
+    }),
   );
+}
+
+
+List<String> generatePastDates(DateTime startDate, int days) {
+  List<String> dates = [];
+  DateFormat dateFormat = DateFormat('EEEE, dd MMMM', 'id_ID');
+
+  for (int i = 0; i < days; i++) {
+    DateTime currentDate = startDate.subtract(Duration(days: i));
+    dates.add(dateFormat.format(currentDate));
+  }
+
+  return dates;
 }

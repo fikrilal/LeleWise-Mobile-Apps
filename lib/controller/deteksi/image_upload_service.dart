@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -12,9 +13,28 @@ class ImageUploadResult {
 }
 
 class ImageUploadService {
+
+  Future<String?> getApiKey() async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref("api_key");
+    DataSnapshot snapshot = await ref.get();
+    if (snapshot.exists) {
+      return snapshot.value.toString();
+    } else {
+      print("No data available for API key.");
+      return null;
+    }
+  }
+
   Future<ImageUploadResult?> uploadImage(XFile? pickedFile, BuildContext context, VoidCallback onComplete) async {
     try {
       Dio dio = Dio();
+
+      String? apiKey = await getApiKey(); // Fetch the API key
+
+      if (apiKey == null) {
+        print("API key is not available.");
+        return null;
+      }
 
       if (pickedFile != null) {
         DateTime now = DateTime.now();
@@ -26,7 +46,7 @@ class ImageUploadService {
         });
 
         Response response = await dio.post(
-          'https://lelewise.kencang.id/lele',
+          apiKey,
           data: formData,
         );
 
