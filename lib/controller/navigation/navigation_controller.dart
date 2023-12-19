@@ -13,7 +13,7 @@ import '../../view/page/pakan/pakan_new_schedule.dart';
 class NavigationController {
   NavigationController._();
 
-  static String initR = '/HomePage';
+  static String initR = '/LoginPage';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
   static final _rootNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
