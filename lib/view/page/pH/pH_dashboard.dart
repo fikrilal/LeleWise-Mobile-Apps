@@ -37,6 +37,19 @@ class _PHPageState extends State<PHPage> {
 
   @override
   Widget build(BuildContext context) {
+    String iconPath;
+    Widget textWidget;
+
+    if (ph > 8) {
+      iconPath = 'assets/icons/alert.svg';
+      textWidget = TextDescriptionAlert("pH terlalu tinggi!");
+    } else if (ph >= 5 && ph <= 7) {
+      iconPath = 'assets/icons/cheklist_icon.svg';
+      textWidget = TextDescriptionTiny("pH dalam kondisi baik!");
+    } else {
+      iconPath = 'assets/icons/alert.svg';
+      textWidget = TextDescriptionAlert("pH terlalu rendah!");
+    }
     return Scaffold(
         body: Container(
           padding: EdgeInsets.fromLTRB(16.w, 46.h, 16.w, 20.h),
@@ -101,12 +114,12 @@ class _PHPageState extends State<PHPage> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/icons/cheklist_icon.svg',
+                                  iconPath,
                                   width: 20.w,
                                   height: 20.h,
                                 ),
                                 SizedBox(width: 8.w),
-                                TextDescriptionTiny("Dalam keadaan baik")
+                                textWidget,
                               ],
                             ),
                           ],
@@ -162,7 +175,7 @@ Widget buildTemperatureTable(List<PHAndTemperatureHistory> data) {
           TableCell(
             child: Padding(
               padding: EdgeInsets.only(bottom: 24.h, top: 24.h),
-              child: TextDescription("${item.ph}"),
+              child: TextDescription("${item.ph.toStringAsFixed(1)}"),
             ),
           ),
           TableCell(
