@@ -111,51 +111,49 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                             ),
                             builder: ((context) {
                               return IntrinsicHeight(
-                                child: Container(
-                                  child: Column(
-                                    children: [
-                                      SizedBox(height: 32.h),
-                                      for (var option in pakanOptions)
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              opsiPakan = option;
-                                            });
-                                            Navigator.pop(context); // Tutup ModalBottomSheet
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.all(24.h),
-                                            decoration: BoxDecoration(
-                                              color: option.id == opsiPakan.id ? ListColor.primaryAccent : Colors.transparent,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '${option.name} Gram',
-                                                style: TextStyle(
-                                                fontFamily: 'Satoshi',
-                                                fontWeight: option.name == opsiPakan.name ? FontWeight.w700 : FontWeight.w500,
-                                                height: 1.5,
-                                                fontSize: 18,
-                                                color: option.name == opsiPakan.name ? ListColor.primary : ListColor.gray600,
-                                                ),
-                                                ),
-                                                Spacer(),
-                                                CustomRadio(
-                                                  value: option.id,
-                                                  groupValue: opsiPakan.id,
-                                                  onChanged: (int? value) {
-                                                    setState(() {
-                                                      opsiPakan = pakanOptions.firstWhere((opt) => opt.id == value);
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 32.h),
+                                    for (var option in pakanOptions)
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            opsiPakan = option;
+                                          });
+                                          Navigator.pop(context); // Tutup ModalBottomSheet
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(24.h),
+                                          decoration: BoxDecoration(
+                                            color: option.id == opsiPakan.id ? ListColor.primaryAccent : Colors.transparent,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '${option.name} Gram',
+                                              style: TextStyle(
+                                              fontFamily: 'Satoshi',
+                                              fontWeight: option.name == opsiPakan.name ? FontWeight.w700 : FontWeight.w500,
+                                              height: 1.5,
+                                              fontSize: 18,
+                                              color: option.name == opsiPakan.name ? ListColor.primary : ListColor.gray600,
+                                              ),
+                                              ),
+                                              Spacer(),
+                                              CustomRadio(
+                                                value: option.id,
+                                                groupValue: opsiPakan.id,
+                                                onChanged: (int? value) {
+                                                  setState(() {
+                                                    opsiPakan = pakanOptions.firstWhere((opt) => opt.id == value);
+                                                  });
+                                                },
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                    ],
-                                  ),
+                                      ),
+                                  ],
                                 ),
                               );
                             }));

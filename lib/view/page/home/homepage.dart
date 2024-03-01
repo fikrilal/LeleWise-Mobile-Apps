@@ -69,35 +69,31 @@ class _HomePageState extends State<HomePage> {
     getDataPakan();
     GetPHandTemperature getPHandTemperature = GetPHandTemperature();
 
-    final notificationModel = NotificationModel(
-        onMessagePHUpdate: (message) {
-          setState(() {
-            phMessage = message;
-            if (message == "Terlalu tinggi") {
-              phCondition = "high";
-            } else if (message == "Kondisi baik") {
-              phCondition = "good";
-            } else {
-              phCondition = "low";
-            }
-          });
-        },
-        onMessageSuhuUpdate: (message) {
-          setState(() {
-            suhuMessage = message;
-            if (message == "Terlalu tinggi") {
-              suhuCondition = "high";
-            } else if (message == "Kondisi baik") {
-              suhuCondition = "good";
-            } else {
-              suhuCondition = "low";
-            }
-          });
-        },
-        onUniversalMessageUpdate: (message) {
-          setState(() => universalMessage = message);
+    final notificationModel = NotificationModel(onMessagePHUpdate: (message) {
+      setState(() {
+        phMessage = message;
+        if (message == "Terlalu tinggi") {
+          phCondition = "high";
+        } else if (message == "Kondisi baik") {
+          phCondition = "good";
+        } else {
+          phCondition = "low";
         }
-    );
+      });
+    }, onMessageSuhuUpdate: (message) {
+      setState(() {
+        suhuMessage = message;
+        if (message == "Terlalu tinggi") {
+          suhuCondition = "high";
+        } else if (message == "Kondisi baik") {
+          suhuCondition = "good";
+        } else {
+          suhuCondition = "low";
+        }
+      });
+    }, onUniversalMessageUpdate: (message) {
+      setState(() => universalMessage = message);
+    });
 
     getPHandTemperature.getPHStream().listen((newPh) {
       double formattedPh = double.parse(newPh.toStringAsFixed(2));
@@ -108,7 +104,8 @@ class _HomePageState extends State<HomePage> {
     });
 
     getPHandTemperature.getTemperatureStream().listen((newTemperature) {
-      double formattedTemperature = double.parse(newTemperature.toStringAsFixed(1));
+      double formattedTemperature =
+          double.parse(newTemperature.toStringAsFixed(1));
       setState(() {
         suhu = formattedTemperature;
       });
@@ -129,7 +126,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<String> getImageUrl(String imageName) async {
-    String url = await FirebaseStorage.instance.ref('image_history/$imageName').getDownloadURL();
+    String url = await FirebaseStorage.instance
+        .ref('image_history/$imageName')
+        .getDownloadURL();
     return url;
   }
 
@@ -152,7 +151,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     listener.cancel(); // Only cancel if listener is not null
-      super.dispose();
+    super.dispose();
   }
 
   @override
@@ -166,72 +165,83 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16.w, 60.h, 16.w, 16.h),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => DetailNotifikasi(universalMessage: universalMessage)),
-                            );
-                          },
-                          child: NotificationCard(message: universalMessage),
-                        ),
-                        SizedBox(height: 8.h),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Obx(
-                                () => Container(
-                              decoration: const BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0x0A000000),
-                                      blurRadius: 50,
-                                      offset: Offset(1, 6),
-                                      spreadRadius: 0,
-                                    ),
-                                  ]
-                              ),
-                              child: controller.locationData.value.latitude != null
-                                  ? FutureBuilder(
-                                  future: OpenWeatherMapClient().getWeather(controller.locationData.value),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.w, 60.h, 16.w, 16.h),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailNotifikasi(
+                                  universalMessage: universalMessage)),
+                        );
+                      },
+                      child: NotificationCard(message: universalMessage),
+                    ),
+                    SizedBox(height: 8.h),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Obx(
+                        () => Container(
+                          decoration: const BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Color(0x0A000000),
+                              blurRadius: 50,
+                              offset: Offset(1, 6),
+                              spreadRadius: 0,
+                            ),
+                          ]),
+                          child: controller.locationData.value.latitude != null
+                              ? FutureBuilder(
+                                  future: OpenWeatherMapClient().getWeather(
+                                      controller.locationData.value),
                                   builder: (context, snapshot) {
                                     Widget content;
-                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
                                       content = SizedBox(
                                         width: double.infinity,
                                         child: Padding(
-                                          padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                                          padding: EdgeInsets.only(
+                                              top: 8.h, bottom: 8.h),
                                           child: Column(
                                             children: [
                                               const CircularProgressIndicator(
                                                 valueColor:
-                                                AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                                    AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        ListColor.primary),
                                               ),
                                               SizedBox(height: 4.h),
-                                              TextDescriptionSmall("Sedang memuat data.."),
+                                              TextDescriptionSmall(
+                                                  "Sedang memuat data.."),
                                             ],
                                           ),
                                         ),
                                       );
                                     } else if (snapshot.hasError) {
-                                      content = Center(child: Text(snapshot.error.toString()));
+                                      content = Center(
+                                          child:
+                                              Text(snapshot.error.toString()));
                                     } else if (!snapshot.hasData) {
-                                      content = const Center(child: Text('Tidak ada data'));
+                                      content = const Center(
+                                          child: Text('Tidak ada data'));
                                     } else {
                                       var data = snapshot.data as WeatherData;
-                                      double temperature = data.main!.temp ?? 0.0;
-                                      double minTemp = data.main!.tempMin ?? 0.0;
-                                      double maxTemp = data.main!.tempMax ?? 0.0;
+                                      double temperature =
+                                          data.main!.temp ?? 0.0;
+                                      double minTemp =
+                                          data.main!.tempMin ?? 0.0;
+                                      double maxTemp =
+                                          data.main!.tempMax ?? 0.0;
                                       content = Padding(
                                         padding: EdgeInsets.all(16.w),
                                         child: Column(
                                           children: [
-                                            Row( //row pertama
+                                            Row(
+                                              //row pertama
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/icons/maps_icon.svg',
@@ -239,19 +249,24 @@ class _HomePageState extends State<HomePage> {
                                                   height: 18.h,
                                                 ),
                                                 SizedBox(width: 8.w),
-                                                TextDescriptionOver("${data.name}, Indonesia")
+                                                TextDescriptionOver(
+                                                    "${data.name}, Indonesia")
                                               ],
                                             ),
                                             SizedBox(height: 10.h),
                                             Row(
                                               children: [
-                                                TextPoint("${temperature.toStringAsFixed(0)}°C"),
+                                                TextPoint(
+                                                    "${temperature.toStringAsFixed(0)}°C"),
                                                 SizedBox(width: 10.w),
                                                 Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children:[
-                                                    TextDescriptionSmall("Terendah: ${minTemp.toStringAsFixed(0)}°C"),
-                                                    TextDescriptionSmall("Tertinggi: ${maxTemp.toStringAsFixed(0)}°C")
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    TextDescriptionSmall(
+                                                        "Terendah: ${minTemp.toStringAsFixed(0)}°C"),
+                                                    TextDescriptionSmall(
+                                                        "Tertinggi: ${maxTemp.toStringAsFixed(0)}°C")
                                                   ],
                                                 ),
                                               ],
@@ -270,76 +285,85 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       color: Colors.white,
-                                      child: content, // Menampilkan content yang sesuai
+                                      child:
+                                          content, // Menampilkan content yang sesuai
                                     );
-                                  }
-                              ) : Card(
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: const BorderSide(
-                                    color: ListColor.gray100,
-                                    width: 1,
+                                  })
+                              : Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: const BorderSide(
+                                      color: ListColor.gray100,
+                                      width: 1,
+                                    ),
                                   ),
-                                ),
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
-                                    child: Column(
-                                      children: [
-                                        const CircularProgressIndicator(
-                                          valueColor:
-                                          AlwaysStoppedAnimation<Color>(ListColor.primary),
-                                        ),
-                                        SizedBox(height: 4.h),
-                                        TextDescriptionSmall("Sedang memuat data.."),
-                                      ],
+                                  color: Colors.white,
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 16.h, bottom: 16.h),
+                                      child: Column(
+                                        children: [
+                                          const CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    ListColor.primary),
+                                          ),
+                                          SizedBox(height: 4.h),
+                                          TextDescriptionSmall(
+                                              "Sedang memuat data.."),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Align(
+                              // align pertama
+                              alignment: Alignment.center,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PHPage()),
+                                  );
+                                },
+                                child: PHCard(
+                                    ph: ph,
+                                    phMessage: phMessage,
+                                    phCondition: phCondition),
+                              )),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SuhuAirPage()),
+                                );
+                              },
+                              child: SuhuCard(
+                                  suhu: suhu,
+                                  suhuMessage: suhuMessage,
+                                  suhuCondition: suhuCondition),
                             ),
                           ),
                         ),
-
-                        Row(
-                          children: [
-                            Expanded(child:
-                            Align( // align pertama
-                              alignment: Alignment.center,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => PHPage()),
-                                  );
-                                },
-                                child: PHCard(ph: ph, phMessage: phMessage, phCondition: phCondition),
-                              )
-                            ),
-                            ),
-                            Expanded(child:
-                            Align(
-                              alignment: Alignment.center,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SuhuAirPage()),
-                                  );
-                                },
-                                child: SuhuCard(suhu: suhu, suhuMessage: suhuMessage, suhuCondition: suhuCondition),
-                              ),
-                            ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Container(
                 width: double.infinity,
@@ -353,7 +377,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Container(
-                          child: Column (
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ComponentTextTitleCenter("Pakan Lele"),
@@ -391,125 +415,147 @@ class _HomePageState extends State<HomePage> {
               ),
               Column(
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Column (
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                ComponentTextTitleCenter("Riwayat Pakan Lele"),
-                                Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => PakanDashboard()),
-                                    );
-                                  },
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        TextDescriptionSmallAll("Semua"),
-                                        SvgPicture.asset(
-                                          'assets/icons/right_arrow2.svg',
-                                          width: 18.w,
-                                          height: 18.h,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 16.h),
-                            Align(
-                              alignment: Alignment.center,
-                              child: FutureBuilder<List<Map<String, String>>>(
-                                future: PakanDataHelper.fetchRiwayatPakanData(),
-                                builder: (BuildContext context, AsyncSnapshot<List<Map<String, String>>> snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return SizedBox(
-                                      width: double.infinity,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
-                                        child: Column(
-                                          children: [
-                                            const CircularProgressIndicator(
-                                              valueColor:
-                                              AlwaysStoppedAnimation<Color>(ListColor.primary),
-                                            ),
-                                            SizedBox(height: 4.h),
-                                            TextDescriptionSmall("Sedang memuat data.."),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  if (snapshot.hasError) {
-                                    return Center(child: Text("Error: ${snapshot.error}"));
-                                  }
-                                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                                    return Center(child: Text("No data available"));
-                                  }
-                                  List<Map<String, String>> limitedData = snapshot.data!.take(5).toList();
-                                  return Table(
-                                    border: const TableBorder(
-                                      horizontalInside: BorderSide(
-                                        width: 1.0,
-                                        color: ListColor.gray200,
-                                      ),
-                                      bottom: BorderSide(
-                                        width: 1.0,
-                                        color: ListColor.gray200,
-                                      ),
-                                    ),
-                                    children: limitedData
-                                        .map(
-                                          (item) => TableRow(
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
+                    child: Column(
+                      children: [
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  ComponentTextTitleCenter(
+                                      "Riwayat Pakan Lele"),
+                                  Spacer(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PakanDashboard()),
+                                      );
+                                    },
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          TableCell(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                bottom: 24.h,
-                                                top: 24.h,
-                                              ),
-                                              child: TextDescription(
-                                                item["name"] ?? "",
-                                              ),
-                                            ),
-                                          ),
-                                          TableCell(
-                                            verticalAlignment: TableCellVerticalAlignment.middle,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                bottom: 24.h,
-                                                top: 24.h,
-                                              ),
-                                              child: Align(
-                                                alignment: Alignment.centerRight,
-                                                child: TextDescription(
-                                                  item["date"] ?? "",
-                                                ),
-                                              ),
-                                            ),
+                                          TextDescriptionSmallAll("Semua"),
+                                          SvgPicture.asset(
+                                            'assets/icons/right_arrow2.svg',
+                                            width: 18.w,
+                                            height: 18.h,
                                           ),
                                         ],
                                       ),
-                                    )
-                                        .toList(),
-                                  );
-                                },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 16.h),
+                              Align(
+                                alignment: Alignment.center,
+                                child: FutureBuilder<List<Map<String, String>>>(
+                                  future:
+                                      PakanDataHelper.fetchRiwayatPakanData(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List<Map<String, String>>>
+                                          snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return SizedBox(
+                                        width: double.infinity,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 8.h, bottom: 8.h),
+                                          child: Column(
+                                            children: [
+                                              const CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        ListColor.primary),
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              TextDescriptionSmall(
+                                                  "Sedang memuat data.."),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    if (snapshot.hasError) {
+                                      return Center(
+                                          child:
+                                              Text("Error: ${snapshot.error}"));
+                                    }
+                                    if (!snapshot.hasData ||
+                                        snapshot.data!.isEmpty) {
+                                      return Center(
+                                          child: Text("No data available"));
+                                    }
+                                    List<Map<String, String>> limitedData =
+                                        snapshot.data!.take(5).toList();
+                                    return Table(
+                                      border: const TableBorder(
+                                        horizontalInside: BorderSide(
+                                          width: 1.0,
+                                          color: ListColor.gray200,
+                                        ),
+                                        bottom: BorderSide(
+                                          width: 1.0,
+                                          color: ListColor.gray200,
+                                        ),
+                                      ),
+                                      children: limitedData
+                                          .map(
+                                            (item) => TableRow(
+                                              children: [
+                                                TableCell(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      bottom: 24.h,
+                                                      top: 24.h,
+                                                    ),
+                                                    child: TextDescription(
+                                                      item["name"] ?? "",
+                                                    ),
+                                                  ),
+                                                ),
+                                                TableCell(
+                                                  verticalAlignment:
+                                                      TableCellVerticalAlignment
+                                                          .middle,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      bottom: 24.h,
+                                                      top: 24.h,
+                                                    ),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      child: TextDescription(
+                                                        item["date"] ?? "",
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                          .toList(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),)
+                      ],
+                    ),
+                  )
                 ],
               ),
               Container(
@@ -528,19 +574,24 @@ class _HomePageState extends State<HomePage> {
                       decoration: const BoxDecoration(color: Colors.white),
                       child: FutureBuilder<List<DetectionHistory>>(
                         future: fetchHistory(),
-                        builder: (BuildContext context, AsyncSnapshot<List<DetectionHistory>> snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<DetectionHistory>> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return SizedBox(
                               width: double.infinity,
                               child: Padding(
-                                padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+                                padding:
+                                    EdgeInsets.only(top: 16.h, bottom: 16.h),
                                 child: Column(
                                   children: [
                                     const CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(ListColor.primary),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          ListColor.primary),
                                     ),
                                     SizedBox(height: 4.h),
-                                    TextDescriptionSmall("Sedang memuat data.."),
+                                    TextDescriptionSmall(
+                                        "Sedang memuat data.."),
                                   ],
                                 ),
                               ),
@@ -548,7 +599,8 @@ class _HomePageState extends State<HomePage> {
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (snapshot.hasData) {
-                            List<DetectionHistory> limitedData = snapshot.data!.take(5).toList();
+                            List<DetectionHistory> limitedData =
+                                snapshot.data!.take(5).toList();
                             return Column(
                               children: limitedData.map((history) {
                                 return InkWell(
@@ -558,7 +610,8 @@ class _HomePageState extends State<HomePage> {
                                   child: Column(
                                     children: [
                                       HistoryCard(
-                                        imageUrl: history.imageName, // Make sure this is a correct URL
+                                        imageUrl: history.imageName,
+                                        // Make sure this is a correct URL
                                         date: history.date,
                                         time: history.time,
                                         condition: history.condition,
@@ -578,7 +631,6 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),
@@ -588,24 +640,22 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> enableLocationListener() async {
     controller.isEnableLocation.value = await location.serviceEnabled();
-    if(!controller.isEnableLocation.value) {
+    if (!controller.isEnableLocation.value) {
       controller.isEnableLocation.value = await location.requestService();
-      if(!controller.isEnableLocation.value) {
+      if (!controller.isEnableLocation.value) {
         return;
       }
     }
 
     permissionStatus = await location.hasPermission();
-    if(permissionStatus == PermissionStatus.denied) {
+    if (permissionStatus == PermissionStatus.denied) {
       permissionStatus = await location.requestPermission();
-      if(permissionStatus != PermissionStatus.granted) {
+      if (permissionStatus != PermissionStatus.granted) {
         return;
       }
     }
 
     controller.locationData.value = await location.getLocation();
-    listener = location.onLocationChanged.listen((event) {
-
-    });
+    listener = location.onLocationChanged.listen((event) {});
   }
 }
