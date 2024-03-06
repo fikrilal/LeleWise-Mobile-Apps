@@ -43,6 +43,26 @@ class TextDescription extends StatelessWidget {
   }
 }
 
+class TextDescription16 extends StatelessWidget {
+  final String? text;
+  final Color? textcolor;
+  final double? fontSize;
+  TextDescription16(this.text, {super.key, this.textcolor, this.fontSize});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "${text}",
+      style: TextStyle(
+        fontFamily: 'Satoshi',
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+        fontSize: SizeDimen.textDescriptionSmall,
+        color: ListColor.gray500,
+      ),
+    );
+  }
+}
+
 class TextDescription700 extends StatelessWidget {
   final String? text;
   final Color? textcolor;

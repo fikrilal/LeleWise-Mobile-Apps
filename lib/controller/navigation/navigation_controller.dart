@@ -4,6 +4,7 @@ import 'package:lelewise_mobile_apps/view/page/air/suhu_air_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/auth/login_page.dart';
 import 'package:lelewise_mobile_apps/view/page/deteksi/deteksi_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/home/homepage.dart';
+import 'package:lelewise_mobile_apps/view/page/monitoring/monitoring_dashboard.dart';
 import 'package:lelewise_mobile_apps/view/page/pH/pH_dashboard.dart';
 
 import '../../view/component/button/bottom_navigation_bar.dart';
@@ -19,7 +20,7 @@ class NavigationController {
   static final _rootNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
   static final _rootNavigatorPakan = GlobalKey<NavigatorState>(debugLabel: 'shellPakan');
   static final _rootNavigatorDeteksi = GlobalKey<NavigatorState>(debugLabel: 'shellDeteksi');
-  static final _rootNavigatorSuhu = GlobalKey<NavigatorState>(debugLabel: 'shellSuhu');
+  static final _rootNavigatorMonitoring = GlobalKey<NavigatorState>(debugLabel: 'shellMonitoring');
   static final _rootNavigatorPH = GlobalKey<NavigatorState>(debugLabel: 'shellPH');
 
   static final GoRouter router = GoRouter(
@@ -95,12 +96,12 @@ class NavigationController {
           ),
 
           StatefulShellBranch(
-            navigatorKey: _rootNavigatorSuhu,
+            navigatorKey: _rootNavigatorMonitoring,
             routes: [
-              GoRoute(path: '/SuhuAirPage',
-                name: 'SuhuAirPage',
+              GoRoute(path: '/MonitoringPage',
+                name: 'MonitoringPage',
                 builder: (context, state) {
-                  return SuhuAirPage(
+                  return MonitoringDashboard(
                     key: state.pageKey,
                   );
                 },

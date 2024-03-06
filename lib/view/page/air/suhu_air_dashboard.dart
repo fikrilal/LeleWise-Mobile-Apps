@@ -147,7 +147,7 @@ class _SuhuAirPageState extends State<SuhuAirPage> {
                           } else if (snapshot.hasData) {
                             return buildTemperatureTable(snapshot.data!);
                           } else {
-                            return Text("No data available");
+                            return const Text("No data available");
                           }
                         },
                       ),
